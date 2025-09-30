@@ -1,5 +1,5 @@
 "use client"; // Required for client-side navigation
-
+import NavbarBottom from "@/components/NavbarBottom";
 
 export default function HomePage() {
   return (
@@ -18,8 +18,8 @@ export default function HomePage() {
           Go to Dashboard
         </a>
       </main>
-
-
+      {/* Bottom Navbar */}
+      <NavbarBottom />
     </div>
   );
 }

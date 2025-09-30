@@ -94,4 +94,5 @@ function NavItem({ item, pathname }) {
             {/* {isActive && <span className="text-xs">{item.label}</span>} */}
         </Link>
     );
+
 }
