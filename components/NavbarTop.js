@@ -1,0 +1,26 @@
+import { Bell } from "lucide-react";
+import Image from "next/image";
+
+export default function NavbarTop() {
+  return (
+    <header className="relative flex items-center justify-between px-4 py-2 shadow-md bg-white">
+      {/* Profile */}
+      <div className="w-10 h-10 relative rounded-full overflow-hidden">
+        <Image
+          src="/profile.jpg" // put your profile image in /public folder
+          alt="Profile"
+          fill
+          className="object-cover"
+        />
+      </div>
+
+      {/* Centered Logo */}
+      <h1 className="absolute left-1/2 -translate-x-1/2 text-2xl font-bold text-blue-600">
+        VAD<span className="text-black">AI</span>
+      </h1>
+
+      {/* Notification */}
+      <Bell className="h-6 w-6 text-gray-700 cursor-pointer" />
+    </header>
+  );
+}
