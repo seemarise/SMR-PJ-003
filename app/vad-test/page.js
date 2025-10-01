@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import NavbarTop from "@/components/NavbarTop";
-import NavbarBottom from "@/components/NavbarBottom";
 import SubjectCard from "@/components/SubjectCard";
 import VadInfoModal from "@/components/VadInfoModal";
 import VadTestDetails from "@/components/VadTestDetails";
@@ -127,8 +125,8 @@ export default function VadTestPage() {
   // Show details page if a subject is selected
   if ((showDetails || isExiting) && selectedSubject) {
     return (
-      <VadTestDetails 
-        testData={selectedSubject} 
+      <VadTestDetails
+        testData={selectedSubject}
         onBack={handleBack}
         isExiting={isExiting}
       />
@@ -137,8 +135,6 @@ export default function VadTestPage() {
 
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white">
-      {/* Top Navbar */}
-      <NavbarTop />
 
       {/* Page Content */}
       <main className={`flex-1 px-4 py-6 space-y-6 ${isExiting ? 'animate-out fade-out slide-out-to-left duration-300' : 'animate-in fade-in duration-300'}`}>
@@ -171,8 +167,8 @@ export default function VadTestPage() {
           </div>
 
           {/* Right - Tasks Icon */}
-          <ClipboardList 
-            className="h-6 w-6 text-gray-700 cursor-pointer hover:text-blue-600 hover:scale-110 transition-all duration-200 active:scale-95" 
+          <ClipboardList
+            className="h-6 w-6 text-gray-700 cursor-pointer hover:text-blue-600 hover:scale-110 transition-all duration-200 active:scale-95"
             onClick={() => setIsModalOpen(true)}
           />
         </div>
@@ -184,28 +180,24 @@ export default function VadTestPage() {
 
         {/* Subject Cards */}
         <div className="space-y-4">
-          <SubjectCard 
-            title="English" 
-            date="01 Dec 2025" 
+          <SubjectCard
+            title="English"
+            date="01 Dec 2025"
             imageSrc="/book.png"
             onClick={() => handleSubjectClick('English')}
           />
-          <SubjectCard 
-            title="Social Science" 
-            date="01 Dec 2025" 
+          <SubjectCard
+            title="Social Science"
+            date="01 Dec 2025"
             imageSrc="/globe.png"
             onClick={() => handleSubjectClick('Social Science')}
           />
         </div>
       </main>
-
-      {/* Bottom Navbar */}
-      <NavbarBottom />
-
       {/* VAD Info Modal */}
-      <VadInfoModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <VadInfoModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </div>
   );

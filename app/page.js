@@ -19,7 +19,7 @@ export default function HomePage() {
         </a>
       </main>
       {/* Bottom Navbar */}
-      <NavbarBottom />
+      {/* <NavbarBottom /> */}
     </div>
   );
 }

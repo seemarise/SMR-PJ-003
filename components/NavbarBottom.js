@@ -7,6 +7,7 @@ import { HiMiniComputerDesktop } from "react-icons/hi2";
 import { MdTimeline } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { FaBrain } from "react-icons/fa";
+import { useEffect } from "react";
 
 
 // Helper function to get active label
@@ -15,12 +16,13 @@ function getActiveLabel(path, items) {
     return activeItem ? activeItem.label : "";
 }
 
-export default function NavbarBottom() {
+export default function NavbarBottom({ setSharedTitle }) {
     const pathname = usePathname();
+
 
     // Define all items
     const leftItems = [
-        { icon: PiExam, label: "VAD Test", href: "/" },
+        { icon: PiExam, label: "VAD Test", href: "/vad-test" },
         { icon: SiGoogleclassroom, label: "Classroom", href: "/classroom" },
     ];
 
@@ -37,6 +39,14 @@ export default function NavbarBottom() {
 
     const allItems = [...leftItems, centerItem, ...rightItems];
     const activeLabel = getActiveLabel(pathname, allItems);
+
+    useEffect(() => {
+        if (setSharedTitle) {
+            setSharedTitle(activeLabel);
+        }
+    }, [pathname, activeLabel, setSharedTitle]);
+
+
 
     return (
         <div className="fixed bottom-4 w-full flex justify-center z-50">
