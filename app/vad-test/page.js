@@ -29,7 +29,7 @@ function VadTestPage() {
           setVadTests(response.data.vadTests); // update state
         }
       } catch (err) {
-        console.error("Error fetching subjects:", err);
+        // console.error("Error fetching subjects:", err);
       }
     }
     fetchSubjects();
@@ -45,7 +45,7 @@ function VadTestPage() {
         setTestDetail(response.data.vadTest); // update state
       }
     } catch (err) {
-      console.error("Error fetching subjects:", err);
+      // console.error("Error fetching subjects:", err);
     }
   };
 
@@ -118,7 +118,7 @@ function VadTestPage() {
                 {vadTest?.tests?.map(test => {
                   return <SubjectCard
                     title={test.subject}
-                    date={moment(test.date).format("DD-MMM-YYYY")}
+                    date={moment(test.date).format("DD MMM YYYY")}
                     imageSrc={test.icon}
                     onClick={() => handleTestClick(test._id)}
                   />

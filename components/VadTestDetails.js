@@ -14,6 +14,21 @@ export default function VadTestDetails({ testData, onBack }) {
     }));
   };
 
+
+  function formatMinutes(totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    if (hours > 0 && minutes > 0) {
+      return `${hours}h ${minutes}m`;
+    } else if (hours > 0) {
+      return `${hours}h`;
+    } else {
+      return `${minutes}m`;
+    }
+  }
+
+
   return (
     <div className={`fixed inset-0 z-50 bg-gray-50 overflow-y-auto transition-all duration-300 `}>
       {/* Header */}
@@ -43,15 +58,15 @@ export default function VadTestDetails({ testData, onBack }) {
         <div className="space-y-3 animate-in fade-in slide-in-from-bottom duration-500 delay-100">
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
             <Calendar className="w-5 h-5 text-blue-600" />
-            <span className="text-sm">{moment(testData.date).format("DD-MMM-YYYY")}</span>
+            <span className="text-sm">{moment(testData.date).format("DD MMM YYYY")}</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
             <Clock className="w-5 h-5 text-blue-600" />
-            <span className="text-sm">{moment(testData.startTime).format("hh:mm A")}</span>
+            <span className="text-sm">{moment.utc(testData.startTime).format("hh:mm A") + " - " + moment.utc(testData.endTime).format("hh:mm A")}</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
             <Info className="w-5 h-5 text-blue-600" />
-            <span className="text-sm">Duration: {testData.durationInMinutes} Minutes</span>
+            <span className="text-sm">Duration: {formatMinutes(testData.durationInMinutes)}</span>
           </div>
         </div>
 
