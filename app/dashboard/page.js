@@ -1,4 +1,7 @@
-export default function DashboardPage() {
+"use client";
+import withAuth from "../auth";
+
+export  function DashboardPage() {
   return (
     <div>
       <h2 className="text-2xl font-bold">Dashboard</h2>
@@ -6,3 +9,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+export default withAuth(DashboardPage);

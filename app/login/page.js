@@ -1,17 +1,26 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
-
+import { loginApi } from "@/services/loginService/loginApi";
+import { sessionService } from "@/services/sessionService";
 export default function LoginPage() {
+  const router = useRouter();
   const [step, setStep] = useState("choose"); // choose | email | otp
   const [role, setRole] = useState(null); // student | teacher
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", ""]);
   const [timer, setTimer] = useState(60);
 
+  useEffect(() => {
+    const token = sessionService.getToken();
+    if (token) {
+      router.replace("/dashboard"); // or "/" for home page
+    }
+  }, [router]);
   // Countdown for OTP
   useEffect(() => {
     let interval;
@@ -138,9 +147,14 @@ export default function LoginPage() {
         </div>
 
         <button
-          onClick={() => {
-            setStep("otp");
-            setTimer(60);
+          onClick={async () => {
+            console.log("clicked", role);
+            let res = await  loginApi[role].getOtp({"email": email},{});
+            if (res.statusCode == 200){
+              setStep("otp");
+              setTimer(60);
+            }
+            
           }}
           className="w-full max-w-md bg-blue-600 text-white py-3 rounded-xl text-lg font-semibold hover:bg-blue-700 transition"
         >
@@ -200,6 +214,27 @@ export default function LoginPage() {
             ? "bg-green-800 text-white hover:bg-green-700"
             : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
+        onClick = {
+          async ()=>{
+            let res  = await loginApi[role].verifyOtp({
+              'email': email,
+              'otp' : otp.join('')
+            },{});
+            if(res.statusCode == 200){
+              let data = {
+                token : res.data.tokens.access.token,
+                refreshToken: res.data.tokens.refresh.token,
+                Id: res.data[role][role == "teacher" ? ( role + "sId") :( role + "Id")]
+              }
+              sessionService.setSession(data);
+              router.replace("/dashboard");
+              console.log(role + " login successful");
+            }
+            else if (res.statusCode == 401){
+              console.log(res.meessage);
+            }
+          }
+        }
       >
         Verify & Continue
       </button>

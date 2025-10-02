@@ -1,10 +1,10 @@
 "use client";
-
+import withAuth from "../auth";
 import { useState } from "react";
 import { ArrowLeft, Calendar, ChevronRight } from "lucide-react";
 import ExamDetailsView from "@/components/ExamDetailsView"
 
-export default function SchoolExamsPage() {
+function SchoolExamsPage() {
   const [selectedClass, setSelectedClass] = useState("10");
   const [selectedSection, setSelectedSection] = useState("A");
   const [selectedSubject, setSelectedSubject] = useState("English");
@@ -222,3 +222,5 @@ export default function SchoolExamsPage() {
     </div>
   );
 }
+
+export default withAuth(SchoolExamsPage);
