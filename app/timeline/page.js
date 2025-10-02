@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import withAuth from "../auth";
 
-export default function ProgressTrackingPage() {
+ function ProgressTrackingPage() {
   const [selectedClass, setSelectedClass] = useState("10");
   const [selectedSection, setSelectedSection] = useState("A");
   const [selectedSubject, setSelectedSubject] = useState("English");
@@ -405,3 +406,5 @@ export default function ProgressTrackingPage() {
     </div>
   );
 }
+
+export default withAuth(ProgressTrackingPage);

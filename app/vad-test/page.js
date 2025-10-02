@@ -8,8 +8,8 @@ import VadInfoModal from "@/components/VadInfoModal";
 import VadTestDetails from "@/components/VadTestDetails";
 import { ClipboardList } from "lucide-react";
 import { useRouter } from 'next/navigation';
-
-export default function VadTestPage() {
+import withAuth from "../auth";
+function VadTestPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -210,3 +210,5 @@ export default function VadTestPage() {
     </div>
   );
 }
+
+export default  withAuth(VadTestPage);
