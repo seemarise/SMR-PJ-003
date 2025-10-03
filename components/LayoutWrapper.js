@@ -1,8 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import NavbarBottom from "./NavbarBottom";
-import NavbarTop from "./NavbarTop";
+const NavbarBottom = dynamic(() => import("./NavbarBottom"), {
+    loading: () => <div className="h-15 w-full bg-gray-100 animate-pulse"></div>,
+    ssr: false,
+});
+const NavbarTop = dynamic(() => import("./NavbarTop"), {
+    loading: () => <div className="h-15 w-full bg-gray-100 animate-pulse"></div>,
+    ssr: false,
+});
+
 import { useState } from "react";
 
 export default function LayoutWrapper({ children }) {
@@ -18,7 +26,7 @@ export default function LayoutWrapper({ children }) {
     return (
         <div className="h-full w-full flex flex-col relative">
             {!shouldHideNavbar && (
-                <div className="h-15">
+                <div className="h-15 sticky top-0 z-10">
                     <NavbarTop sharedTitle={sharedTitle} />
                 </div>
             )}

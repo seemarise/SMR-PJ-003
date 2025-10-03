@@ -3,11 +3,11 @@ import Image from "next/image";
 
 export default function NavbarTop({ sharedTitle }) {
   return (
-    <header className="relative flex items-center justify-between px-4 py-2 shadow-md bg-white">
+    <header className="flex items-center justify-between px-4 py-2 shadow-md bg-white z-10">
       {/* Profile */}
       <div className="w-10 h-10 relative rounded-full overflow-hidden">
         <Image
-          src="/profile.jpg" // put your profile image in /public folder
+          src="/profile.jpg"
           alt="Profile"
           fill
           className="object-cover"

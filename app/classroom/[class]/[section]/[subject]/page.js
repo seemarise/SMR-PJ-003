@@ -32,37 +32,61 @@ export default function SubjectPage({ params }) {
             </h1>
 
             {/* Class Info Box */}
-            <div className="flex items-center justify-between bg-blue-50 rounded-xl px-4 py-3 mb-6 shadow-sm">
+            <div className="flex items-center justify-between bg-blue-50 rounded-xl px-4 py-3 mb-6 shadow-sm md:px-6 md:py-4 md:mb-8 md:bg-white md:border md:border-blue-100">
                 <div>
-                    <p className="text-sm font-semibold text-gray-800">Class {className}</p>
-                    <p className="text-xs text-gray-500">Section {section.toUpperCase()}</p>
+                    <p className="text-sm font-semibold text-gray-800 md:text-lg">Class {className}</p>
+                    <p className="text-xs text-gray-500 md:text-sm">Section {section.toUpperCase()}</p>
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100">
-                    <BookOpen className="text-blue-600 w-5 h-5" />
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 md:w-14 md:h-14">
+                    <BookOpen className="text-blue-600 w-5 h-5 md:w-7 md:h-7" />
                 </div>
             </div>
 
             {/* Subject Management Title */}
-            <p className="text-blue-700 font-semibold mb-3">Subject Management</p>
+            <p className="text-blue-700 font-semibold mb-3 md:text-xl md:mb-5">Subject Management</p>
 
             {/* Management Options */}
-            <div className="flex flex-col space-y-5">
+            <div className="space-y-4 md:grid md:grid-cols-2 md:gap-5 md:space-y-0">
                 {items.map(({ name, icon: Icon, href }) => (
                     <Link
                         key={name}
                         href={`/classroom/${className}/${section}/${subject}/${href}`}
                     >
-                        <div className="flex items-center justify-between bg-white border rounded-xl p-4 shadow-sm hover:shadow-md transition cursor-pointer">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50">
-                                    <Icon className="text-blue-600 w-5 h-5" />
+                        <div className="flex items-center justify-between bg-white border rounded-xl p-4 shadow-sm hover:shadow-md transition cursor-pointer md:p-5 md:hover:border-blue-200">
+                            <div className="flex items-center gap-3 md:gap-4">
+                                <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 md:w-12 md:h-12">
+                                    <Icon className="text-blue-600 w-5 h-5 md:w-6 md:h-6" />
                                 </div>
-                                <span className="font-medium text-gray-700">{name}</span>
+                                <span className="font-medium text-gray-700 md:text-lg">{name}</span>
                             </div>
-                            <span className="text-gray-400 text-xl">›</span>
+                            <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100">
+                                <BookOpen className="text-blue-600 w-5 h-5" />
+                            </div>
                         </div>
-                    </Link>
-                ))}
+
+                        {/* Subject Management Title */}
+                        <p className="text-blue-700 font-semibold mb-3">Subject Management</p>
+
+                        {/* Management Options */}
+                        <div className="flex flex-col space-y-5">
+                            {items.map(({ name, icon: Icon, href }) => (
+                                <Link
+                                    key={name}
+                                    href={`/classroom/${className}/${section}/${subject}/${href}`}
+                                >
+                                    <div className="flex items-center justify-between bg-white border rounded-xl p-4 shadow-sm hover:shadow-md transition cursor-pointer">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50">
+                                                <Icon className="text-blue-600 w-5 h-5" />
+                                            </div>
+                                            <span className="font-medium text-gray-700">{name}</span>
+                                        </div>
+                                        <span className="text-gray-400 text-xl">›</span>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </Link>))}
             </div>
         </main>
     );

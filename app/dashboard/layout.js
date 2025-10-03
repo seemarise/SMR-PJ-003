@@ -1,7 +1,9 @@
+"use client";
 import NavbarTop from "@/components/NavbarTop";
 import NavbarBottom from "@/components/NavbarBottom";
+import withAuth from "../auth";
 
-export default function DashboardLayout({ children }) {
+function DashboardLayout({ children }) {
   return (
     <div className="flex min-h-screen flex-col pb-20">
       {/* Top Navbar */}
@@ -15,3 +17,5 @@ export default function DashboardLayout({ children }) {
     </div>
   );
 }
+
+export default withAuth(DashboardLayout);-0

@@ -1,7 +1,7 @@
 "use client"; // Required for client-side navigation
-import NavbarBottom from "@/components/NavbarBottom";
+import withAuth from "./auth";
 
-export default function HomePage() {
+function HomePage() {
   return (
     <div className="flex min-h-screen flex-col pb-20">
       {/* Page Content */}
@@ -18,8 +18,8 @@ export default function HomePage() {
           Go to Dashboard
         </a>
       </main>
-      {/* Bottom Navbar */}
-      {/* <NavbarBottom /> */}
     </div>
   );
 }
+
+export default withAuth(HomePage);
