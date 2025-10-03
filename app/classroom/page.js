@@ -1,5 +1,12 @@
+"use client";
+
+import Link from "next/link";
+
 export default function Classroom() {
     const sections = ["A", "B", "C", "D"];
+
+    // Example subjects coming from DB (replace with API call)
+    const subjects = ["English", "Maths", "Science", "History"];
 
     return (
         <main className="px-4 py-4 bg-white min-h-screen">
@@ -20,8 +27,17 @@ export default function Classroom() {
                 {sections.map((section) => (
                     <div key={section}>
                         <p className="text-gray-700 font-semibold mb-1">Sec - {section}</p>
-                        <div className="bg-white rounded-xl p-4 shadow text-blue-600 font-medium text-center">
-                            English
+                        <div className="grid grid-cols-2 gap-4">
+                            {subjects.map((subject) => (
+                                <Link
+                                    key={subject}
+                                    href={`/classroom/class10/${section.toLowerCase()}/${subject.toLowerCase()}`}
+                                >
+                                    <div className="bg-white rounded-xl p-4 shadow text-blue-600 font-medium text-center cursor-pointer hover:bg-blue-50 hover:shadow-md transition">
+                                        {subject}
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 ))}
