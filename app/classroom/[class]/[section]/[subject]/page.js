@@ -1,9 +1,11 @@
 "use client";
 
-import { Megaphone, ClipboardList, BookOpen, BarChart3 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Megaphone, ClipboardList, BookOpen, BarChart3, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function SubjectPage({ params }) {
+    const router = useRouter();
     const { class: className, section, subject } = params;
 
     const items = [
@@ -14,7 +16,16 @@ export default function SubjectPage({ params }) {
     ];
 
     return (
-        <main className="px-4 py-6 bg-white min-h-screen">
+        <main className="px-4 py-6 bg-white min-h-screen relative">
+            {/* Back Button */}
+            <button
+                onClick={() => router.back()}
+                className="absolute top-4 left-4 p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
+                aria-label="Go back"
+            >
+                <ArrowLeft className="w-5 h-5 text-blue-600" />
+            </button>
+
             {/* Subject Title */}
             <h1 className="text-2xl font-semibold text-center text-blue-800 mb-4">
                 {subject.charAt(0).toUpperCase() + subject.slice(1)}
@@ -35,7 +46,7 @@ export default function SubjectPage({ params }) {
             <p className="text-blue-700 font-semibold mb-3">Subject Management</p>
 
             {/* Management Options */}
-            <div className="space-y-4">
+            <div className="space-y-5">
                 {items.map(({ name, icon: Icon, href }) => (
                     <Link
                         key={name}

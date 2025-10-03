@@ -9,9 +9,11 @@ export default function LayoutWrapper({ children }) {
     const pathname = usePathname();
     const [sharedTitle, setSharedTitle] = useState("");
 
-    // Hide navbar on login and classroom subject pages
-    const hideNavbarPaths = ["/login", "/classroom"];
-    const shouldHideNavbar = hideNavbarPaths.some(path => pathname.startsWith(path));
+    // Hide navbar on these exact paths
+    const hideNavbarExactPaths = ["/login"];
+    const shouldHideNavbar =
+        hideNavbarExactPaths.includes(pathname) ||
+        (pathname.startsWith("/classroom") && pathname !== "/classroom");
 
     return (
         <div className="h-full w-full flex flex-col relative">
