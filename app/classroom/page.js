@@ -29,8 +29,8 @@ function Classroom() {
         <div className="space-y-6 md:space-y-8">
           {sections.map((section) => (
             <div key={section}>
-              <p className="text-gray-700 font-semibold mb-1 md:text-lg md:mb-3">Sec - {section}</p>
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+              <p className="text-gray-700  text-center font-semibold mb-1 md:text-lg md:mb-3">Sec - {section}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
                 {subjects.map((subject) => (
                   <Link
                     key={subject}

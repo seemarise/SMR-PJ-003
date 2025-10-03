@@ -1,6 +1,6 @@
 const TOKEN_KEY = "vadai_auth_token";
-const REFRESH_TOKEN_KEY = "vadai_auth_refresh_token"; 
-const USER_KEY = "vadai_id"; 
+const REFRESH_TOKEN_KEY = "vadai_auth_refresh_token";
+const USER_KEY = "vadai_id";
 export const sessionService = {
   setSession(data) {
     try {
@@ -17,7 +17,7 @@ export const sessionService = {
         }
       }
     } catch (error) {
-      console.error("Error setting session in localStorage:", error);
+      // console.error("Error setting session in localStorage:", error);
     }
   },
 
@@ -28,7 +28,7 @@ export const sessionService = {
       }
       return null;
     } catch (error) {
-      console.error("Error reading token from localStorage:", error);
+      // console.error("Error reading token from localStorage:", error);
       return null;
     }
   },
@@ -42,7 +42,7 @@ export const sessionService = {
         localStorage.removeItem(USER_KEY);
       }
     } catch (error) {
-      console.error("Error removing session from localStorage:", error);
+      // console.error("Error removing session from localStorage:", error);
     }
   },
 };

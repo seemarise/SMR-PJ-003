@@ -1,5 +1,4 @@
 "use client"; // Required for client-side navigation
-import NavbarBottom from "@/components/NavbarBottom";
 import withAuth from "./auth";
 
 function HomePage() {
@@ -19,8 +18,6 @@ function HomePage() {
           Go to Dashboard
         </a>
       </main>
-      {/* Bottom Navbar */}
-      {/* <NavbarBottom /> */}
     </div>
   );
 }

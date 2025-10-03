@@ -52,7 +52,7 @@ class ApiClient {
         // Optional: if 401, clear token and force logout
         if (response.status === 401) {
           sessionService.removeToken();
-          console.warn("Unauthorized. Token removed.");
+          // console.warn("Unauthorized. Token removed.");
         }
 
         throw new Error(errorMessage);
@@ -60,7 +60,7 @@ class ApiClient {
 
       return await response.json();
     } catch (error) {
-      console.error("API request failed:", error);
+      // console.error("API request failed:", error);
       throw error; // rethrow so caller can handle
     }
   }

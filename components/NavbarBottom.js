@@ -1,13 +1,41 @@
 "use client";
 
 import Link from "next/link";
-import { PiExam } from "react-icons/pi";
-import { SiGoogleclassroom } from "react-icons/si";
-import { HiMiniComputerDesktop } from "react-icons/hi2";
-import { MdTimeline } from "react-icons/md";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { FaBrain } from "react-icons/fa";
 import { useEffect } from "react";
+
+// Example placeholder component
+const IconPlaceholder = () => (
+  <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
+);
+
+// Dynamically import icons with loading placeholder
+const PiExam = dynamic(
+  () => import("react-icons/pi").then((mod) => mod.PiExam),
+  { ssr: false, loading: () => <IconPlaceholder /> }
+);
+
+const SiGoogleclassroom = dynamic(
+  () => import("react-icons/si").then((mod) => mod.SiGoogleclassroom),
+  { ssr: false, loading: () => <IconPlaceholder /> }
+);
+
+const HiMiniComputerDesktop = dynamic(
+  () => import("react-icons/hi2").then((mod) => mod.HiMiniComputerDesktop),
+  { ssr: false, loading: () => <IconPlaceholder /> }
+);
+
+const MdTimeline = dynamic(
+  () => import("react-icons/md").then((mod) => mod.MdTimeline),
+  { ssr: false, loading: () => <IconPlaceholder /> }
+);
+
+const FaBrain = dynamic(
+  () => import("react-icons/fa").then((mod) => mod.FaBrain),
+  { ssr: false, loading: () => <IconPlaceholder /> }
+);
+
 
 
 // Helper function to get active label
@@ -72,7 +100,7 @@ export default function NavbarBottom({ setSharedTitle }) {
             </div>
           </Link>
           {/* Always show active label below FAB */}
-          <span className="text-xs mt-2 text-black dark:text-white">{activeLabel}</span>
+          <span className="text-xs mt-2 text-black dark:text-blue-600">{activeLabel}</span>
         </div>
 
         {/* Right Items */}
@@ -96,8 +124,8 @@ function NavItem({ item, pathname }) {
       onTouchStart={(e) => e.currentTarget.classList.add("touch-bounce")}
       onAnimationEnd={(e) => e.currentTarget.classList.remove("touch-bounce")}
       className={`
-                flex flex-col items-center justify-center text-gray-700 dark:text-gray-200 transition-all duration-300
-                ${isActive ? "scale-110 text-yellow-400 dark:text-yellow-400" : "hover:scale-105 hover:text-blue-300"}
+                flex flex-col items-center justify-center text-gray-700  transition-all duration-300
+                ${isActive ? "scale-110 text-yellow-400" : "hover:scale-105 hover:text-blue-300"}
             `}
     >
       <Icon className="text-2xl mb-1" />

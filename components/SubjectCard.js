@@ -17,7 +17,7 @@ export default function SubjectCard({ title, date, imageSrc, onClick }) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative">
         <div className="flex justify-between items-start mb-10">
           <h3 className="text-lg font-bold">{title}</h3>
           <span className="text-xs bg-blue-500 bg-opacity-50 px-2 py-1 rounded-full">

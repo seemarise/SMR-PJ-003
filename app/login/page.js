@@ -21,6 +21,7 @@ export default function LoginPage() {
       router.replace("/dashboard"); // or "/" for home page
     }
   }, [router]);
+
   // Countdown for OTP
   useEffect(() => {
     let interval;
@@ -142,19 +143,19 @@ export default function LoginPage() {
 
         <div className="w-full max-w-md mb-5">
           <p className="text-gray-600 text-sm text-left">
-            We'll send a verification code to this email
+            We&apos;ll send a verification code to this email
           </p>
         </div>
 
         <button
           onClick={async () => {
             console.log("clicked", role);
-            let res = await  loginApi[role].getOtp({"email": email},{});
-            if (res.statusCode == 200){
+            let res = await loginApi[role].getOtp({ "email": email }, {});
+            if (res.statusCode == 200) {
               setStep("otp");
               setTimer(60);
             }
-            
+
           }}
           className="w-full max-w-md bg-blue-600 text-white py-3 rounded-xl text-lg font-semibold hover:bg-blue-700 transition"
         >
@@ -214,23 +215,23 @@ export default function LoginPage() {
             ? "bg-green-800 text-white hover:bg-green-700"
             : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
-        onClick = {
-          async ()=>{
-            let res  = await loginApi[role].verifyOtp({
+        onClick={
+          async () => {
+            let res = await loginApi[role].verifyOtp({
               'email': email,
-              'otp' : otp.join('')
-            },{});
-            if(res.statusCode == 200){
+              'otp': otp.join('')
+            }, {});
+            if (res.statusCode == 200) {
               let data = {
-                token : res.data.tokens.access.token,
+                token: res.data.tokens.access.token,
                 refreshToken: res.data.tokens.refresh.token,
-                Id: res.data[role][role == "teacher" ? ( role + "sId") :( role + "Id")]
+                Id: res.data[role][role == "teacher" ? (role + "sId") : (role + "Id")]
               }
               sessionService.setSession(data);
               router.replace("/dashboard");
               console.log(role + " login successful");
             }
-            else if (res.statusCode == 401){
+            else if (res.statusCode == 401) {
               console.log(res.meessage);
             }
           }
