@@ -1,12 +1,12 @@
 "use client";
-
+import React from "react";
 import { useRouter } from "next/navigation";
 import { Megaphone, ClipboardList, BookOpen, BarChart3, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function SubjectPage({ params }) {
     const router = useRouter();
-    const { class: className, section, subject } = params;
+    const { class: className, section, subject } = React.use(params);
 
     const items = [
         { name: "Announcements", icon: Megaphone, href: "announcements" },
@@ -46,7 +46,7 @@ export default function SubjectPage({ params }) {
             <p className="text-blue-700 font-semibold mb-3">Subject Management</p>
 
             {/* Management Options */}
-            <div className="space-y-5">
+            <div className="flex flex-col space-y-5">
                 {items.map(({ name, icon: Icon, href }) => (
                     <Link
                         key={name}
