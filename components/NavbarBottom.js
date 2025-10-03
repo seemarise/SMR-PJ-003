@@ -7,6 +7,7 @@ import { HiMiniComputerDesktop } from "react-icons/hi2";
 import { MdTimeline } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { FaBrain } from "react-icons/fa";
+import { useEffect } from "react";
 
 
 // Helper function to get active label
@@ -15,14 +16,15 @@ function getActiveLabel(path, items) {
   return activeItem ? activeItem.label : "";
 }
 
-export default function NavbarBottom() {
-  const pathname = usePathname();
+export default function NavbarBottom({ setSharedTitle }) {
+    const pathname = usePathname();
 
-  // Define all items
-  const leftItems = [
-    { icon: PiExam, label: "VAD Test", href: "/vad-test" },
-    { icon: SiGoogleclassroom, label: "Classroom", href: "/classroom" },
-  ];
+
+    // Define all items
+    const leftItems = [
+        { icon: PiExam, label: "VAD Test", href: "/vad-test" },
+        { icon: SiGoogleclassroom, label: "Classroom", href: "/classroom" },
+    ];
 
   const centerItem = {
     icon: FaBrain,
@@ -38,10 +40,23 @@ export default function NavbarBottom() {
   const allItems = [...leftItems, centerItem, ...rightItems];
   const activeLabel = getActiveLabel(pathname, allItems);
 
-  return (
-    <>
-      {/* Spacer to prevent content from being hidden */}
-      <div className="h-24" />
+    useEffect(() => {
+        if (setSharedTitle) {
+            setSharedTitle(activeLabel);
+        }
+    }, [pathname, activeLabel, setSharedTitle]);
+
+
+
+    return (
+        <div className="fixed bottom-4 w-full flex justify-center z-50">
+            <nav className="relative flex justify-between items-center w-[95%] bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg px-4 py-2">
+                {/* Left Items */}
+                <div className="flex flex-1 pr-10 justify-evenly">
+                    {leftItems.map((item) => (
+                        <NavItem key={item.label} item={item} pathname={pathname} />
+                    ))}
+                </div>
 
       <div className="fixed bottom-4 w-full flex justify-center z-50 pointer-events-none">
         <nav className="relative flex justify-between items-center w-[95%] bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg px-4 py-2 pointer-events-auto">
