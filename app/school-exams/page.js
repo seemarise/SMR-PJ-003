@@ -1,8 +1,111 @@
 "use client";
-import withAuth from "../auth";
 import { useState } from "react";
-import { ArrowLeft, Calendar, ChevronRight } from "lucide-react";
-import ExamDetailsView from "@/components/ExamDetailsView"
+import { ArrowLeft, Calendar, ChevronRight, ChevronDown, FileText } from "lucide-react";
+
+// Mock ExamDetailsView component
+function ExamDetailsView({ exam, onBack }) {
+  const [expandedTopics, setExpandedTopics] = useState({});
+
+  const toggleTopic = (topicId) => {
+    setExpandedTopics(prev => ({
+      ...prev,
+      [topicId]: !prev[topicId]
+    }));
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-gray-50 overflow-y-auto transition-all duration-300">
+      {/* Header */}
+      <div className="bg-white shadow-sm sticky top-0 z-10">
+        <div className="px-4 py-4 flex items-center gap-4 md:max-w-5xl md:mx-auto">
+          <button
+            onClick={onBack}
+            className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-all duration-200 active:scale-95 cursor-pointer"
+          >
+            <ArrowLeft className="w-6 h-6 text-gray-700" />
+          </button>
+          <h1 className="text-lg font-semibold text-blue-600 md:text-xl">Exam Details</h1>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="px-4 py-6 space-y-6 pb-20 md:max-w-5xl md:mx-auto md:pb-8">
+        {/* Exam Title */}
+        <div className="animate-in fade-in slide-in-from-bottom duration-500">
+          <h2 className="text-xl font-bold text-gray-900 md:text-3xl">
+            {exam.title}
+          </h2>
+          <p className="text-base text-blue-600 mt-1 md:text-lg">{exam.subject}</p>
+        </div>
+
+        {/* Exam Info */}
+        <div className="space-y-3 animate-in fade-in slide-in-from-bottom duration-500 delay-100 md:grid md:grid-cols-3 md:gap-4 md:space-y-0 md:bg-white md:p-6 md:rounded-xl md:shadow-sm">
+          <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
+            <Calendar className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <span className="text-sm md:text-base">{exam.date}</span>
+          </div>
+          <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
+            <FileText className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <span className="text-sm md:text-base">Total Marks: {exam.marks}</span>
+          </div>
+          <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
+            <ChevronRight className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <span className="text-sm md:text-base">{exam.mainTopics} Main Topics</span>
+          </div>
+        </div>
+
+        {/* Topics */}
+        <div className="space-y-4 animate-in fade-in slide-in-from-left duration-400 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 md:items-start">
+          {exam.topics?.map((topic, idx) => (
+            <div
+              key={topic.id}
+              className="bg-white rounded-xl shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom duration-400 md:self-start"
+              style={{ animationDelay: `${idx * 100}ms` }}
+            >
+              <button
+                onClick={() => toggleTopic(topic.id)}
+                className="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200 cursor-pointer select-none"
+              >
+                <div className="text-left">
+                  <h3 className="text-base font-semibold text-gray-900 md:text-lg">
+                    {topic.name}
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-1 md:text-sm">
+                    {topic.subtopics.length} subtopics
+                  </p>
+                </div>
+                <div className={`transition-transform duration-300 ${expandedTopics[topic.id] ? 'rotate-180' : 'rotate-0'}`}>
+                  <ChevronDown className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                </div>
+              </button>
+
+              <div
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  expandedTopics[topic.id]
+                    ? 'max-h-96 opacity-100'
+                    : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="px-5 pb-4 space-y-3">
+                  {topic.subtopics?.map((subtopic, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-3 pl-2 animate-in fade-in slide-in-from-left duration-300"
+                      style={{ animationDelay: `${index * 50}ms` }}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0 transition-transform hover:scale-150 duration-200" />
+                      <span className="text-sm text-gray-700 md:text-base">{subtopic}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function SchoolExamsPage() {
   const [selectedClass, setSelectedClass] = useState("10");
@@ -97,29 +200,29 @@ function SchoolExamsPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="px-4 py-4 flex items-center gap-4">
+        <div className="px-4 py-4 flex items-center gap-4 md:max-w-5xl md:mx-auto">
           <button 
             onClick={handleBack}
             className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors active:scale-95 cursor-pointer"
           >
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
-          <h1 className="text-xl font-semibold text-blue-600">School Exams</h1>
+          <h1 className="text-lg font-semibold text-blue-600 md:text-xl">School Exams</h1>
         </div>
       </div>
 
       {/* Content */}
-      <div className="px-4 py-6 space-y-6">
+      <div className="px-4 py-6 space-y-6 md:max-w-5xl md:mx-auto md:pb-8">
         {/* Filters Card */}
-        <div className="bg-gray-100 rounded-2xl p-6 space-y-5">
+        <div className="bg-gray-100 rounded-2xl p-6 space-y-5 md:bg-white md:shadow-sm">
           {/* Class and Section Row */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             <div>
-              <label className="text-sm text-gray-600 mb-2 block">Class</label>
+              <label className="text-sm text-gray-600 mb-2 block md:text-base">Class</label>
               <select
                 value={selectedClass}
                 onChange={(e) => setSelectedClass(e.target.value)}
-                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-base"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',
@@ -133,11 +236,11 @@ function SchoolExamsPage() {
             </div>
 
             <div>
-              <label className="text-sm text-gray-600 mb-2 block">Section</label>
+              <label className="text-sm text-gray-600 mb-2 block md:text-base">Section</label>
               <select
                 value={selectedSection}
                 onChange={(e) => setSelectedSection(e.target.value)}
-                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-base"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',
@@ -149,49 +252,49 @@ function SchoolExamsPage() {
                 <option value="C">C</option>
               </select>
             </div>
-          </div>
 
-          {/* Subject */}
-          <div>
-            <label className="text-sm text-gray-600 mb-2 block">Subject</label>
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right 1rem center'
-              }}
-            >
-              <option value="English">English</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Science">Science</option>
-              <option value="Social Science">Social Science</option>
-            </select>
+            {/* Subject */}
+            <div className="col-span-2 md:col-span-1">
+              <label className="text-sm text-gray-600 mb-2 block md:text-base">Subject</label>
+              <select
+                value={selectedSubject}
+                onChange={(e) => setSelectedSubject(e.target.value)}
+                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-base"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'right 1rem center'
+                }}
+              >
+                <option value="English">English</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Science">Science</option>
+                <option value="Social Science">Social Science</option>
+              </select>
+            </div>
           </div>
 
           {/* Apply Filters Button */}
-          <button className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors active:scale-95 cursor-pointer">
+          <button className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors active:scale-95 cursor-pointer md:text-base">
             Apply Filters
           </button>
         </div>
 
         {/* Exam Cards */}
-        <div className="space-y-4">
+        <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
           {currentExams.length > 0 ? (
             currentExams.map((exam) => (
               <div
                 key={exam.id}
-                className="bg-white rounded-2xl p-5 shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom duration-300"
+                className="bg-white rounded-2xl p-5 shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom duration-300 hover:shadow-md transition-shadow"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900">{exam.title}</h3>
-                    <p className="text-sm text-gray-500 mt-1">{exam.description}</p>
+                    <h3 className="text-xl font-bold text-gray-900 md:text-2xl">{exam.title}</h3>
+                    <p className="text-sm text-gray-500 mt-1 md:text-base">{exam.description}</p>
                   </div>
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-sm font-medium">
+                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-sm font-medium md:text-base md:px-4 md:py-2">
                     {exam.subject}
                   </span>
                 </div>
@@ -199,21 +302,21 @@ function SchoolExamsPage() {
                 {/* Date and View Details */}
                 <div className="flex items-center justify-between pt-2 border-t border-gray-100">
                   <div className="flex items-center gap-2 text-gray-600">
-                    <Calendar className="w-5 h-5" />
-                    <span className="text-sm font-medium">{exam.date}</span>
+                    <Calendar className="w-5 h-5 md:w-6 md:h-6" />
+                    <span className="text-sm font-medium md:text-base">{exam.date}</span>
                   </div>
                   <button
                     onClick={() => handleViewDetails(exam)}
-                    className="flex items-center gap-1 text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors active:scale-95 cursor-pointer"
+                    className="flex items-center gap-1 text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors active:scale-95 cursor-pointer md:text-base"
                   >
                     View details
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
                   </button>
                 </div>
               </div>
             ))
           ) : (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-gray-500 col-span-2 md:text-lg">
               No exams available for this subject
             </div>
           )}
@@ -223,4 +326,4 @@ function SchoolExamsPage() {
   );
 }
 
-export default withAuth(SchoolExamsPage);
+export default SchoolExamsPage;
