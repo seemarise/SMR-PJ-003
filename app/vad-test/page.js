@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import NavbarTop from "@/components/NavbarTop";
-import NavbarBottom from "@/components/NavbarBottom";
 import SubjectCard from "@/components/SubjectCard";
 import VadInfoModal from "@/components/VadInfoModal";
 import VadTestDetails from "@/components/VadTestDetails";
@@ -134,9 +132,6 @@ function VadTestPage() {
           </div>
 
         </main>
-
-        {/* Bottom Navbar */}
-        {/* <NavbarBottom /> */}
 
         {/* VAD Info Modal */}
         <VadInfoModal

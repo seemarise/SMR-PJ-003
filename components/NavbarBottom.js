@@ -58,39 +58,28 @@ export default function NavbarBottom({ setSharedTitle }) {
           ))}
         </div>
 
-        <div className="fixed bottom-4 w-full flex justify-center z-50 pointer-events-none">
-          <nav className="relative flex justify-between items-center w-[95%] bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg px-4 py-2 pointer-events-auto">
-            {/* Left Items */}
-            <div className="flex flex-1 pr-10 justify-evenly">
-              {leftItems.map((item) => (
-                <NavItem key={item.label} item={item} pathname={pathname} />
-              ))}
+        {/* Center FAB */}
+        <div className="absolute -top-9 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center">
+          <Link href={centerItem.href}>
+            <div
+              className={`
+                bg-blue-600 w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-4 border-white/30
+                text-white hover:text-blue-300 hover:scale-105 transition-all duration-300
+                ${pathname === centerItem.href ? "text-yellow-400 scale-110" : ""}
+              `}
+            >
+              <centerItem.icon className="text-2xl" />
             </div>
+          </Link>
+          {/* Always show active label below FAB */}
+          <span className="text-xs mt-2 text-black dark:text-white">{activeLabel}</span>
+        </div>
 
-            {/* Center FAB */}
-            <div className="absolute -top-9 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center">
-              <Link href={centerItem.href}>
-                <div
-                  className={`
-                                    bg-blue-600 w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-4 border-white/30
-                                    text-white hover:text-blue-300 hover:scale-105 transition-all duration-300
-                                    ${pathname === centerItem.href ? "text-yellow-400 scale-110" : ""}
-                                `}
-                >
-                  <centerItem.icon className="text-2xl" />
-                </div>
-              </Link>
-              {/* Always show active label below FAB */}
-              <span className="text-xs mt-2 text-black dark:text-white whitespace-nowrap">{activeLabel}</span>
-            </div>
-
-            {/* Right Items */}
-            <div className="flex flex-1 justify-evenly">
-              {rightItems.map((item) => (
-                <NavItem key={item.label} item={item} pathname={pathname} />
-              ))}
-            </div>
-          </nav>
+        {/* Right Items */}
+        <div className="flex flex-1 justify-evenly">
+          {rightItems.map((item) => (
+            <NavItem key={item.label} item={item} pathname={pathname} />
+          ))}
         </div>
       </nav>
     </div>
@@ -112,6 +101,8 @@ function NavItem({ item, pathname }) {
             `}
     >
       <Icon className="text-2xl mb-1" />
+      {/* {isActive && <span className="text-xs">{item.label}</span>} */}
     </Link>
   );
+
 }
