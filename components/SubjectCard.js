@@ -12,7 +12,7 @@ export default function SubjectCard({ title, date, imageSrc, onClick }) {
       {/* Subject icon - large overlapping squares */}
       <div className="absolute bottom-4 right-4 flex items-center justify-center">
         <div className="relative w-20 h-20">
-          <Image src={imageSrc} width={100} height={100} draggable={false} />
+          <Image src={imageSrc} width={100} height={100} draggable={false} alt="imageSrc" />
         </div>
       </div>
 
