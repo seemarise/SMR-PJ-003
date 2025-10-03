@@ -1,8 +1,9 @@
 "use client";
 
+import withAuth from "../auth";
 import Link from "next/link";
 
-export default function Classroom() {
+function Classroom() {
     const sections = ["A", "B", "C", "D"];
 
     // Example subjects coming from DB (replace with API call)
@@ -45,3 +46,5 @@ export default function Classroom() {
         </main>
     );
 }
+
+export default withAuth(Classroom);

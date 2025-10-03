@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { ArrowLeft, Calendar, Clock, Info, ChevronDown, ChevronUp, Download, FileText } from 'lucide-react';
+import moment from 'moment';
+import Link from 'next/link';
 
-export default function VadTestDetails({ testData, onBack, isExiting = false }) {
+export default function VadTestDetails({ testData, onBack }) {
   const [activeTab, setActiveTab] = useState('syllabus');
   const [expandedTopics, setExpandedTopics] = useState({});
 
@@ -12,16 +14,27 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
     }));
   };
 
+
+  function formatMinutes(totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    if (hours > 0 && minutes > 0) {
+      return `${hours}h ${minutes}m`;
+    } else if (hours > 0) {
+      return `${hours}h`;
+    } else {
+      return `${minutes}m`;
+    }
+  }
+
+
   return (
-    <div className={`fixed inset-0 z-50 bg-gray-50 overflow-y-auto transition-all duration-300 ${
-      isExiting 
-        ? 'animate-out fade-out slide-out-to-right' 
-        : 'animate-in fade-in slide-in-from-right'
-    }`}>
+    <div className={`fixed inset-0 z-50 bg-gray-50 overflow-y-auto transition-all duration-300 `}>
       {/* Header */}
       <div className="bg-white shadow-sm sticky top-0 z-10">
         <div className="px-4 py-4 flex items-center gap-4">
-          <button 
+          <button
             onClick={onBack}
             className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-all duration-200 active:scale-95 cursor-pointer"
           >
@@ -36,7 +49,7 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
         {/* Test Title */}
         <div className="animate-in fade-in slide-in-from-bottom duration-500">
           <h2 className="text-xl font-bold text-gray-900">
-            VAD TEST {testData.testNumber}: {testData.subject}
+            {testData.name}
           </h2>
           <p className="text-base text-blue-600 mt-1">{testData.subject}</p>
         </div>
@@ -45,15 +58,15 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
         <div className="space-y-3 animate-in fade-in slide-in-from-bottom duration-500 delay-100">
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
             <Calendar className="w-5 h-5 text-blue-600" />
-            <span className="text-sm">{testData.date}</span>
+            <span className="text-sm">{moment(testData.date).format("DD MMM YYYY")}</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
             <Clock className="w-5 h-5 text-blue-600" />
-            <span className="text-sm">{testData.time}</span>
+            <span className="text-sm">{moment.utc(testData.startTime).format("hh:mm A") + " - " + moment.utc(testData.endTime).format("hh:mm A")}</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
             <Info className="w-5 h-5 text-blue-600" />
-            <span className="text-sm">Duration: {testData.duration}</span>
+            <span className="text-sm">Duration: {formatMinutes(testData.durationInMinutes)}</span>
           </div>
         </div>
 
@@ -61,9 +74,8 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
         <div className="flex border-b border-gray-200 animate-in fade-in slide-in-from-bottom duration-500 delay-200">
           <button
             onClick={() => setActiveTab('syllabus')}
-            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer ${
-              activeTab === 'syllabus' ? 'text-blue-600' : 'text-gray-500'
-            }`}
+            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer ${activeTab === 'syllabus' ? 'text-blue-600' : 'text-gray-500'
+              }`}
           >
             Syllabus & Topics
             {activeTab === 'syllabus' && (
@@ -72,9 +84,8 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
           </button>
           <button
             onClick={() => setActiveTab('documents')}
-            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer ${
-              activeTab === 'documents' ? 'text-blue-600' : 'text-gray-500'
-            }`}
+            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer ${activeTab === 'documents' ? 'text-blue-600' : 'text-gray-500'
+              }`}
           >
             Documents
             {activeTab === 'documents' && (
@@ -86,14 +97,14 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
         {/* Tab Content */}
         {activeTab === 'syllabus' ? (
           <div className="space-y-4 animate-in fade-in slide-in-from-left duration-400 ">
-            {testData.topics.map((topic, idx) => (
+            {testData.largerTopics?.map((topic, idx) => (
               <div
-                key={topic.id}
+                key={topic.name}
                 className="bg-white rounded-xl shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom duration-400"
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
                 <button
-                  onClick={() => toggleTopic(topic.id)}
+                  onClick={() => toggleTopic(topic.name)}
                   className="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-all duration-200 active:scale-[0.99] cursor-pointer"
                 >
                   <div className="text-left">
@@ -104,27 +115,26 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
                       {topic.subtopics.length} subtopics
                     </p>
                   </div>
-                  <div className={`transition-transform duration-300 ${expandedTopics[topic.id] ? 'rotate-180' : 'rotate-0'}`}>
+                  <div className={`transition-transform duration-300 ${expandedTopics[topic.name] ? 'rotate-180' : 'rotate-0'}`}>
                     <ChevronDown className="w-5 h-5 text-gray-600 flex-shrink-0" />
                   </div>
                 </button>
 
-                <div 
-                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    expandedTopics[topic.id] 
-                      ? 'max-h-96 opacity-100' 
-                      : 'max-h-0 opacity-0'
-                  }`}
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedTopics[topic.name]
+                    ? 'max-h-96 opacity-100'
+                    : 'max-h-0 opacity-0'
+                    }`}
                 >
                   <div className="px-5 pb-4 space-y-3">
-                    {topic.subtopics.map((subtopic, index) => (
-                      <div 
-                        key={index} 
+                    {topic.subtopics?.map((subtopic, index) => (
+                      <div
+                        key={index}
                         className="flex items-start gap-3 pl-2 animate-in fade-in slide-in-from-left duration-300"
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
                         <div className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0 transition-transform hover:scale-150 duration-200" />
-                        <span className="text-sm text-gray-700">{subtopic}</span>
+                        <span className="text-sm text-gray-700">{subtopic.name}</span>
                       </div>
                     ))}
                   </div>
@@ -136,7 +146,7 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
           <div className="space-y-4 animate-in fade-in slide-in-from-right duration-400">
             {testData.documents.map((doc, idx) => (
               <div
-                key={doc.id}
+                key={doc._id}
                 className="bg-white rounded-xl shadow-sm p-4 flex items-center justify-between hover:shadow-md transition-all duration-300 hover:scale-[1.02] animate-in fade-in slide-in-from-bottom duration-400"
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
@@ -151,9 +161,9 @@ export default function VadTestDetails({ testData, onBack, isExiting = false }) 
                     <p className="text-xs text-gray-500 mt-0.5">{doc.type}</p>
                   </div>
                 </div>
-                <button className="p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all duration-200 active:scale-95 hover:rotate-12">
+                <Link href={doc.link} target='_blank' download={true} className="p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all duration-200 active:scale-95 hover:rotate-12">
                   <Download className="w-5 h-5 text-blue-600" />
-                </button>
+                </Link>
               </div>
             ))}
           </div>
