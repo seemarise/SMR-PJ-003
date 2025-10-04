@@ -1,103 +1,233 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { ArrowLeft, Plus, Megaphone, GraduationCap } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import {
+    ArrowLeft,
+    MessageSquare,
+    UserRound,
+    Plus,
+    MoreVertical,
+    Pencil,
+    Trash2,
+} from "lucide-react";
 
 export default function AnnouncementsPage() {
-    const [announcements, setAnnouncements] = useState([]);
     const router = useRouter();
+    const params = useParams(); // ✅ Get current route params
+
+    // Extract route params
+    const { classId, section, subject } = params;
+
+    const [announcements, setAnnouncements] = useState([
+        {
+            id: 1,
+            title: "English lab",
+            description: "English lab\nday : Monday\nsession 2",
+            author: "Prakasavalli",
+            time: "7 days ago",
+        },
+        {
+            id: 2,
+            title: "holiday details",
+            description: "September 27th to Oct 6th",
+            author: "Prakasavalli",
+            time: "7 days ago",
+        },
+    ]);
+
+    const [selectedId, setSelectedId] = useState(null);
+    const [showOptions, setShowOptions] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const openOptions = (id, e) => {
+        const rect = e.target.getBoundingClientRect();
+        setPopupPosition({ top: rect.bottom + 4, left: rect.left - 150 });
+        setSelectedId(id);
+        setShowOptions(true);
+    };
+
+    const closeOptions = () => {
+        setShowOptions(false);
+        setSelectedId(null);
+    };
+
+    const handleEdit = () => {
+        if (selectedId) router.push(`/announcements/edit/${selectedId}`);
+        closeOptions();
+    };
+
+    const handleDelete = () => {
+        if (selectedId)
+            setAnnouncements((prev) => prev.filter((a) => a.id !== selectedId));
+        closeOptions();
+    };
 
     return (
-        <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
-            <main className="px-4 py-4 flex-1 relative md:px-8 md:py-10">
-                {/* Page Container (centers content on desktop) */}
+        <div className="flex flex-col min-h-screen bg-gray-50 relative">
+            <main className="px-4 py-4 flex-1 md:px-8 md:py-10">
                 <div className="md:max-w-5xl md:mx-auto md:space-y-10">
-
-                    {/* Header with Back + Title + Add */}
-                    <div className="flex justify-between items-center mb-6 md:mb-10">
-                        {/* Back Button */}
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
+                            aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
                         </button>
 
-                        {/* Page Title */}
-                        <h1 className="text-xl font-semibold text-blue-600 md:text-3xl md:font-bold">
+                        <h1 className="text-xl font-bold text-blue-700 md:text-3xl">
                             Announcements
                         </h1>
 
-                        {/* Add Button */}
-                        <Link
-                            href="announcements/create"
-                            className="w-9 h-9 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 md:w-11 md:h-11 md:shadow-sm"
-                        >
-                            <Plus className="md:w-6 md:h-6" size={20} />
-                        </Link>
+                        <div className="w-6 md:w-8" />
                     </div>
 
-                    {/* Class Section Header */}
-                    <div className="flex items-center gap-2 text-gray-600 mb-6 md:mb-8">
-                        <span className="text-sm flex justify-center items-center gap-0.5 md:text-base">
-                            <GraduationCap className="md:w-5 md:h-5" /> Class
-                        </span>
-                        <span className="text-sm md:text-base">• Section</span>
-                    </div>
-
-                    {/* If no announcements */}
-                    {announcements.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center text-center mt-20 md:mt-28">
-                            <div className="bg-blue-50 rounded-full p-6 mb-4 md:p-8">
-                                <Megaphone className="text-blue-600 w-10 h-10 md:w-14 md:h-14" />
-                            </div>
-                            <h2 className="text-blue-600 font-semibold text-lg mb-1 md:text-2xl">
-                                No Announcements Yet
-                            </h2>
-                            <p className="text-gray-500 text-sm mb-6 md:text-base md:mb-8">
-                                Create your first announcement for this subject
-                            </p>
-                            <Link
-                                href="announcements/create"
-                                className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition md:px-8 md:py-3 md:text-lg"
+                    {/* Announcements List */}
+                    <div className="space-y-4 md:space-y-6">
+                        {announcements.map((a) => (
+                            <div
+                                key={a.id}
+                                className="bg-white rounded-lg shadow p-4 md:p-6 md:rounded-xl relative"
                             >
-                                + Create Announcement
-                            </Link>
+                                {/* Author and menu */}
+                                <div className="flex justify-between items-center mb-3">
+                                    <div className="flex items-center gap-2 text-gray-600 text-sm md:text-base">
+                                        <UserRound className="w-4 h-4 text-blue-600" />
+                                        <span>{a.author}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-xs text-gray-400 md:text-sm">
+                                            {a.time}
+                                        </span>
+                                        <button
+                                            onClick={(e) => openOptions(a.id, e)}
+                                            className="p-1 rounded-full hover:bg-gray-100 transition"
+                                        >
+                                            <MoreVertical size={18} className="text-gray-600" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Title */}
+                                <h2 className="font-semibold text-gray-800 md:text-xl">
+                                    {a.title}
+                                </h2>
+
+                                {/* Description */}
+                                <p className="text-gray-700 whitespace-pre-line text-sm md:text-base mt-2">
+                                    {a.description}
+                                </p>
+
+                                {/* Footer */}
+                                <div className="flex justify-start items-center gap-1 mt-4 text-blue-600 text-sm md:text-base hover:underline cursor-pointer"
+                                    onClick={() =>
+                                        router.push(
+                                            `/classroom/${classId}/${section}/${subject}/announcements/${a.id}/comments`
+                                        )
+                                    }>
+                                    <MessageSquare size={16} />
+                                    Comments
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Floating Add Button */}
+                    <button
+                        onClick={() =>
+                            router.push(
+                                `/classroom/${classId}/${section}/${subject}/announcements/create`
+                            )
+                        }
+                        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+                    >
+                        <Plus />
+                    </button>
+                </div>
+            </main>
+
+            {/* Overlay */}
+            {showOptions && (
+                <div
+                    className="fixed inset-0 bg-white/40 flex items-end justify-center z-50 md:items-start md:justify-start"
+                    onClick={closeOptions}
+                >
+                    {/* Mobile: Bottom Sheet */}
+                    {isMobile ? (
+                        <div
+                            className="bg-white w-full rounded-t-2xl p-6 space-y-4 shadow-lg animate-slide-up md:hidden"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h3 className="text-lg font-semibold text-gray-800 text-center">
+                                Announcement Options
+                            </h3>
+
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    router.push(
+                                        `/classroom/${classId}/${section}/${subject}/announcements/${selectedId}/edit`
+                                    );
+                                    closeOptions();
+                                }} className="flex items-center justify-center gap-2 w-full py-3 text-blue-600 font-medium border-b border-gray-200"
+                            >
+                                <Pencil size={18} />
+                                Edit Announcement
+                            </button>
+
+                            <button
+                                onClick={handleDelete}
+                                className="flex items-center justify-center gap-2 w-full py-3 text-red-600 font-medium"
+                            >
+                                <Trash2 size={18} />
+                                Delete Announcement
+                            </button>
                         </div>
                     ) : (
-                        <div className="space-y-4 md:space-y-6">
-                            {announcements.map((a, i) => (
-                                <div
-                                    key={i}
-                                    className="bg-white border rounded-lg p-4 shadow-sm flex flex-col gap-2 md:p-6 md:border-gray-200 md:hover:shadow-md md:transition-all"
-                                >
-                                    <h3 className="font-semibold text-blue-600 md:text-xl">
-                                        {a.title}
-                                    </h3>
-                                    <p className="text-gray-700 md:text-base">{a.description}</p>
-                                    {a.image && (
-                                        <img
-                                            src={URL.createObjectURL(a.image)}
-                                            alt="announcement"
-                                            className="rounded-lg mt-2 md:mt-4 md:max-h-80 object-cover"
-                                        />
-                                    )}
-                                </div>
-                            ))}
+                        // Desktop: Floating Popup
+                        <div
+                            style={{
+                                position: "absolute",
+                                top: popupPosition.top,
+                                left: popupPosition.left,
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-white shadow-xl rounded-xl p-2 w-52 animate-fade-in"
+                        >
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    router.push(
+                                        `/classroom/${classId}/${section}/${subject}/announcements/${selectedId}/edit`
+                                    );
+                                    closeOptions();
+                                }} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-blue-600 text-sm font-medium"
+                            >
+                                <Pencil size={16} /> Edit Announcement
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-red-600 text-sm font-medium"
+                            >
+                                <Trash2 size={16} /> Delete Announcement
+                            </button>
                         </div>
                     )}
                 </div>
+            )}
 
-                {/* Floating Action Button (mobile only) */}
-                <Link
-                    href="announcements/create"
-                    className="fixed bottom-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition md:hidden"
-                >
-                    <Plus size={24} />
-                </Link>
-            </main>
+
+
         </div>
     );
 }
