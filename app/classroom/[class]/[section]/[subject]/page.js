@@ -16,10 +16,13 @@ export default function SubjectPage({ params }) {
 
   // ✅ Fix: directly extract from params (not React.use)
   const { class: className, section, subject } = params || {};
-
+   // 🔹 get query params
+   const classId = searchParams.get("class");
+   const sectionId = searchParams.get("section");
+  const subjectId = searchParams.get("subject");
   const items = [
     { name: "Announcements", icon: Megaphone, href: "announcements" },
-    { name: "Assignments", icon: ClipboardList, href: "assignments" },
+    { name: "Assignments", icon: ClipboardList, href:  `assignments?class=${classId}&section=${sectionId}&subject=${subjectId}`},
     { name: "Resources", icon: BookOpen, href: "resources" },
     { name: "Performance", icon: BarChart3, href: "performance" },
   ];
