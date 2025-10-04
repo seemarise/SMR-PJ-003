@@ -62,7 +62,7 @@ function VadTestPage() {
     );
   } else {
     return (
-      <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
+      <div className="flex h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
         {/* Top Navbar */}
         {/* <NavbarTop /> */}
 
