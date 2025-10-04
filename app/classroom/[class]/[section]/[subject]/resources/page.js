@@ -1,6 +1,7 @@
 "use client";
 
 import { Folder, Trash2, Plus, BookOpen, GraduationCap, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import { useRouter } from "next/navigation";
 export default function ResourcesPage({ params }) {
   const router = useRouter();
   const { class: className, section, subject } = params;
+  const router = useRouter();
 
   const [chapters, setChapters] = useState([
     { id: 1, name: "Chapter 1", createdAt: "7 days ago" },
@@ -27,27 +29,28 @@ export default function ResourcesPage({ params }) {
     ]);
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
-    <main className="px-4 py-4 bg-white min-h-screen relative">
-      {/* Header with Back + Title + Add */}
-      <div className="flex justify-between items-center mb-6">
+    <main className="px-4 py-6 bg-white min-h-screen md:max-w-4xl md:mx-auto md:px-8 md:py-10">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
         {/* Back Button */}
         <button
-          onClick={() => router.back()}
-          className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
+          onClick={handleBack}
+          className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-all duration-200 active:scale-95 cursor-pointer"
         >
-          <ArrowLeft className="w-5 h-5 text-blue-600" />
+          <ArrowLeft className="w-6 h-6 text-gray-700" />
         </button>
 
-        <h1 className="text-xl font-semibold text-blue-600">Resources</h1>
+        <h1 className="text-2xl font-semibold text-blue-800 md:text-4xl text-center flex-1">
+          Resources
+        </h1>
 
-        {/* Add Button */}
-        <button
-          onClick={handleAdd}
-          className="w-9 h-9 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200"
-        >
-          <Plus size={20} />
-        </button>
+        {/* Empty div for spacing (to balance layout) */}
+        <div className="w-8" />
       </div>
 
       {/* Subject Info */}
@@ -104,7 +107,7 @@ export default function ResourcesPage({ params }) {
       {/* Floating Add Button */}
       <button
         onClick={handleAdd}
-        className="fixed bottom-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition"
+        className="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition active:scale-95"
       >
         <Plus size={24} />
       </button>

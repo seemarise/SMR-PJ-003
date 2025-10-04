@@ -24,7 +24,7 @@ function Classroom() {
   return (
     <main className="px-4 py-4 bg-white min-h-screen md:h-screen md:overflow-y-auto md:bg-gray-50 md:px-8 md:py-10">
       {/* Content Container - Centered on desktop */}
-      <div className="md:max-w-5xl md:mx-auto">
+      <div className="md:max-w-5xl md:mx-auto mb-28">
         {/* Title Section */}
         <div className="bg-blue-600 text-white text-lg font-semibold rounded-lg py-3 px-4 mb-4 text-center md:text-2xl md:py-4">
           My Classroom
