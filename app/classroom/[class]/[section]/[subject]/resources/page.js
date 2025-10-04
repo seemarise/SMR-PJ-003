@@ -4,10 +4,8 @@ import { Folder, Trash2, Plus, BookOpen, GraduationCap, ArrowLeft } from "lucide
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function ResourcesPage({ params }) {
-  const router = useRouter();
   const { class: className, section, subject } = params;
   const router = useRouter();
 
