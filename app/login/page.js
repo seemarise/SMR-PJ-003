@@ -18,7 +18,7 @@ export default function LoginPage() {
   useEffect(() => {
     const token = sessionService.getToken();
     if (token) {
-      router.replace("/dashboard"); // or "/" for home page
+      router.replace("/"); // or "/" for home page
     }
   }, [router]);
 

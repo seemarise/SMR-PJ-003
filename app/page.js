@@ -10,13 +10,6 @@ function HomePage() {
         <p className="text-gray-600 text-lg text-center">
           This is the homepage.
         </p>
-
-        <a
-          href="/dashboard"
-          className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700"
-        >
-          Go to Dashboard
-        </a>
       </main>
     </div>
   );
