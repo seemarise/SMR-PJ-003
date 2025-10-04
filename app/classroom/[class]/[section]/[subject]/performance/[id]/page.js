@@ -55,7 +55,7 @@ export default function StudentPerformanceReport({ params }) {
                     </div>
 
                     {/* Student Info Card */}
-                    <div className="bg-white border rounded-lg shadow-sm p-3 mb-5 md:p-6 md:rounded-xl md:shadow">
+                    <div className="bg-white  rounded-lg shadow-sm p-3 mb-5 md:p-6 md:rounded-xl md:shadow">
                         <div className="flex items-center gap-3">
                             {/* Student Photo */}
                             <div className="w-12 h-12 rounded-full overflow-hidden border md:w-16 md:h-16">
@@ -86,14 +86,14 @@ export default function StudentPerformanceReport({ params }) {
                     </div>
 
                     {/* Tabs & Content Box */}
-                    <div className="border rounded-lg shadow-sm bg-white overflow-hidden mb-6 md:rounded-xl md:border md:shadow-sm">
+                    <div className=" rounded-lg shadow-sm bg-white overflow-hidden mb-6 md:rounded-xl md:border md:shadow-sm">
                         {/* Tabs Header */}
                         <div className="flex border-b">
                             <button
                                 onClick={() => setActiveTab("school")}
                                 className={`flex-1 py-3 font-medium flex flex-col items-center transition md:py-4 ${activeTab === "school"
-                                        ? "text-blue-700 border-b-2 border-blue-700 bg-blue-50"
-                                        : "text-gray-500 hover:bg-gray-50"
+                                    ? "text-blue-700 border-b-2 border-blue-700 bg-blue-50"
+                                    : "text-gray-500 hover:bg-gray-50"
                                     }`}
                             >
                                 <GraduationCap className="w-4 h-4 mb-1 md:w-5 md:h-5" />
@@ -104,8 +104,8 @@ export default function StudentPerformanceReport({ params }) {
                             <button
                                 onClick={() => setActiveTab("vad")}
                                 className={`flex-1 py-3 font-medium flex flex-col items-center transition md:py-4 ${activeTab === "vad"
-                                        ? "text-blue-700 border-b-2 border-blue-700 bg-blue-50"
-                                        : "text-gray-500 hover:bg-gray-50"
+                                    ? "text-blue-700 border-b-2 border-blue-700 bg-blue-50"
+                                    : "text-gray-500 hover:bg-gray-50"
                                     }`}
                             >
                                 <BarChart2 className="w-4 h-4 mb-1 md:w-5 md:h-5" />
