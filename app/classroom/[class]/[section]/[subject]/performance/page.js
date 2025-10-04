@@ -1,23 +1,54 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { RotateCcw, ArrowLeft, Book, GraduationCap, Users } from "lucide-react";
+import { useRouter, useParams } from "next/navigation";
+import {
+    RotateCcw,
+    ArrowLeft,
+    Book,
+    GraduationCap,
+    Users,
+    ChevronRight,
+} from "lucide-react";
+import Image from "next/image";
 
 export default function StudentPerformancePage() {
     const router = useRouter();
+    const { classId, section, subject } = useParams(); // ✅ get all three
 
     // Mock subject data
-    const subject = {
-        name: "English",
-        class: "Class 10 - Section B",
-        students: 0,
+    const subjectInfo = {
+        name: subject ? subject.charAt(0).toUpperCase() + subject.slice(1) : "English",
+        class: `Class ${classId} - Section ${section.toUpperCase()}`,
+        students: 2,
+    };
+
+    // Mock student list
+    const students = [
+        {
+            id: 1,
+            name: "Kishan Rao B",
+            photo: "/students/kishan.jpg",
+        },
+        {
+            id: 2,
+            name: "Sai Prasad N",
+            photo: "/students/sai.jpg",
+        },
+    ];
+
+    const handleRefresh = () => {
+        alert("Refreshing...");
+    };
+
+    // ✅ Correct routing to each student's report
+    const handleStudentClick = (id) => {
+        router.push(`/classroom/${classId}/${section}/${subject}/performance/${id}`);
     };
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
             <main className="px-4 py-4 flex-1 md:px-8 md:py-10">
-                {/* Main Container for desktop alignment */}
-                <div className="md:max-w-4xl md:mx-auto md:space-y-10">
+                <div className="md:max-w-5xl md:mx-auto md:space-y-10">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
@@ -32,47 +63,91 @@ export default function StudentPerformancePage() {
                             Student Performance
                         </h1>
 
-                        <button className="text-blue-600 md:p-2 md:rounded-full md:hover:bg-blue-100">
+                        <button
+                            className="text-blue-600 md:p-2 md:rounded-full md:hover:bg-blue-100"
+                            onClick={handleRefresh}
+                        >
                             <RotateCcw className="w-6 h-6 md:w-7 md:h-7" />
                         </button>
                     </div>
 
-                    {/* Subject Card */}
+                    {/* Subject Info Card */}
                     <div className="bg-white border rounded-lg shadow p-4 mb-8 md:p-6 md:rounded-xl">
                         <div className="flex items-center gap-2 text-blue-700 font-medium mb-2 md:text-lg">
                             <Book className="w-5 h-5 md:w-6 md:h-6" />
-                            <span>{subject.name}</span>
+                            <span>{subjectInfo.name}</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-600 text-sm mb-1 md:text-base">
                             <GraduationCap className="w-4 h-4 md:w-5 md:h-5" />
-                            <span>{subject.class}</span>
+                            <span>{subjectInfo.class}</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-600 text-sm md:text-base">
                             <Users className="w-4 h-4 md:w-5 md:h-5" />
-                            <span>{subject.students} students</span>
+                            <span>{subjectInfo.students} students</span>
                         </div>
                     </div>
 
-                    {/* Empty State */}
-                    <p className="text-gray-500 text-center mb-6 md:text-lg">
-                        Select a student to view their performance report:
-                    </p>
+                    {students.length === 0 ? (
+                        // Empty State
+                        <div className="flex flex-col items-center justify-center text-center mt-12 md:mt-16">
+                            <Users className="w-12 h-12 text-gray-300 mb-3 md:w-16 md:h-16" />
+                            <h2 className="text-lg font-semibold text-gray-700 md:text-2xl">
+                                No Students Found
+                            </h2>
+                            <p className="text-gray-500 text-sm mb-4 md:text-base">
+                                There are no students assigned to this class yet.
+                            </p>
+                            <button
+                                className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition md:px-8 md:py-3"
+                                onClick={handleRefresh}
+                            >
+                                Refresh
+                            </button>
+                        </div>
+                    ) : (
+                        <>
+                            <p className="text-gray-500 mb-4 md:text-lg">
+                                Select a student to view their performance report:
+                            </p>
 
-                    <div className="flex flex-col items-center justify-center text-center mt-12 md:mt-16">
-                        <Users className="w-12 h-12 text-gray-300 mb-3 md:w-16 md:h-16" />
-                        <h2 className="text-lg font-semibold text-gray-700 md:text-2xl">
-                            No Students Found
-                        </h2>
-                        <p className="text-gray-500 text-sm mb-4 md:text-base">
-                            There are no students assigned to this class yet.
-                        </p>
-                        <button
-                            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition md:px-8 md:py-3"
-                            onClick={() => alert('Refreshing...')}
-                        >
-                            Refresh
-                        </button>
-                    </div>
+                            {/* Student Cards */}
+                            <div className="flex flex-col gap-3 md:gap-4">
+                                {students.map((student, index) => (
+                                    <div
+                                        key={student.id}
+                                        className="flex items-center justify-between bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition cursor-pointer md:p-4"
+                                        onClick={() => handleStudentClick(student.id)}
+                                    >
+                                        <div className="flex items-center gap-3 md:gap-4">
+                                            {/* Number Badge */}
+                                            <div className="w-7 h-7 flex items-center justify-center bg-blue-100 text-blue-700 font-semibold rounded-full text-sm md:w-8 md:h-8 md:text-base">
+                                                {index + 1}
+                                            </div>
+
+                                            {/* Profile Image */}
+                                            <div className="w-10 h-10 rounded-full overflow-hidden border md:w-12 md:h-12">
+                                                <Image
+                                                    src={student.photo}
+                                                    alt={student.name}
+                                                    width={48}
+                                                    height={48}
+                                                    className="object-cover w-full h-full"
+                                                />
+                                            </div>
+
+                                            {/* Student Name */}
+                                            <p className="font-semibold text-gray-800 text-base md:text-lg">
+                                                {student.name}
+                                            </p>
+                                        </div>
+
+                                        {/* Arrow */}
+                                        <ChevronRight className="w-5 h-5 text-gray-400 md:w-6 md:h-6" />
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
             </main>
         </div>
