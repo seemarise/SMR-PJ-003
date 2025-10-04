@@ -27,7 +27,7 @@ export default function ChapterPage({ params }) {
   };
 
   return (
-    <main className="px-4 py-6 bg-white min-h-screen md:max-w-4xl md:mx-auto md:px-8 md:py-10">
+    <main className="px-4 py-6 bg-white min-h-screen  md:px-8 md:py-10">
       {/* Header */}
       <h1 className="text-2xl font-semibold text-center text-blue-800 mb-6 md:text-3xl">
         {chapter.charAt(0).toUpperCase() + chapter.slice(1)}
