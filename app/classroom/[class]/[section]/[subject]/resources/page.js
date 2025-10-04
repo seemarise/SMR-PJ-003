@@ -1,13 +1,14 @@
 "use client";
 
-import { Folder, Trash2, Plus, BookOpen, GraduationCap } from "lucide-react";
+import { Folder, Trash2, Plus, BookOpen, GraduationCap, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 
 export default function ResourcesPage({ params }) {
   const { class: className, section, subject } = params;
+  const router = useRouter();
 
-  // Example data - you can fetch from API later
   const [chapters, setChapters] = useState([
     { id: 1, name: "Chapter 1", createdAt: "7 days ago" },
     { id: 2, name: "Chapter 2", createdAt: "7 days ago" },
@@ -26,12 +27,29 @@ export default function ResourcesPage({ params }) {
     ]);
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <main className="px-4 py-6 bg-white min-h-screen md:max-w-4xl md:mx-auto md:px-8 md:py-10">
       {/* Header */}
-      <h1 className="text-2xl font-semibold text-center text-blue-800 mb-6 md:text-4xl">
-        Resources
-      </h1>
+      <div className="flex items-center justify-between mb-6">
+        {/* Back Button */}
+        <button
+          onClick={handleBack}
+          className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-all duration-200 active:scale-95 cursor-pointer"
+        >
+          <ArrowLeft className="w-6 h-6 text-gray-700" />
+        </button>
+
+        <h1 className="text-2xl font-semibold text-blue-800 md:text-4xl text-center flex-1">
+          Resources
+        </h1>
+
+        {/* Empty div for spacing (to balance layout) */}
+        <div className="w-8" />
+      </div>
 
       {/* Subject Info */}
       <div className="bg-blue-50 rounded-xl px-4 py-3 mb-6 shadow-sm flex items-center gap-3 md:px-6 md:py-4">
@@ -60,7 +78,9 @@ export default function ResourcesPage({ params }) {
           >
             {/* Chapter clickable */}
             <Link
-              href={`/classroom/${className}/${section}/${subject}/resources/${chapter.name.toLowerCase().replace(/\s+/g, "-")}`}
+              href={`/classroom/${className}/${section}/${subject}/resources/${chapter.name
+                .toLowerCase()
+                .replace(/\s+/g, "-")}`}
               className="flex items-center gap-3 flex-1"
             >
               <Folder className="text-blue-600 w-8 h-8" />
@@ -86,7 +106,7 @@ export default function ResourcesPage({ params }) {
       {/* Floating Add Button */}
       <button
         onClick={handleAdd}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition"
+        className="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition active:scale-95"
       >
         <Plus className="w-6 h-6" />
       </button>
