@@ -4,8 +4,10 @@ import { Folder, Trash2, Plus, BookOpen, GraduationCap, ArrowLeft } from "lucide
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ResourcesPage({ params }) {
+  const router = useRouter();
   const { class: className, section, subject } = params;
   const router = useRouter();
 
@@ -76,7 +78,6 @@ export default function ResourcesPage({ params }) {
             key={chapter.id}
             className="flex items-center justify-between bg-white border rounded-xl p-4 shadow-sm hover:shadow-md transition"
           >
-            {/* Chapter clickable */}
             <Link
               href={`/classroom/${className}/${section}/${subject}/resources/${chapter.name
                 .toLowerCase()
@@ -108,7 +109,7 @@ export default function ResourcesPage({ params }) {
         onClick={handleAdd}
         className="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition active:scale-95"
       >
-        <Plus className="w-6 h-6" />
+        <Plus size={24} />
       </button>
     </main>
   );

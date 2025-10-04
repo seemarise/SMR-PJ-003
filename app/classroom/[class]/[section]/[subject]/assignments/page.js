@@ -1,11 +1,22 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import {
+    ArrowLeft,
+    UserRound,
+    Pencil,
+    Trash,
+    ArrowRight,
+    Plus,
+} from "lucide-react";
 
 export default function AssignmentsPage() {
     const router = useRouter();
+    const params = useParams(); // ✅ Get current route params
 
-    // Mock data (replace with API later)
+    // Extract route params
+    const { classId, section, subject } = params;
+
     const assignments = [
         {
             id: 1,
@@ -31,67 +42,126 @@ export default function AssignmentsPage() {
     ];
 
     return (
-        <main className="px-4 py-4 bg-gray-50 min-h-screen">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6">
-                <button onClick={() => router.back()} className="text-2xl">←</button>
-                <h1 className="text-xl font-bold text-blue-700">Assignments</h1>
-                <div className="w-6" />
-            </div>
+        <div className="flex flex-col min-h-screen bg-gray-50">
+            <main className="px-4 py-4 flex-1 md:px-8 md:py-10">
+                {/* Main container for desktop alignment */}
+                <div className="md:max-w-5xl md:mx-auto md:space-y-10">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-6 md:mb-10">
+                        <button
+                            onClick={() => router.back()}
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            aria-label="Go back"
+                        >
+                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                        </button>
 
-            {/* Assignment Cards */}
-            <div className="space-y-4">
-                {assignments.map((a) => (
-                    <div key={a.id} className="bg-white rounded-lg shadow p-4">
-                        <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm text-gray-500">
-                                Due: {a.dueDate}
-                            </span>
-                            <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">
-                                Active
-                            </span>
-                        </div>
+                        <h1 className="text-xl font-bold text-blue-700 md:text-3xl md:font-bold">
+                            Assignments
+                        </h1>
 
-                        <h2 className="font-semibold text-gray-800">{a.title}</h2>
-
-                        {/* Tags */}
-                        <div className="flex gap-2 mt-2">
-                            {a.tags.map((tag, i) => (
-                                <span
-                                    key={i}
-                                    className="bg-gray-100 text-gray-600 px-2 py-1 text-xs rounded-full"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-
-                        <div className="flex justify-between items-center mt-3 text-sm text-gray-600">
-                            <span>👤 {a.submissions} submissions</span>
-                            <div className="flex gap-3">
-                                <button className="text-blue-500">✏️</button>
-                                <button className="text-red-500">🗑️</button>
-                                <button
-                                    onClick={() => router.push(`assignments/${a.id}`)} // relative path ✅
-                                    className="text-blue-600 text-xl"
-                                >
-                                    ➡
-                                </button>
-
-                            </div>
-                        </div>
+                        <div className="w-6 md:w-8" />
                     </div>
-                ))}
-            </div>
 
-            {/* Floating Add Button */}
-            <button
-                onClick={() => router.push("/assignments/create")}
-                className="fixed bottom-6 right-6 bg-blue-600 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg text-3xl hover:bg-blue-700 active:scale-95 transition-all"
-            >
-                +
-            </button>
+                    {/* Assignment Cards */}
+                    <div className="space-y-4 md:space-y-6">
+                        {assignments.map((a) => (
+                            <div
+                                key={a.id}
+                                onClick={() =>
+                                    router.push(
+                                        `/classroom/${classId}/${section}/${subject}/assignments/${a.id}`
+                                    )
+                                }
+                                className="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-md transition md:p-6 md:rounded-xl"
+                            >
+                                {/* Top Row: Due Date + Status */}
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-sm text-gray-500 md:text-base">
+                                        Due: {a.dueDate}
+                                    </span>
+                                    <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full md:text-sm md:px-3">
+                                        Active
+                                    </span>
+                                </div>
 
-        </main>
+                                {/* Title */}
+                                <h2 className="font-semibold text-gray-800 md:text-xl">
+                                    {a.title}
+                                </h2>
+
+                                {/* Tags */}
+                                <div className="flex gap-2 mt-2 flex-wrap">
+                                    {a.tags.map((tag, i) => (
+                                        <span
+                                            key={i}
+                                            className="bg-gray-100 text-gray-600 px-2 py-1 text-xs rounded-full md:text-sm md:px-3"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                {/* Footer Row */}
+                                <div className="flex justify-between items-center mt-3 text-sm text-gray-600 md:text-base">
+                                    <span className="flex items-center gap-1">
+                                        <UserRound size={16} className="md:w-5 md:h-5" />
+                                        {a.submissions} submissions
+                                    </span>
+
+                                    <div className="flex gap-3 md:gap-5">
+                                        {/* ✏️ Edit */}
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                router.push(
+                                                    `/classroom/${classId}/${section}/${subject}/assignments/${a.id}/edit`
+                                                );
+                                            }}
+                                            className="text-blue-500 hover:text-blue-700 transition"
+                                        >
+                                            <Pencil size={18} className="md:w-5 md:h-5" />
+                                        </button>
+
+                                        {/* 🗑️ Delete */}
+                                        <button
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="text-red-500 hover:text-red-600 transition"
+                                        >
+                                            <Trash size={18} className="md:w-5 md:h-5" />
+                                        </button>
+
+                                        {/* ➡️ View */}
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                router.push(
+                                                    `/classroom/${classId}/${section}/${subject}/assignments/${a.id}`
+                                                );
+                                            }}
+                                            className="text-blue-600 hover:text-blue-700 transition"
+                                        >
+                                            <ArrowRight size={18} className="md:w-5 md:h-5" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Floating Add Button */}
+                    <button
+                        onClick={() =>
+                            router.push(
+                                `/classroom/${classId}/${section}/${subject}/assignments/create`
+                            )
+                        }
+                        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+                    >
+                        <Plus />
+                    </button>
+                </div>
+            </main>
+        </div>
     );
 }

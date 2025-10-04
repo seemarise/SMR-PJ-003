@@ -228,7 +228,7 @@ export default function LoginPage() {
                 Id: res.data[role][role == "teacher" ? (role + "sId") : (role + "Id")]
               }
               sessionService.setSession(data);
-              router.replace("/dashboard");
+              router.replace("/");
               console.log(role + " login successful");
             }
             else if (res.statusCode == 401) {
