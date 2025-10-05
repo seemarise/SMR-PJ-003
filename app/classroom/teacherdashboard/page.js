@@ -26,7 +26,7 @@ export default function TeacherDashboard() {
         {
             title: "Remarks",
             icon: FileText,
-            link: "/classroom/remarks",
+            link: "/classroom/teacherdashboard/remarks",
         },
         {
             title: "Performance",
