@@ -3,10 +3,12 @@
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { sessionService } from "@/services/sessionService";
 
 export default function ProfilePage() {
     const router = useRouter();
-
+    const user = sessionService.getUser();
+    console.log(user);
     const teacher = {
         name: "Prakasavalli",
         status: "ACTIVE",
@@ -51,7 +53,7 @@ export default function ProfilePage() {
                         <div className="flex items-center gap-4">
                             <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-blue-200">
                                 <Image
-                                    src="/teacher.png"
+                                    src={user.profileImage}
                                     alt="Profile"
                                     fill
                                     className="object-cover"
@@ -59,10 +61,10 @@ export default function ProfilePage() {
                             </div>
                             <div>
                                 <h2 className="font-semibold text-gray-800 text-lg md:text-2xl">
-                                    {teacher.name}
+                                    {user.name}
                                 </h2>
                                 <span className="bg-blue-100 text-[#5074b6] text-xs md:text-sm font-semibold px-3 py-1 rounded-full mt-1 inline-block">
-                                    Status: {teacher.status}
+                                    Status: {user.accountStatus}
                                 </span>
                             </div>
                         </div>
@@ -71,19 +73,19 @@ export default function ProfilePage() {
                     {/* Info Sections */}
                     <div className="md:bg-white md:p-6 md:rounded-2xl md:shadow-md md:border md:border-blue-100 md:space-y-6">
                         <Section title="Basic Information">
-                            <Info label="Teacher ID" value={teacher.teacherId} />
-                            <Info label="Name" value={teacher.name} />
-                            <Info label="Email" value={teacher.email} />
+                            <Info label="Teacher ID" value={user.teachersId} />
+                            <Info label="Name" value={user.name} />
+                            <Info label="Email" value={user.email} />
                         </Section>
 
                         <Section title="School Information">
-                            <Info label="School" value={teacher.school} />
-                            <Info label="Class Teacher" value={teacher.classTeacher} />
+                            <Info label="School" value={user.school} />
+                            <Info label="Class Teacher" value={user.section + user.className} />
                         </Section>
 
                         <Section title="Contact Information">
-                            <Info label="Phone Number" value={teacher.phone} />
-                            <Info label="WhatsApp Number" value={teacher.whatsapp} />
+                            <Info label="Phone Number" value={user.phoneNumber} />
+                            <Info label="WhatsApp Number" value={user.teachersWhatsappNumber} />
                         </Section>
 
                         {/* Teaching Assignments */}
@@ -92,18 +94,18 @@ export default function ProfilePage() {
                                 Teaching Assignments
                             </h3>
                             <div className="space-y-3">
-                                {teacher.assignments.map((a, i) => (
+                                {user.classesAndSubjects.map((a, i) => (
                                     <div
                                         key={i}
                                         className="border border-gray-200 rounded-xl p-3 bg-white shadow-sm md:p-4 md:hover:shadow-md md:transition"
                                     >
                                         <p className="text-sm font-medium text-gray-800 md:text-base">
-                                            Class {a.class}
+                                            Class {a.className + a.section}
                                         </p>
                                         <p className="text-sm text-gray-600 md:text-base">
-                                            Subject: {a.subject}
+                                            Subject: {a.subjectName}
                                         </p>
-                                        <p className="text-xs text-gray-500 mt-1">ID: {a.id}</p>
+                                        <p className="text-xs text-gray-500 mt-1">ID: {a.sectionId}</p>
                                     </div>
                                 ))}
                             </div>
