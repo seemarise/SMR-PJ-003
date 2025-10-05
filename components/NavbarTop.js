@@ -17,7 +17,7 @@ export default function NavbarTop({ sharedTitle }) {
         onClick={() => router.push("/profile")} // ✅ Works now
       >
         <Image
-          src={user.profileImage}
+          src={user?.profileImage}
           alt="Profile"
           height={500}
           width={500}
