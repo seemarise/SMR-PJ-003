@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { deleteAnnouncement, getAllAnnouncements } from "@/services/classroomService/announcementApi";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AnnouncementsPage({ params }) {
     const router = useRouter();
@@ -23,7 +24,7 @@ export default function AnnouncementsPage({ params }) {
     const sectionId = searchParams.get("section");
     const subjectId = searchParams.get("subject");
 
-    // 🔹 state
+    // state
     const [announcements, setAnnouncements] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
     const [hasMore, setHasMore] = useState(true);
@@ -34,7 +35,7 @@ export default function AnnouncementsPage({ params }) {
     const [isMobile, setIsMobile] = useState(false);
     const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
 
-    // 🔹 fetch announcements
+    // fetch announcements
     const fetchAnnouncements = async (page) => {
         if (loading || !hasMore) return;
         setLoading(true);
@@ -114,8 +115,9 @@ export default function AnnouncementsPage({ params }) {
 
     const handleEdit = () => {
         if (selectedId) {
+            let annc = announcements.find(x => x._id == selectedId)
             router.push(
-                `/classroom/${classId}/${sectionId}/${subjectId}/announcements/${selectedId}/edit`
+                `/classroom/${className}/${section}/${subject}/announcements/${selectedId}/edit?classId=${classId}&sectionId=${sectionId}&subjectId=${subjectId}&title=${annc.title}&description=${annc.description}`
             );
             closeOptions();
         }
@@ -224,13 +226,14 @@ export default function AnnouncementsPage({ params }) {
                     <button
                         onClick={() =>
                             router.push(
-                                `/classroom/${classId}/${sectionId}/${subjectId}/announcements/create`
+                                `/classroom/${className}/${section}/${subject}/announcements/create?classId=${classId}&sectionId=${sectionId}&subjectId=${subjectId}`
                             )
                         }
                         className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
                     >
                         <Plus />
                     </button>
+
                 </div>
             </main>
 

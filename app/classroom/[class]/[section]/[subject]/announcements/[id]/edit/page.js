@@ -1,41 +1,44 @@
 "use client";
 
-import { useRouter, useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { ArrowLeft, Info, BookOpen, GraduationCap, SquarePen } from "lucide-react";
+import { updateAnnouncement } from "@/services/classroomService/announcementApi";
 
 export default function EditAnnouncementPage() {
     const router = useRouter();
     const { class: classNum, section, subject, id } = useParams();
 
-    // Dummy data fetching simulation
-    const [announcement, setAnnouncement] = useState({
-        title: "",
-        description: "",
-    });
+    const searchParams = useSearchParams();
+    const classId = searchParams.get("classId");
+    const sectionId = searchParams.get("sectionId");
+    const subjectId = searchParams.get("subjectId");
+    const title = searchParams.get("title");
+    const description = searchParams.get("description");
 
-    // Simulate fetching announcement by ID
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
+
+    // Simulate fetching existing announcement
     useEffect(() => {
-        // You can replace this with real API call
-        const dummy = {
-            title: "English lab",
-            description: "English lab\nday : Monday\nsession 2",
-        };
-        setAnnouncement(dummy);
-    }, [id]);
+        reset({ title, description }); // populate form with fetched data
+    }, [id, reset]);
 
-    const handleUpdate = () => {
-        // Here you can call your PUT API to update the announcement
-        console.log("Updated announcement:", announcement);
-        router.push(
-            `/classroom/${classNum}/${section}/${subject}/announcements`
-        );
+    const onSubmit = (data) => {
+        updateAnnouncement(id, { ...data, classId, sectionId, subjectId }).then(res => {
+            router.back();
+        })
     };
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-4  bg-white shadow-sm md:px-8">
+            <div className="flex items-center justify-between px-4 py-4 bg-white shadow-sm md:px-8">
                 <button
                     onClick={() => router.back()}
                     className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
@@ -80,20 +83,20 @@ export default function EditAnnouncementPage() {
                     </div>
 
                     {/* Form */}
-                    <div className="space-y-5">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                         <div>
                             <label className="block font-medium text-gray-700 mb-2">
                                 Announcement Title
                             </label>
                             <input
                                 type="text"
-                                value={announcement.title}
-                                onChange={(e) =>
-                                    setAnnouncement({ ...announcement, title: e.target.value })
-                                }
-                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 placeholder="Enter title"
+                                {...register("title", { required: "Title is required" })}
+                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             />
+                            {errors.title && (
+                                <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
+                            )}
                         </div>
 
                         <div>
@@ -102,23 +105,27 @@ export default function EditAnnouncementPage() {
                             </label>
                             <textarea
                                 rows="5"
-                                value={announcement.description}
-                                onChange={(e) =>
-                                    setAnnouncement({ ...announcement, description: e.target.value })
-                                }
-                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 placeholder="Enter description"
+                                {...register("description", {
+                                    required: "Description is required",
+                                })}
+                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                             />
+                            {errors.description && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.description.message}
+                                </p>
+                            )}
                         </div>
-                    </div>
 
-                    {/* Update Button */}
-                    <button
-                        onClick={handleUpdate}
-                        className="w-full mt-8 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-                    >
-                        Update Announcement
-                    </button>
+                        {/* Update Button */}
+                        <button
+                            type="submit"
+                            className="w-full mt-8 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+                        >
+                            Update Announcement
+                        </button>
+                    </form>
                 </div>
             </main>
         </div>
