@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   ArrowLeft,
@@ -10,12 +10,10 @@ import {
   Plus,
   GraduationCap,
 } from "lucide-react";
-import Link from "next/link";
 
 export default function ResourcesPage({ params }) {
   const { class: className, section, subject } = params;
   const router = useRouter();
-  const params = useParams();
 
   const [chapters, setChapters] = useState([
     { id: 1, name: "Chapter 1", createdAt: "1 week ago" },
@@ -65,7 +63,7 @@ export default function ResourcesPage({ params }) {
               </p>
               <p className="text-sm text-gray-500 flex items-center gap-2">
                 <GraduationCap className="w-4 h-4 md:w-5 md:h-5" />
-                Class {classId} - Section {section?.toUpperCase()}
+                Class {className} - Section {section?.toUpperCase()}
               </p>
             </div>
           </div>
@@ -78,7 +76,7 @@ export default function ResourcesPage({ params }) {
                 className="flex items-center justify-between bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition cursor-pointer md:p-5"
                 onClick={() =>
                   router.push(
-                    `/classroom/${classId}/${section}/${subject}/resources/${chapter.name
+                    `/classroom/${className}/${section}/${subject}/resources/${chapter.name
                       .toLowerCase()
                       .replace(/\s+/g, "-")}`
                   )
