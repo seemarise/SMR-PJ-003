@@ -21,5 +21,24 @@ const getAssignments = (queryParams,body,options) => {
 const getSubmissions = (queryParams,body,options) => {
     return apiClient.get(concatenatePath("/api/v1/assignments/teachers/all-submissions/",queryParams));
 };
+const getSubmissionsInfoById = (queryParams,body,options) => {
+    return apiClient.get(concatenatePath("/api/v1/assignments/teachers/submission/",queryParams));
+};
 
-export { getClassromSubjects,getListOfAnnouncements,getAssignments,getSubmissions };
+const approveSubmissionBySubId = (queryParams,body,options) => {
+    return apiClient.post(concatenatePath("/api/v1/assignments/teachers/approve-submission/",queryParams));
+};
+
+const rejectSubmissionBySubId = (queryParams,body,options) => {
+    return apiClient.post(concatenatePath("/api/v1/assignments/teachers/reject-submission/",queryParams),body);
+};
+
+export { 
+        getClassromSubjects,
+        getListOfAnnouncements,
+        getAssignments,
+        getSubmissions,
+        getSubmissionsInfoById,
+        approveSubmissionBySubId,
+        rejectSubmissionBySubId
+};
