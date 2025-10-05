@@ -71,8 +71,8 @@ function VadTestPage() {
           {/* Title Row */}
           <div className="relative flex items-center justify-between md:max-w-5xl md:mx-auto">
             {/* Left - School Exam */}
-            <button 
-              onClick={() => router.push('/school-exams')} 
+            <button
+              onClick={() => router.push('/school-exams')}
               className="px-3 py-1 border border-gray-400 text-gray-800 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-100 hover:border-gray-500 transition-all duration-200 active:scale-95 md:px-5 md:py-2.5 md:text-base md:shadow-sm md:bg-white"
             >
               School Exam
@@ -116,7 +116,7 @@ function VadTestPage() {
                 </div>
 
                 {/* Subject Cards - Grid layout on desktop */}
-                <div className="space-y-4 md:grid md:grid-cols-3 md:gap-6 md:space-y-0">
+                <div className="space-y-4 mt-3 md:grid md:grid-cols-3 md:gap-6 md:space-y-0">
                   {vadTest?.tests?.map((test, testIndex) => {
                     return <SubjectCard
                       key={testIndex}
