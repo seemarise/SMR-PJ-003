@@ -58,7 +58,7 @@ export default function StudentPerformanceReport({ params }) {
                     <div className="bg-white  rounded-lg shadow-sm p-3 mb-5 md:p-6 md:rounded-xl md:shadow">
                         <div className="flex items-center gap-3">
                             {/* Student Photo */}
-                            <div className="w-12 h-12 rounded-full overflow-hidden border md:w-16 md:h-16">
+                            <div className="w-12 h-12 rounded-full overflow-hidden md:w-16 md:h-16">
                                 <Image
                                     src={student.photo}
                                     alt={student.name}

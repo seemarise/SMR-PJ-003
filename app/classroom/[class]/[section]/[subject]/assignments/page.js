@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useRouter, useParams,useSearchParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import {
     ArrowLeft,
     UserRound,
@@ -10,19 +10,19 @@ import {
     Plus,
 } from "lucide-react";
 import { getAssignments } from "@/services/classroomService/classroomApi";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
-export default function AssignmentsPage({params}) {
+export default function AssignmentsPage({ params }) {
     const router = useRouter();
     // const params = useParams(); // ✅ Get current route params
 
     // Extract route params
-                  // 🔹 get route params
-  const searchParams = useSearchParams();
-  const { class: classId, section, subject } = React.use(params);
-  const subjectId = searchParams.get("subject");
+    // 🔹 get route params
+    const searchParams = useSearchParams();
+    const { class: classId, section, subject } = React.use(params);
+    const subjectId = searchParams.get("subject");
 
-  const [assignments, setAssignments] = useState([]);
+    const [assignments, setAssignments] = useState([]);
     // const assignments = [
     //     {
     //         id: 1,
@@ -46,14 +46,14 @@ export default function AssignmentsPage({params}) {
     //         submissions: 0,
     //     },
     // ];
-    useEffect(()=>{
-        async function fetchAssignments(){
-            console.log("my subject id id",subjectId)
+    useEffect(() => {
+        async function fetchAssignments() {
+            console.log("my subject id id", subjectId)
             let res = await getAssignments([subjectId]);
             setAssignments(res.data.assignments);
         };
         fetchAssignments();
-    },[]);
+    }, []);
     function formatDate(isoDate) {
         if (!isoDate) return "";
         const date = new Date(isoDate);
@@ -87,14 +87,14 @@ export default function AssignmentsPage({params}) {
 
                     {/* Assignment Cards */}
                     <div className="space-y-4 md:space-y-6">
-                        { assignments.length === 0 ? (
-  <p>Loading...</p>
-) :(assignments.map((a) => (
+                        {assignments.length === 0 ? (
+                            <p>Loading...</p>
+                        ) : (assignments.map((a) => (
                             <div
                                 key={a._id}
                                 onClick={() =>
                                     router.push(
-                                        `/classroom/${classId}/${section}/${subject}/assignments/${a._id}`
+                                        `/classroom/${classId}/${section}/${subject}/assignments/${a._id}?title=${a.lesson}`
                                     )
                                 }
                                 className="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-md transition md:p-6 md:rounded-xl"

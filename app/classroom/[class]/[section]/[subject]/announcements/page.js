@@ -102,7 +102,10 @@ export default function AnnouncementsPage() {
                                 {/* Author and menu */}
                                 <div className="flex justify-between items-center mb-3">
                                     <div className="flex items-center gap-2 text-gray-600 text-sm md:text-base">
-                                        <UserRound className="w-4 h-4 text-blue-600" />
+                                        <img
+                                            alt="hey not avaible"
+                                            className="w-10 h-10 rounded-full object-cover md:w-10 md:h-10"
+                                        />
                                         <span>{a.author}</span>
                                     </div>
                                     <div className="flex items-center gap-2">

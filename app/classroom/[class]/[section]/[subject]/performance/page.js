@@ -125,7 +125,7 @@ export default function StudentPerformancePage() {
                                             </div>
 
                                             {/* Profile Image */}
-                                            <div className="w-10 h-10 rounded-full overflow-hidden border md:w-12 md:h-12">
+                                            <div className="w-10 h-10 rounded-full overflow-hidden md:w-12 md:h-12">
                                                 <Image
                                                     src={student.photo}
                                                     alt={student.name}

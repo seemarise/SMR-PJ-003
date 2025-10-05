@@ -13,9 +13,9 @@ import {
 import Link from "next/link";
 
 export default function ResourcesPage({ params }) {
-  const { class: className, section, subject } = params;
   const router = useRouter();
-  const params = useParams();
+  // const params = useParams();
+  const { class: className, section, subject } = params;
 
   const [chapters, setChapters] = useState([
     { id: 1, name: "Chapter 1", createdAt: "1 week ago" },
