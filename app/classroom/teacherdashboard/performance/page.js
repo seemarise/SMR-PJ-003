@@ -1,15 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, BarChart2 } from "lucide-react";
+import { getPeople } from "@/services/classroomService/classroomApi";
+import Image from "next/image";
 
 export default function PerformancePage() {
-  const students = [
-    { id: 1, name: "Kishan Rao B", class: "Class 10 A", avatar: "/student1.png" },
-    { id: 2, name: "Aditi Sharma", class: "Class 10 A", avatar: "/student2.png" },
-    { id: 3, name: "Rohit Kumar", class: "Class 10 A", avatar: "/student3.png" },
-  ];
+  const [load, setLoad] = useState(true)
+  const [students, setStudents] = useState([])
+
+  useEffect(() => {
+    getPeople().then((res) => {
+      setStudents(res.data.students)
+    })
+  }, [load])
 
   return (
     <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
@@ -40,13 +45,15 @@ export default function PerformancePage() {
             <div className="flex flex-col gap-4 mt-3 md:grid md:grid-cols-2 md:gap-6">
               {students.map((student) => (
                 <Link
-                  key={student.id}
-                  href={`/classroom/teacherdashboard/performance/${student.id}`}
+                  key={student._id}
+                  href={`/classroom/teacherdashboard/performance/${student._id}`}
                   className="flex items-center justify-between bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer md:p-5"
                 >
                   <div className="flex items-center gap-3">
-                    <img
-                      src={student.avatar}
+                    <Image
+                      src={student.profileImage}
+                      width={100}
+                      height={100}
                       alt={student.name}
                       className="w-12 h-12 rounded-full border-2 border-blue-200 md:w-14 md:h-14"
                     />

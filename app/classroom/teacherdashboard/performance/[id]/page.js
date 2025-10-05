@@ -1,19 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, RefreshCcw } from "lucide-react";
+import { getPeople } from "@/services/classroomService/classroomApi";
+import Image from "next/image";
 
 export default function StudentPerformancePage({ params }) {
-  const { id } = params;
+  const { id } = React.use(params);
 
-  // fake student details (replace with real API later)
-  const student = {
-    name: "Kishan Rao B",
-    class: "Class 10 A",
-    subjects: "All Subjects",
-    avatar: "/student1.png",
-  };
+  const [students, setStudents] = useState([])
+
+  useEffect(() => {
+    getPeople().then((res) => {
+      setStudents(res.data.students)
+    })
+  }, [])
+  const student = students.find(student => student._id == id) ?? {}
 
   const [activeTab, setActiveTab] = useState("school");
 
@@ -41,8 +44,10 @@ export default function StudentPerformancePage({ params }) {
 
           {/* Student Info Card */}
           <div className="bg-blue-50 rounded-xl p-4 shadow-sm flex items-center gap-4 md:bg-white md:border md:border-blue-100">
-            <img
-              src={student.avatar}
+            <Image
+              src={student.profileImage}
+              width={100}
+              height={100}
               alt={student.name}
               className="w-16 h-16 rounded-full border-2 border-blue-300 md:w-20 md:h-20"
             />
@@ -57,21 +62,19 @@ export default function StudentPerformancePage({ params }) {
           <div className="flex items-center bg-gray-100 rounded-lg p-1 md:w-1/2 md:mx-auto">
             <button
               onClick={() => setActiveTab("school")}
-              className={`flex-1 text-center py-2 rounded-md font-medium transition ${
-                activeTab === "school"
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-600 hover:text-blue-600"
-              }`}
+              className={`flex-1 text-center py-2 rounded-md font-medium transition ${activeTab === "school"
+                ? "bg-blue-600 text-white"
+                : "text-gray-600 hover:text-blue-600"
+                }`}
             >
               School Performance
             </button>
             <button
               onClick={() => setActiveTab("vad")}
-              className={`flex-1 text-center py-2 rounded-md font-medium transition ${
-                activeTab === "vad"
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-600 hover:text-blue-600"
-              }`}
+              className={`flex-1 text-center py-2 rounded-md font-medium transition ${activeTab === "vad"
+                ? "bg-blue-600 text-white"
+                : "text-gray-600 hover:text-blue-600"
+                }`}
             >
               VAD Performance
             </button>
