@@ -1,6 +1,7 @@
 const TOKEN_KEY = "vadai_auth_token";
 const REFRESH_TOKEN_KEY = "vadai_auth_refresh_token";
 const USER_KEY = "vadai_id";
+const USER = "vadai_user";
 export const sessionService = {
   setSession(data) {
     try {
@@ -21,6 +22,12 @@ export const sessionService = {
     }
   },
 
+  setUser(user) {
+    localStorage.setItem(USER, JSON.stringify(user))
+  },
+  getUser() {
+    return JSON.parse(localStorage.getItem(USER))
+  },
   getToken() {
     try {
       if (typeof window !== "undefined") {

@@ -17,6 +17,11 @@ const getAttendence = (data) => {
 const updateAttendence = (data) => {
     return apiClient.post("/api/v1/teachers/classroom/submit-attendance", data);
 };
+const getPeople = (data) => {
+    return apiClient.get("/api/v1/teachers/classroom/get-all-students", data);
+};
+
+
 
 const getListOfAnnouncements = (body, options) => {
     return apiClient.get("/api/v1/announcement/teachers/list-all");
@@ -47,6 +52,7 @@ export {
     getClassromSubjects,
     getListOfAnnouncements,
     getAssignments,
+    getPeople,
     getSubmissions,
     getSubmissionsInfoById,
     approveSubmissionBySubId,

@@ -1,13 +1,15 @@
+import { sessionService } from "@/services/sessionService";
 import { Bell } from "lucide-react";
 import Image from "next/image";
 
 export default function NavbarTop({ sharedTitle }) {
+  const user = sessionService.getUser()
   return (
     <header className="flex items-center justify-between px-4 py-2 shadow-md bg-white z-10">
       {/* Profile */}
       <div className="w-10 h-10 relative rounded-full overflow-hidden">
         <Image
-          src="/profile.jpg"
+          src={user.profileImage}
           alt="Profile"
           fill
           className="object-cover"

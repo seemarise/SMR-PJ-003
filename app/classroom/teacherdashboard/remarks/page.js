@@ -1,25 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft, RefreshCw, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { getPeople } from "@/services/classroomService/classroomApi";
+import Image from "next/image";
 
 export default function StudentRemarksPage() {
     const router = useRouter();
     const [search, setSearch] = useState("");
+    const [load, setLoad] = useState(true)
+    const [students, setStudents] = useState([])
 
-    const students = [
-        {
-            id: 1,
-            name: "Kishan Rao B",
-            image: "/student1.png",
-        },
-        {
-            id: 2,
-            name: "Sai Prasad N",
-            image: "/student2.png",
-        },
-    ];
+    useEffect(() => {
+        getPeople().then((res) => {
+            setStudents(res.data.students)
+        })
+    }, [load])
 
     const filteredStudents = students.filter((s) =>
         s.name.toLowerCase().includes(search.toLowerCase())
@@ -46,7 +43,7 @@ export default function StudentRemarksPage() {
                         </h1>
 
                         {/* Refresh Button */}
-                        <button className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:absolute md:right-0 md:p-3 md:shadow-sm">
+                        <button className="p-2 rounded-full  cursor-pointer bg-blue-100 hover:bg-blue-200 transition md:absolute md:right-0 md:p-3 md:shadow-sm" onClick={() => setLoad(x => !x)}>
                             <RefreshCw className="w-5 h-5 text-blue-700 md:w-6 md:h-6" />
                         </button>
                     </div>
@@ -72,13 +69,15 @@ export default function StudentRemarksPage() {
                     <div className="px-4 pb-10 md:px-0 md:mt-6">
                         {filteredStudents.map((student) => (
                             <div
-                                key={student.id}
-                                onClick={() => router.push(`/classroom/teacherdashboard/remarks/${student.id}`)}
+                                key={student._id}
+                                onClick={() => router.push(`/classroom/teacherdashboard/remarks/${student._id}`)}
                                 className="flex items-center justify-between bg-white border-b border-gray-100 py-3 cursor-pointer hover:bg-blue-50 transition md:rounded-xl md:shadow-sm md:p-4 md:mb-3 md:hover:shadow-md md:border md:border-gray-200"
                             >
                                 <div className="flex items-center gap-3">
-                                    <img
-                                        src={student.image}
+                                    <Image
+                                        src={student.profileImage}
+                                        width={100}
+                                        height={100}
                                         alt={student.name}
                                         className="w-12 h-12 rounded-full object-cover border border-gray-200 md:w-14 md:h-14"
                                     />

@@ -228,6 +228,10 @@ export default function LoginPage() {
                 Id: res.data[role][role == "teacher" ? (role + "sId") : (role + "Id")]
               }
               sessionService.setSession(data);
+              if (role == "teacher") {
+                sessionService.setUser(res.data.teacher)
+              }
+
               router.replace("/");
               console.log(role + " login successful");
             }

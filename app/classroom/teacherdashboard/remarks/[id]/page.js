@@ -1,30 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, RefreshCw, MessageSquare } from "lucide-react";
+import { getRemarks } from "@/services/classroomService/remarkApi";
+import { getPeople } from "@/services/classroomService/classroomApi";
+import Image from "next/image";
 
 export default function StudentRemarkDetailPage() {
     const router = useRouter();
     const { id } = useParams();
+    const [students, setStudents] = useState([])
 
-    // Mock data - replace with real data fetch later
-    const students = [
-        {
-            id: "1",
-            name: "Kishan Rao B",
-            image: "/student1.png",
-        },
-        {
-            id: "2",
-            name: "Sai Prasad N",
-            image: "/student2.png",
-        },
-    ];
-
-    const student = students.find((s) => s.id === id);
+    useEffect(() => {
+        getPeople().then((res) => {
+            setStudents(res.data.students)
+        })
+    }, [])
     const [remark, setRemark] = useState("");
     const [remarksHistory, setRemarksHistory] = useState([]);
+    const student = students.find(student => student._id == id)
+    useEffect(() => {
+        getRemarks({ studentId: id }).then(res => {
+
+        })
+    }, [])
 
     const handleSubmit = () => {
         if (!remark.trim()) return;
@@ -61,9 +61,11 @@ export default function StudentRemarkDetailPage() {
                     {/* Student Info */}
                     {student && (
                         <div className="bg-blue-50 rounded-xl p-4 flex items-center gap-3 shadow-sm md:bg-white md:border md:border-blue-100 md:p-5">
-                            <img
-                                src={student.image}
+                            <Image
+                                src={student.profileImage}
                                 alt={student.name}
+                                width={100}
+                                height={100}
                                 className="w-14 h-14 rounded-full border-2 border-blue-300 object-cover md:w-16 md:h-16"
                             />
                             <h2 className="font-semibold text-gray-800 text-lg md:text-2xl">
