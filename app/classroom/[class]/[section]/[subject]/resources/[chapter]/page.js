@@ -191,7 +191,7 @@ export default function ChapterPage({ params }) {
                 className="flex items-center justify-between bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition cursor-pointer md:p-5"
                 onClick={() =>
                   router.push(
-                    `/classroom/${className}/${section}/${subject}/resources/${chapter}/topic-${topic.id}`
+                    `/classroom/${className}/${section}/${subject}/resources/${chapter}/${topic._id}?chapterName=${chapterName}`
                   )
                 }
               >
