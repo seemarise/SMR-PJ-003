@@ -34,7 +34,7 @@ export default function TeacherDashboard() {
         {
             title: "Performance",
             icon: BarChart2,
-            link: "/classroom/performance",
+            link: "/classroom/teacherdashboard/performance",
         },
         {
             title: "Resources",
