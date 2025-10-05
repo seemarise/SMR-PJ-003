@@ -1,24 +1,58 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowLeft, CalendarDays, CheckCircle, XCircle, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { getAttendence, updateAttendence } from "@/services/classroomService/classroomApi";
+import Image from "next/image";
+
+function capitalize(word) {
+    if (!word) return "";
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
+
 
 export default function AttendancePage() {
     const router = useRouter();
 
     const [isEditing, setIsEditing] = useState(false);
     const [attendance, setAttendance] = useState([
-        { id: 1, name: "Kishan Rao B", status: "Present", image: "/student1.png" },
-        { id: 2, name: "Sai Prasad N", status: "Absent", image: "/student2.png" },
     ]);
+    const [selectedDate, setSelectedDate] = useState(() => {
+        const today = new Date();
+        return today.toISOString().split("T")[0]; // YYYY-MM-DD format for input[type="date"]
+    });
+    const [changedAttendence, setChangedAttendence] = useState({})
+    const [load, setLoad] = useState(false)
 
-    const toggleStatus = (id, newStatus) => {
-        setAttendance((prev) =>
-            prev.map((student) =>
-                student.id === id ? { ...student, status: newStatus } : student
-            )
-        );
+    useEffect(() => {
+        getAttendence({ date: selectedDate }).then((res) => {
+            setAttendance(res.data?.studentsWithAttendance)
+            setChangedAttendence(res.data?.studentsWithAttendance?.reduce((acc, v) => {
+                return { ...acc, [v._id]: { studentId: v._id, status: v.attendanceDetails.status } }
+            }, {}))
+        })
+    }, [selectedDate, load])
+
+    const handleSubmitAttendence = () => {
+        let param = {
+            date: selectedDate,
+            attendanceData: Object.values(changedAttendence)
+        }
+        updateAttendence(param).then(res => {
+            setIsEditing(false)
+            setLoad(x => !x)
+        })
+    }
+
+
+
+    const toggleStatus = (studentId, status) => {
+        setChangedAttendence(p => ({
+            ...p, [studentId]: {
+                studentId, status
+            }
+        }))
     };
 
     return (
@@ -60,7 +94,7 @@ export default function AttendancePage() {
                                     Cancel
                                 </button>
                                 <button
-                                    onClick={() => setIsEditing(false)}
+                                    onClick={handleSubmitAttendence}
                                     className="text-blue-700 font-medium hover:underline text-sm md:text-base"
                                 >
                                     Save
@@ -70,15 +104,18 @@ export default function AttendancePage() {
                     </div>
                 </div>
 
-                {/* Date Selector */}
+                {/* Date Selector (Now with input type="date") */}
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex items-center justify-between mb-6 md:p-6 md:rounded-2xl md:bg-blue-50 md:border-blue-100">
                     <div className="flex items-center gap-3">
                         <CalendarDays className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
                         <div>
                             <p className="text-gray-500 text-sm font-medium">Date</p>
-                            <p className="font-semibold text-gray-800 text-base md:text-lg">
-                                05 Oct 2025
-                            </p>
+                            <input
+                                type="date"
+                                value={selectedDate}
+                                onChange={(e) => setSelectedDate(e.target.value)}
+                                className="font-semibold text-gray-800 text-base md:text-lg bg-transparent focus:outline-none cursor-pointer"
+                            />
                         </div>
                     </div>
                     <span className="text-gray-400 text-lg md:text-xl">▾</span>
@@ -92,8 +129,10 @@ export default function AttendancePage() {
                             className="flex items-center justify-between bg-white rounded-xl p-3 shadow-sm border border-gray-100 hover:shadow-md transition md:p-5"
                         >
                             <div className="flex items-center gap-3">
-                                <img
-                                    src={student.image}
+                                <Image
+                                    src={student.profileImage}
+                                    width={35}
+                                    height={35}
                                     alt={student.name}
                                     className="w-12 h-12 rounded-full object-cover border border-gray-200 md:w-14 md:h-14"
                                 />
@@ -105,23 +144,23 @@ export default function AttendancePage() {
                             {/* Attendance Status */}
                             {!isEditing ? (
                                 <div
-                                    className={`px-3 py-1 rounded-full border font-medium text-sm md:text-base flex items-center gap-1 ${student.status === "Present"
+                                    className={`px-3 py-1 rounded-full border font-medium text-sm md:text-base flex items-center gap-1 ${student.attendanceDetails.status === "present"
                                         ? "text-green-600 border-green-400 bg-green-50"
                                         : "text-red-500 border-red-400 bg-red-50"
                                         }`}
                                 >
-                                    {student.status === "Present" ? (
+                                    {student.attendanceDetails.status === "present" ? (
                                         <CheckCircle className="w-4 h-4" />
                                     ) : (
                                         <XCircle className="w-4 h-4" />
                                     )}
-                                    {student.status}
+                                    {capitalize(student.attendanceDetails.status)}
                                 </div>
                             ) : (
                                 <div className="flex gap-3">
                                     <button
-                                        onClick={() => toggleStatus(student.id, "Present")}
-                                        className={`p-2 rounded-full border transition ${student.status === "Present"
+                                        onClick={() => toggleStatus(student._id, "present")}
+                                        className={`p-2 rounded-full border transition ${changedAttendence[student._id]?.status === "present"
                                             ? "bg-green-500 border-green-500 text-white"
                                             : "border-green-400 text-green-500 hover:bg-green-50"
                                             }`}
@@ -129,8 +168,8 @@ export default function AttendancePage() {
                                         <CheckCircle className="w-5 h-5" />
                                     </button>
                                     <button
-                                        onClick={() => toggleStatus(student.id, "Absent")}
-                                        className={`p-2 rounded-full border transition ${student.status === "Absent"
+                                        onClick={() => toggleStatus(student._id, "absent")}
+                                        className={`p-2 rounded-full border transition ${changedAttendence[student._id]?.status === "absent"
                                             ? "bg-red-500 border-red-500 text-white"
                                             : "border-red-400 text-red-500 hover:bg-red-50"
                                             }`}
