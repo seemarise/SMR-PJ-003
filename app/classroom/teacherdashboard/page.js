@@ -36,7 +36,7 @@ export default function TeacherDashboard() {
         {
             title: "Resources",
             icon: BookOpen,
-            link: "/classroom/resources",
+            link: "/classroom/teacherdashboard/resource",
         },
     ];
 
