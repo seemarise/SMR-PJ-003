@@ -8,23 +8,6 @@ import { sessionService } from "@/services/sessionService";
 export default function ProfilePage() {
     const router = useRouter();
     const user = sessionService.getUser();
-    console.log(user);
-    const teacher = {
-        name: "Prakasavalli",
-        status: "ACTIVE",
-        teacherId: "VAD448539",
-        email: "englishteacher@vadaiapp.com",
-        school: "Jaigopal Garodia Hindu Vidyalaya Secondary School",
-        classTeacher: "10 A",
-        phone: "Not provided",
-        whatsapp: "8167848895",
-        assignments: [
-            { class: "10-A", subject: "English", id: "68d517..." },
-            { class: "10-B", subject: "English", id: "68d517..." },
-            { class: "10-C", subject: "English", id: "68d517..." },
-            { class: "10-D", subject: "English", id: "68d517..." },
-        ],
-    };
 
     return (
         <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
@@ -64,7 +47,7 @@ export default function ProfilePage() {
                                     {user.name}
                                 </h2>
                                 <span className="bg-blue-100 text-[#5074b6] text-xs md:text-sm font-semibold px-3 py-1 rounded-full mt-1 inline-block">
-                                    Status: {user.accountStatus}
+                                    Status: {user.accountStatus?.toUpperCase()}
                                 </span>
                             </div>
                         </div>
@@ -80,7 +63,7 @@ export default function ProfilePage() {
 
                         <Section title="School Information">
                             <Info label="School" value={user.school} />
-                            <Info label="Class Teacher" value={user.section + user.className} />
+                            <Info label="Class Teacher" value={user.className + " - " + user.section} />
                         </Section>
 
                         <Section title="Contact Information">
@@ -100,7 +83,7 @@ export default function ProfilePage() {
                                         className="border border-gray-200 rounded-xl p-3 bg-white shadow-sm md:p-4 md:hover:shadow-md md:transition"
                                     >
                                         <p className="text-sm font-medium text-gray-800 md:text-base">
-                                            Class {a.className + a.section}
+                                            Class {a.className + " - " + a.section}
                                         </p>
                                         <p className="text-sm text-gray-600 md:text-base">
                                             Subject: {a.subjectName}

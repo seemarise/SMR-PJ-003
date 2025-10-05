@@ -81,7 +81,7 @@ export default function TeacherDashboard() {
                                 </h2>
                                 <span className="mt-1 inline-flex items-center bg-white border border-blue-600 text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
                                     <UserRound className="w-4 h-4 mr-2" />
-                                    Class {user.classesAndSubjects[0].className} {user.classesAndSubjects[0].section}
+                                    Class {user.className + " " + user.section}
                                 </span>
                             </div>
                         </div>

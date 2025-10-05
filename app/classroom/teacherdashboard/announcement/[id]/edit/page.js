@@ -5,18 +5,16 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ArrowLeft, Info, BookOpen, GraduationCap, SquarePen } from "lucide-react";
 import { updateAnnouncement } from "@/services/classroomService/announcementApi";
+import { sessionService } from "@/services/sessionService";
 
 export default function EditAnnouncementPage() {
     const router = useRouter();
-    const { class: classNum, section, subject, id } = useParams();
+    const { id } = useParams();
 
     const searchParams = useSearchParams();
-    const classId = searchParams.get("classId");
-    const sectionId = searchParams.get("sectionId");
-    const subjectId = searchParams.get("subjectId");
     const title = searchParams.get("title");
     const description = searchParams.get("description");
-
+    const user = sessionService.getUser()
     const {
         register,
         handleSubmit,
@@ -31,9 +29,9 @@ export default function EditAnnouncementPage() {
 
     const onSubmit = (data) => {
         updateAnnouncement(id, {
-            ...data, "classId": null,
-            "sectionId": null,
-            "subjectId": null
+            ...data,
+            "classId": user.classId,
+            "sectionId": user.sectionId
         }).then(res => {
             router.back();
         })
