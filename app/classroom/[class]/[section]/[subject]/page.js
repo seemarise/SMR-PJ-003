@@ -15,7 +15,7 @@ export default function SubjectPage({ params }) {
   const searchParams = useSearchParams();
 
   // ✅ Fix: directly extract from params (not React.use)
-  const { class: className, section, subject } = params || {};
+  const { class: className, section, subject } = React.use(params) || {};
   // 🔹 get query params
   const classId = searchParams.get("class");
   const sectionId = searchParams.get("section");

@@ -3,15 +3,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, RefreshCw, MessageSquare } from "lucide-react";
-import { getRemarks } from "@/services/classroomService/remarkApi";
+import { addRemarks, getRemarks } from "@/services/classroomService/remarkApi";
 import { getPeople } from "@/services/classroomService/classroomApi";
 import Image from "next/image";
+import moment from "moment";
 
 export default function StudentRemarkDetailPage() {
     const router = useRouter();
     const { id } = useParams();
     const [students, setStudents] = useState([])
-
+    const [load, setLoad] = useState(true)
     useEffect(() => {
         getPeople().then((res) => {
             setStudents(res.data.students)
@@ -22,17 +23,21 @@ export default function StudentRemarkDetailPage() {
     const student = students.find(student => student._id == id)
     useEffect(() => {
         getRemarks({ studentId: id }).then(res => {
-
+            setRemarksHistory(res.data?.remarks)
         })
-    }, [])
+
+    }, [load])
 
     const handleSubmit = () => {
         if (!remark.trim()) return;
-        setRemarksHistory((prev) => [
-            ...prev,
-            { text: remark, date: new Date().toLocaleString() },
-        ]);
-        setRemark("");
+        addRemarks({
+            remarks: remark.trim(),
+            receiver: id
+        }).then(() => {
+            setRemark("");
+            setLoad(x => !x)
+        })
+
     };
 
     return (
@@ -122,10 +127,10 @@ export default function StudentRemarkDetailPage() {
                                         className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm md:p-4 md:rounded-xl"
                                     >
                                         <p className="text-gray-800 text-sm md:text-base">
-                                            {r.text}
+                                            {r.remarks}
                                         </p>
                                         <span className="text-gray-400 text-xs md:text-sm block mt-1">
-                                            {r.date}
+                                            {moment(r.remarkedAt).format("DD MMM YYYY h:mm:s A")}
                                         </span>
                                     </div>
                                 ))}
