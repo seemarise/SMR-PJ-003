@@ -1,48 +1,51 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { ArrowLeft, RotateCw, Info, UserRound, Send } from "lucide-react";
+import { addComment, getAllComment } from "@/services/classroomService/commentApi";
+import Image from "next/image";
+import moment from "moment";
 
 export default function CommentsPage() {
     const router = useRouter();
     const { classId, section, subject, id } = useParams();
+    const [load, setLoad] = useState(false)
+    const [comments, setComments] = useState([]);
 
-    const [comments, setComments] = useState([
-        {
-            id: 1,
-            author: "Prakasavalli",
-            avatar: "/user.png",
-            text: "Hey everyone! Don’t forget the English lab tomorrow.",
-            time: "49 minutes ago",
-        },
-        {
-            id: 2,
-            author: "Student A",
-            avatar: "/user.png",
-            text: "Got it, ma’am!",
-            time: "20 minutes ago",
-        },
-    ]);
-    const [input, setInput] = useState("");
+    // ✅ React Hook Form
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
 
-    const handleAddComment = () => {
-        if (!input.trim()) return;
-        setComments([
-            ...comments,
-            {
-                id: comments.length + 1,
-                author: "You",
-                avatar: "/user.png",
-                text: input,
-                time: "Just now",
-            },
-        ]);
-        setInput("");
+    useEffect(() => {
+        getAllComment(id, {}).then(res => {
+            setComments(res.data.comments)
+        })
+    }, [load])
+
+    const onSubmit = (data) => {
+        if (!data.comment.trim()) return;
+
+        let param = {
+            comment: data.comment,
+            parentId: id
+        }
+
+        addComment(param).then(() => {
+            reset(); // clears the input
+            setLoad(x => !x)
+        })
+
+
     };
 
     const handleRefresh = () => {
-        console.log("Comments refreshed");
+        csetLoad(x => !x)
     };
 
     return (
@@ -85,18 +88,20 @@ export default function CommentsPage() {
                                 key={c.id}
                                 className="bg-white rounded-lg shadow p-4 md:p-6 flex gap-3 items-start"
                             >
-                                <img
-                                    src={c.avatar}
-                                    alt={c.author}
+                                <Image
+                                    src={c.commentedBy.profileImageUrl}
+                                    alt={c.commentedBy.name}
+                                    width={35}
+                                    height={35}
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
                                 <div className="flex-1">
                                     <div className="flex justify-between items-center">
-                                        <h4 className="font-semibold text-gray-800">{c.author}</h4>
-                                        <span className="text-xs text-gray-400">{c.time}</span>
+                                        <h4 className="font-semibold text-gray-800">{c.commentedBy.name}</h4>
+                                        <span className="text-xs text-gray-400">{moment(c.commentedOn).fromNow()}</span>
                                     </div>
                                     <p className="text-gray-700 text-sm md:text-base mt-1 whitespace-pre-line">
-                                        {c.text}
+                                        {c.comment}
                                     </p>
                                 </div>
                             </div>
@@ -105,28 +110,34 @@ export default function CommentsPage() {
                 </div>
             </main>
 
-            {/* ✅ Footer (Fixed for both mobile + desktop) */}
-            <footer
-                className="fixed bottom-0 left-0 right-0 bg-white flex items-center gap-3 px-4 py-3 md:px-8 md:py-4 shadow-sm pb-1"
-
-            >
-                <div className="flex items-center flex-1 bg-gray-100 rounded-full px-4 py-2 md:py-3 max-w-5xl mx-auto">
+            {/* ✅ Footer with React Hook Form */}
+            <footer className="fixed bottom-0 left-0 right-0 bg-white flex items-center gap-3 px-4 py-3 md:px-8 md:py-4 shadow-sm pb-1">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="flex items-center flex-1 bg-gray-100 rounded-full px-4 py-2 md:py-3 max-w-5xl mx-auto"
+                >
                     <UserRound className="text-gray-400 w-5 h-5 mr-2" />
                     <input
                         type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
                         placeholder="Write a comment..."
+                        {...register("comment", { required: true })}
                         className="flex-1 bg-transparent outline-none text-sm md:text-base"
                     />
-                </div>
+                </form>
                 <button
-                    onClick={handleAddComment}
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}
                     className="bg-blue-600 p-3 rounded-full text-white hover:bg-blue-700 transition"
                 >
                     <Send size={18} />
                 </button>
             </footer>
+
+            {errors.comment && (
+                <p className="text-red-500 text-xs text-center pb-2">
+                    Comment cannot be empty
+                </p>
+            )}
         </div>
     );
 }
