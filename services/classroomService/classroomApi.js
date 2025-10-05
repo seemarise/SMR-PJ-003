@@ -33,6 +33,10 @@ const rejectSubmissionBySubId = (queryParams,body,options) => {
     return apiClient.post(concatenatePath("/api/v1/assignments/teachers/reject-submission/",queryParams),body);
 };
 
+const deleteAssignmentById = (queryParams,body,options) => {
+    return apiClient.delete(concatenatePath("/api/v1/assignments/teachers/delete-assignment/",queryParams));
+};
+
 export { 
         getClassromSubjects,
         getListOfAnnouncements,
@@ -40,5 +44,6 @@ export {
         getSubmissions,
         getSubmissionsInfoById,
         approveSubmissionBySubId,
-        rejectSubmissionBySubId
+        rejectSubmissionBySubId,
+        deleteAssignmentById
 };

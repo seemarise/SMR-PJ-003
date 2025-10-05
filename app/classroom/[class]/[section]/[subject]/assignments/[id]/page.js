@@ -14,7 +14,9 @@ export default function AssignmentDetails({ params }) {
     "submissions": [],
     "submittedCount": 0
   });
+  
   const { id } = React.use(params);
+  
   useEffect(() => {
     async function fetchSubmissions() {
       let res = await getSubmissions([id]);
@@ -22,6 +24,7 @@ export default function AssignmentDetails({ params }) {
     };
     fetchSubmissions();
   }, []);
+  
   function formatDateTime(isoDate) {
     if (!isoDate) return "";
     const date = new Date(isoDate);
@@ -42,6 +45,7 @@ export default function AssignmentDetails({ params }) {
 
     return `${formattedDate} - ${formattedTime}`;
   }
+
 
   return (<div className="flex flex-col min-h-screen bg-gray-50">
     <main className="px-4 py-4 flex-1 md:px-8 md:py-10">
@@ -142,13 +146,6 @@ export default function AssignmentDetails({ params }) {
             );
           })
         )}
-
-
-
-
-
-
-
       </div>
     </main>
   </div>);
