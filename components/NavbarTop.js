@@ -19,7 +19,8 @@ export default function NavbarTop({ sharedTitle }) {
         <Image
           src={user.profileImage}
           alt="Profile"
-          fill
+          height={500}
+          width={500}
           className="object-cover"
         />
       </div>

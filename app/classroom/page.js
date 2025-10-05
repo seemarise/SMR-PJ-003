@@ -35,14 +35,14 @@ function Classroom() {
 
         {/* Class Pill */}
         {subjects.classesAndSubjects?.map((classes) => {
-          return <>
+          return <div key={classes.classId}>
             <div className="flex justify-center mb-6 md:mb-8">
               <span className="text-[#5074b6] border border-[#5074b6] px-4 py-1 rounded-full text-sm font-medium md:text-base md:px-6 md:py-2">
                 Class {classes.className}
               </span>
             </div>
             {classes.sections?.map((section) => (
-              <div key={section}>
+              <div key={section.sectionId}>
                 <p className="text-gray-700  text-center font-semibold mb-1 md:text-lg md:mb-3">Sec - {section.section}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
                   {section.subjects?.map((subject) => (
@@ -58,7 +58,7 @@ function Classroom() {
                 </div>
               </div>
             ))}
-          </>
+          </div>
         })
         }
 

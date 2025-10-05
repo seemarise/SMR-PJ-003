@@ -125,7 +125,7 @@ export default function AttendancePage() {
                 <div className="space-y-4 md:max-w-4xl md:mx-auto">
                     {attendance.map((student) => (
                         <div
-                            key={student.id}
+                            key={student._id}
                             className="flex items-center justify-between bg-white rounded-xl p-3 shadow-sm border border-gray-100 hover:shadow-md transition md:p-5"
                         >
                             <div className="flex items-center gap-3">

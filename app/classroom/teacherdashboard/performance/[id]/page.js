@@ -45,10 +45,10 @@ export default function StudentPerformancePage({ params }) {
           {/* Student Info Card */}
           <div className="bg-blue-50 rounded-xl p-4 shadow-sm flex items-center gap-4 md:bg-white md:border md:border-blue-100">
             <Image
-              src={student.profileImage}
+              src={student.profileImage ?? null}
+              alt={student.name ?? ""}
               width={100}
               height={100}
-              alt={student.name}
               className="w-16 h-16 rounded-full border-2 border-blue-300 md:w-20 md:h-20"
             />
             <div>
