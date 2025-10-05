@@ -1,5 +1,5 @@
 "use client";
-
+import Link  from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getSubmissions } from "@/services/classroomService/classroomApi";
@@ -8,6 +8,7 @@ import React from "react";
 export default function AssignmentDetails({ params }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { class: className, section, subject } = React.use(params) ;
   const title = searchParams.get("title");
   const [submissions, setSubmissions] = useState({
     "submissions": [],
@@ -69,23 +70,27 @@ export default function AssignmentDetails({ params }) {
             // Tailwind classes for status
             let headerClass = "";
             let badgeClass = "";
-
+            let arrowClass = "";
             switch (sub.approvalStatus.toLowerCase()) {
               case "pending":
                 headerClass = "bg-[#f9eff0] text-[#d08488]";
                 badgeClass = "bg-[#eed3d5] text-[#d08488]";
+                arrowClass = "text-[#d08488]";
                 break;
               case "rejected":
                 headerClass = "bg-[#feeceb] text-[#f55f54]";
                 badgeClass = "bg-[#fde3e1] text-[#f55f54]";
+                arrowClass = "text-[#f55f54]";
                 break;
               case "approved":
                 headerClass = "bg-[#edf7ed] text-[#6bbd6e]";
                 badgeClass = "bg-[#cde9ce] text-[#6bbd6e]";
+                arrowClass = "text-[#6bbd6e]";
                 break;
               default:
                 headerClass = "bg-white";
                 badgeClass = "bg-gray-200 text-black";
+                arrowClass = "text-black";
             }
 
             return (
@@ -111,9 +116,7 @@ export default function AssignmentDetails({ params }) {
                 <div
                   onClick={() =>
                     router.push(
-                      `/classroom/class10/a/english/assignments/${assignment.id}/submission/${sub.submittedBy.name
-                        .replace(/\s+/g, "")
-                        .toLowerCase()}`
+                      `/classroom/class10/a/english/assignments/${id}/submission/${sub._id}?title=${title} By ${sub.submittedBy.name}`
                     )
                   }
                   className="flex items-center gap-4 bg-white rounded-b-lg p-3 shadow cursor-pointer hover:bg-gray-50 transition md:p-6 md:rounded-b-2xl md:shadow-sm"
@@ -131,7 +134,9 @@ export default function AssignmentDetails({ params }) {
                       {"Class " + sub.submittedBy.className + " - Section " + sub.submittedBy.section}
                     </p>
                   </div>
-                  <span className="text-green-500 text-xl md:text-2xl">›</span>
+                  <Link key={`${sub.submittedBy._id}`} href={`${id}/submission/${sub._id}?title=${title} By ${sub.submittedBy.name}`}>
+                      <span className={`text-xl md:text-2xl ${arrowClass}`}>›</span>
+                  </Link>
                 </div>
               </div>
             );
