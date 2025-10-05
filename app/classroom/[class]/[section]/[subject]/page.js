@@ -16,13 +16,13 @@ export default function SubjectPage({ params }) {
 
   // ✅ Fix: directly extract from params (not React.use)
   const { class: className, section, subject } = params || {};
-   // 🔹 get query params
-   const classId = searchParams.get("class");
-   const sectionId = searchParams.get("section");
+  // 🔹 get query params
+  const classId = searchParams.get("class");
+  const sectionId = searchParams.get("section");
   const subjectId = searchParams.get("subject");
   const items = [
     { name: "Announcements", icon: Megaphone, href: "announcements" },
-    { name: "Assignments", icon: ClipboardList, href:  `assignments?class=${classId}&section=${sectionId}&subject=${subjectId}`},
+    { name: "Assignments", icon: ClipboardList, href: `assignments` },
     { name: "Resources", icon: BookOpen, href: "resources" },
     { name: "Performance", icon: BarChart3, href: "performance" },
   ];
@@ -78,7 +78,7 @@ export default function SubjectPage({ params }) {
             {items.map(({ name, icon: Icon, href }) => (
               <Link
                 key={name}
-                href={`/classroom/${className}/${section}/${subject}/${href}`}
+                href={`/classroom/${className}/${section}/${subject}/${href}?class=${classId}&section=${sectionId}&subject=${subjectId}`}
               >
                 <div className="flex items-center justify-between bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer md:p-5">
                   <div className="flex items-center gap-3">
