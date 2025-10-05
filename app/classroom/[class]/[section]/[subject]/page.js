@@ -45,7 +45,7 @@ export default function SubjectPage({ params }) {
 
             {/* Subject Title */}
             <div className="absolute left-1/2 -translate-x-1/2 text-center">
-              <h1 className="text-xl font-bold text-blue-800 md:text-3xl">
+              <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
                 {subject
                   ? subject.charAt(0).toUpperCase() + subject.slice(1)
                   : "Subject"}
@@ -65,12 +65,12 @@ export default function SubjectPage({ params }) {
               </p>
             </div>
             <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 md:w-14 md:h-14">
-              <BookOpen className="text-blue-600 w-5 h-5 md:w-7 md:h-7" />
+              <BookOpen className="text-[#5074b6] w-5 h-5 md:w-7 md:h-7" />
             </div>
           </div>
 
           {/* Management Section */}
-          <p className="text-blue-700 mt-3 font-semibold text-base md:text-xl">
+          <p className="text-[#5074b6] mt-3 font-semibold text-base md:text-xl">
             Subject Management
           </p>
 
@@ -83,7 +83,7 @@ export default function SubjectPage({ params }) {
                 <div className="flex items-center justify-between bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer md:p-5">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 md:w-12 md:h-12">
-                      <Icon className="text-blue-600 w-5 h-5 md:w-6 md:h-6" />
+                      <Icon className="text-[#5074b6] w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     <span className="font-medium text-gray-700 md:text-lg">
                       {name}

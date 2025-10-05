@@ -48,7 +48,7 @@ export default function ResourcesPage({ params }) {
                             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
                         </button>
 
-                        <h1 className="text-xl font-bold text-blue-700 md:text-3xl">
+                        <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
                             Resources
                         </h1>
 
@@ -57,7 +57,7 @@ export default function ResourcesPage({ params }) {
 
                     {/* Subject Info */}
                     <div className="bg-blue-50 rounded-xl p-4 shadow-sm flex items-center gap-3 md:p-6">
-                        <BookOpen className="text-blue-600 w-6 h-6 md:w-7 md:h-7" />
+                        <BookOpen className="text-[#5074b6] w-6 h-6 md:w-7 md:h-7" />
                         <div>
                             <p className="font-semibold text-gray-800 md:text-lg capitalize">
                                 Classroom Resources
@@ -84,7 +84,7 @@ export default function ResourcesPage({ params }) {
                             >
                                 <div className="flex items-center gap-4">
                                     <div className="bg-blue-100 p-3 rounded-xl flex items-center justify-center">
-                                        <Folder className="text-blue-700 w-6 h-6 md:w-7 md:h-7" />
+                                        <Folder className="text-[#5074b6] w-6 h-6 md:w-7 md:h-7" />
                                     </div>
                                     <div>
                                         <p className="font-semibold text-gray-800 text-base md:text-lg">
@@ -112,7 +112,7 @@ export default function ResourcesPage({ params }) {
                     {/* Floating Add Button */}
                     <button
                         onClick={handleAdd}
-                        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
                     >
                         <Plus />
                     </button>

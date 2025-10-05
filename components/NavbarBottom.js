@@ -91,7 +91,7 @@ export default function NavbarBottom({ setSharedTitle }) {
           <Link href={centerItem.href}>
             <div
               className={`
-                bg-blue-600 w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-4 border-white/30
+                bg-[#5074b6] w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-4 border-white/30
                 text-white hover:text-blue-300 hover:scale-105 transition-all duration-300
                 ${pathname === centerItem.href ? "text-yellow-400 scale-110" : ""}
               `}
@@ -125,7 +125,7 @@ function NavItem({ item, pathname }) {
       onAnimationEnd={(e) => e.currentTarget.classList.remove("touch-bounce")}
       className={`
                 flex flex-col items-center justify-center text-gray-700  transition-all duration-300
-                ${isActive ? "scale-110 text-yellow-400" : "hover:scale-105 hover:text-blue-300"}
+                ${isActive ? "scale-110 text-yellow-200" : "hover:scale-105 hover:text-blue-300"}
             `}
     >
       <Icon className="text-2xl mb-1" />

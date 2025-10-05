@@ -37,7 +37,7 @@ export default function AttendancePage() {
 
                     {/* Centered Title */}
                     <div className="absolute left-1/2 -translate-x-1/2 text-center">
-                        <h1 className="text-xl md:text-3xl font-bold text-blue-700">
+                        <h1 className="text-xl md:text-3xl font-bold text-[#5074b6]">
                             Student Attendance
                         </h1>
                     </div>
@@ -49,7 +49,7 @@ export default function AttendancePage() {
                                 onClick={() => setIsEditing(true)}
                                 className="p-1 md:p-2"
                             >
-                                <Pencil className="w-5 h-5 text-blue-700 hover:scale-110 transition md:w-6 md:h-6" />
+                                <Pencil className="w-5 h-5 text-[#5074b6] hover:scale-110 transition md:w-6 md:h-6" />
                             </button>
                         ) : (
                             <>
@@ -61,7 +61,7 @@ export default function AttendancePage() {
                                 </button>
                                 <button
                                     onClick={() => setIsEditing(false)}
-                                    className="text-blue-700 font-medium hover:underline text-sm md:text-base"
+                                    className="text-[#5074b6] font-medium hover:underline text-sm md:text-base"
                                 >
                                     Save
                                 </button>

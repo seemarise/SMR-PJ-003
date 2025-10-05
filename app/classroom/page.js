@@ -28,7 +28,7 @@ function Classroom() {
         <Link href="/classroom/teacherdashboard">
 
           {/* Title Section */}
-          <div className="bg-blue-600 text-white text-lg font-semibold rounded-lg py-3 px-4 mb-4 text-center md:text-2xl md:py-4">
+          <div className="bg-[#5074b6] text-white text-lg font-semibold rounded-lg py-3 px-4 mb-4 text-center md:text-2xl md:py-4">
             My Classroom
           </div>
         </Link>
@@ -37,7 +37,7 @@ function Classroom() {
         {subjects.classesAndSubjects?.map((classes) => {
           return <>
             <div className="flex justify-center mb-6 md:mb-8">
-              <span className="text-blue-600 border border-blue-600 px-4 py-1 rounded-full text-sm font-medium md:text-base md:px-6 md:py-2">
+              <span className="text-[#5074b6] border border-[#5074b6] px-4 py-1 rounded-full text-sm font-medium md:text-base md:px-6 md:py-2">
                 Class {classes.className}
               </span>
             </div>
@@ -50,7 +50,7 @@ function Classroom() {
                       key={subject}
                       href={`/classroom/${classes.className}/${section.section}/${subject.subjectName}?class=${classes.classId}&section=${section.sectionId}&subject=${subject.subjectId}`}
                     >
-                      <div className="bg-white rounded-xl p-4 shadow text-blue-600 font-medium text-center cursor-pointer hover:bg-blue-50 hover:shadow-md transition md:p-5 md:text-lg md:shadow-sm">
+                      <div className="bg-white rounded-xl p-4 shadow text-[#5074b6] font-medium text-center cursor-pointer hover:bg-blue-50 hover:shadow-md transition md:p-5 md:text-lg md:shadow-sm">
                         {subject.subjectName}
                       </div>
                     </Link>

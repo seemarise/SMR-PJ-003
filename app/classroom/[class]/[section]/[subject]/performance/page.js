@@ -59,12 +59,12 @@ export default function StudentPerformancePage() {
                             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
                         </button>
 
-                        <h1 className="text-xl font-bold text-blue-700 md:text-3xl md:font-semibold">
+                        <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-semibold">
                             Student Performance
                         </h1>
 
                         <button
-                            className="text-blue-600 md:p-2 md:rounded-full md:hover:bg-blue-100"
+                            className="text-[#5074b6] md:p-2 md:rounded-full md:hover:bg-blue-100"
                             onClick={handleRefresh}
                         >
                             <RotateCcw className="w-6 h-6 md:w-7 md:h-7" />
@@ -73,7 +73,7 @@ export default function StudentPerformancePage() {
 
                     {/* Subject Info Card */}
                     <div className="bg-white border rounded-lg shadow p-4 mb-8 md:p-6 md:rounded-xl">
-                        <div className="flex items-center gap-2 text-blue-700 font-medium mb-2 md:text-lg">
+                        <div className="flex items-center gap-2 text-[#5074b6] font-medium mb-2 md:text-lg">
                             <Book className="w-5 h-5 md:w-6 md:h-6" />
                             <span>{subjectInfo.name}</span>
                         </div>

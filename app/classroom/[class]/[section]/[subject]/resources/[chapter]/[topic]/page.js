@@ -72,7 +72,7 @@ export default function TopicPage({ params }) {
               <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
             </button>
 
-            <h1 className="text-xl font-bold text-blue-700 md:text-3xl capitalize">
+            <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl capitalize">
               {topic.replace("-", " ")}
             </h1>
 
@@ -82,8 +82,8 @@ export default function TopicPage({ params }) {
           {/* Topic Info Card */}
           <div className="bg-blue-50 rounded-xl p-4 shadow-sm flex flex-col gap-2 md:p-6">
             <div className="flex items-center gap-2">
-              <Folder className="text-blue-700 w-5 h-5 md:w-6 md:h-6" />
-              <p className="text-blue-900 font-semibold text-lg capitalize">
+              <Folder className="text-[#5074b6] w-5 h-5 md:w-6 md:h-6" />
+              <p className="text-[#5074b6] font-semibold text-lg capitalize">
                 {chapter.replace("-", " ")}
               </p>
             </div>
@@ -184,7 +184,7 @@ export default function TopicPage({ params }) {
           {/* Floating Add Button */}
           <button
             onClick={handleAdd}
-            className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+            className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
           >
             <Plus />
           </button>

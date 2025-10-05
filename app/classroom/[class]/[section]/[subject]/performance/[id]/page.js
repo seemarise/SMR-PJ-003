@@ -42,12 +42,12 @@ export default function StudentPerformanceReport({ params }) {
                             <ArrowLeft className="w-5 h-5 text-gray-700 md:w-6 md:h-6 md:text-blue-600" />
                         </button>
 
-                        <h1 className="text-lg font-bold text-blue-700 md:text-3xl md:font-semibold text-center flex-1">
+                        <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl md:font-semibold text-center flex-1">
                             Performance Report
                         </h1>
 
                         <button
-                            className="text-gray-700 md:text-blue-600 md:p-2 md:rounded-full md:hover:bg-blue-100"
+                            className="text-gray-700 md:text-[#5074b6] md:p-2 md:rounded-full md:hover:bg-blue-100"
                             onClick={handleRefresh}
                         >
                             <RotateCcw className="w-5 h-5 md:w-7 md:h-7" />
@@ -74,10 +74,10 @@ export default function StudentPerformanceReport({ params }) {
                                     {student.name}
                                 </h2>
                                 <div className="flex items-center gap-1 text-gray-600 text-xs md:text-base">
-                                    <GraduationCap className="w-3.5 h-3.5 md:w-5 md:h-5 text-blue-600" />
+                                    <GraduationCap className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#5074b6]" />
                                     <span>{student.class}</span>
                                 </div>
-                                <div className="flex items-center gap-1 text-blue-700 text-xs md:text-base font-medium">
+                                <div className="flex items-center gap-1 text-[#5074b6] text-xs md:text-base font-medium">
                                     <Book className="w-3.5 h-3.5 md:w-5 md:h-5" />
                                     <span>{student.subject}</span>
                                 </div>
@@ -132,7 +132,7 @@ export default function StudentPerformanceReport({ params }) {
 
                             <button
                                 onClick={handleRefresh}
-                                className="px-5 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-md shadow hover:bg-blue-700 transition md:px-8 md:py-3 md:text-base"
+                                className="px-5 py-1.5 bg-[#5074b6] text-white text-sm font-semibold rounded-md shadow hover:bg-blue-700 transition md:px-8 md:py-3 md:text-base"
                             >
                                 Refresh
                             </button>

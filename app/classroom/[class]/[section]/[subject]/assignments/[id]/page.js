@@ -56,7 +56,7 @@ export default function AssignmentDetails({ params }) {
             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
           </button>
 
-          <h1 className="text-xl font-bold text-blue-700 md:text-3xl md:font-bold">
+          <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
             {title ? title : ""}
           </h1>
           <div>
@@ -137,13 +137,6 @@ export default function AssignmentDetails({ params }) {
             );
           })
         )}
-
-
-
-
-
-
-
       </div>
     </main>
   </div>);

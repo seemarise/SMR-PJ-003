@@ -35,7 +35,7 @@ export default function EditAssignmentPage() {
                             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
                         </button>
 
-                        <h1 className="text-xl font-bold text-blue-700 md:text-3xl md:font-bold">
+                        <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
                             Edit Assignment
                         </h1>
 
@@ -80,7 +80,7 @@ export default function EditAssignmentPage() {
                                 <button
                                     type="button"
                                     onClick={handleAddTopic}
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                                    className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                                 >
                                     +
                                 </button>
@@ -160,7 +160,7 @@ export default function EditAssignmentPage() {
                         <div>
                             <label className="font-medium block mb-1">Add Images</label>
                             <div className="flex gap-2">
-                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                                     Add Image
                                 </button>
                                 <button className="border px-4 py-2 rounded-lg hover:bg-gray-50 transition">
@@ -203,7 +203,7 @@ export default function EditAssignmentPage() {
                         </div>
 
                         {/* Update Button */}
-                        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl">
+                        <button className="w-full bg-[#5074b6] hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl">
                             Update Assignment
                         </button>
                     </form>

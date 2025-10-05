@@ -41,13 +41,13 @@ export default function StudentRemarksPage() {
                         </button>
 
                         {/* Title */}
-                        <h1 className="text-lg font-bold text-blue-800 md:text-3xl md:font-semibold text-center">
+                        <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl md:font-semibold text-center">
                             Student Remarks
                         </h1>
 
                         {/* Refresh Button */}
                         <button className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:absolute md:right-0 md:p-3 md:shadow-sm">
-                            <RefreshCw className="w-5 h-5 text-blue-700 md:w-6 md:h-6" />
+                            <RefreshCw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
                     </div>
 

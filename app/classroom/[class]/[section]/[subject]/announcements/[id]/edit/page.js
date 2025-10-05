@@ -42,7 +42,7 @@ export default function EditAnnouncementPage() {
                 >
                     <ArrowLeft className="w-5 h-5 text-blue-600" />
                 </button>
-                <h1 className="text-lg font-bold text-blue-700 md:text-2xl">
+                <h1 className="text-lg font-bold text-[#5074b6] md:text-2xl">
                     Edit Announcement
                 </h1>
                 <div className="w-6" />
@@ -70,7 +70,7 @@ export default function EditAnnouncementPage() {
                                         <BookOpen className="w-4 h-4 text-blue-600" />
                                         <span className="font-medium">Section {section}</span>
                                     </div>
-                                    <div className="flex items-center gap-2 text-blue-600">
+                                    <div className="flex items-center gap-2 text-[#5074b6]">
                                         <SquarePen className="w-4 h-4" />
                                         <span className="font-semibold">{subject}</span>
                                     </div>
@@ -115,7 +115,7 @@ export default function EditAnnouncementPage() {
                     {/* Update Button */}
                     <button
                         onClick={handleUpdate}
-                        className="w-full mt-8 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+                        className="w-full mt-8 bg-[#5074b6] text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
                     >
                         Update Announcement
                     </button>

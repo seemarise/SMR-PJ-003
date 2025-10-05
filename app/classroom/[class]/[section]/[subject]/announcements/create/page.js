@@ -35,7 +35,7 @@ export default function CreateAnnouncement() {
                         </button>
 
                         {/* Title */}
-                        <h1 className="text-lg font-semibold text-blue-600 md:text-3xl md:font-bold">
+                        <h1 className="text-lg font-semibold text-[#5074b6] md:text-3xl md:font-bold">
                             Create Announcement
                         </h1>
 
@@ -101,7 +101,7 @@ export default function CreateAnnouncement() {
                         {/* Post Button */}
                         <button
                             type="submit"
-                            className="flex items-center justify-center gap-2 bg-blue-600 text-white w-full py-3 rounded-lg shadow hover:bg-blue-700 transition text-lg font-medium md:py-4 md:text-xl md:font-semibold md:rounded-xl"
+                            className="flex items-center justify-center gap-2 bg-[#5074b6] text-white w-full py-3 rounded-lg shadow hover:bg-blue-700 transition text-lg font-medium md:py-4 md:text-xl md:font-semibold md:rounded-xl"
                         >
                             📢 Post Announcement
                         </button>

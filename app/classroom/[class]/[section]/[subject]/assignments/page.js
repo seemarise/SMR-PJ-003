@@ -78,7 +78,7 @@ export default function AssignmentsPage({ params }) {
                             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
                         </button>
 
-                        <h1 className="text-xl font-bold text-blue-700 md:text-3xl md:font-bold">
+                        <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
                             Assignments
                         </h1>
 
@@ -180,7 +180,7 @@ export default function AssignmentsPage({ params }) {
                                 `/classroom/${classId}/${section}/${subject}/assignments/create`
                             )
                         }
-                        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
                     >
                         <Plus />
                     </button>
