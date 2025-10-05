@@ -9,11 +9,13 @@ import {
     ArrowRight,
     Plus,
 } from "lucide-react";
-import { getAssignments } from "@/services/classroomService/classroomApi";
+import { getAssignments,deleteAssignmentById } from "@/services/classroomService/classroomApi";
 import { useState, useEffect } from "react";
 
 export default function AssignmentsPage({ params }) {
     const router = useRouter();
+    const [showModal, setShowModal] = useState(false);
+    const [deleteId, setDeleteId] = useState("");
     // const params = useParams(); // ✅ Get current route params
 
     // Extract route params
@@ -46,14 +48,31 @@ export default function AssignmentsPage({ params }) {
     //         submissions: 0,
     //     },
     // ];
-    useEffect(() => {
-        async function fetchAssignments() {
-            console.log("my subject id id", subjectId)
+    async function fetchAssignments() {
             let res = await getAssignments([subjectId]);
             setAssignments(res.data.assignments);
-        };
+    };
+
+    useEffect(() => {
         fetchAssignments();
     }, []);
+
+    async function handleDeleteAssignment(){
+        if (deleteId == ""){
+            return ;
+        }
+        let res = await deleteAssignmentById([deleteId]);
+        if (res.statusCode == 200 ){
+            alert(res.message);
+            setShowModal(false);
+            setDeleteId("");
+            fetchAssignments();
+        }
+        else{
+            alert("error");
+        }
+    };
+
     function formatDate(isoDate) {
         if (!isoDate) return "";
         const date = new Date(isoDate);
@@ -64,6 +83,7 @@ export default function AssignmentsPage({ params }) {
         });
     }
     return (
+        
         <div className="flex flex-col min-h-screen bg-gray-50">
             <main className="px-4 py-4 flex-1 md:px-8 md:py-10">
                 {/* Main container for desktop alignment */}
@@ -149,7 +169,11 @@ export default function AssignmentsPage({ params }) {
 
                                         {/* 🗑️ Delete */}
                                         <button
-                                            onClick={(e) => e.stopPropagation()}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setShowModal(true);
+                                                setDeleteId(a._id);
+                                            }}
                                             className="text-red-500 hover:text-red-600 transition"
                                         >
                                             <Trash size={18} className="md:w-5 md:h-5" />
@@ -172,6 +196,39 @@ export default function AssignmentsPage({ params }) {
                             </div>
                         )))}
                     </div>
+                    {showModal && (
+                            <div className="fixed inset-0 flex items-center justify-center bg-transparent pointer-events-auto z-50">
+                                <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mx-4">
+                                    <h2 className="text-lg font-semibold text-black mb-4">
+                                        Delete Assignment?
+                                    </h2>
+                                    <p className="text-sm text-black">
+                                        Are you sure you want to delete this assignment? This action cannot be undone and all student submissions will be deleted.
+                                    </p>
+
+                                    <div className="flex justify-end gap-3 mt-6">
+                                        {/* Cancel Button */}
+                                        <button
+                                        className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
+                                        onClick={() => {
+                                            setDeleteId("");
+                                            setShowModal(false);
+                                        }}
+                                        >
+                                        Cancel
+                                        </button>
+
+                                        {/* Delete Button */}
+                                        <button
+                                        className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
+                                        onClick={() => handleDeleteAssignment()}
+                                        >
+                                        Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                    )}
 
                     {/* Floating Add Button */}
                     <button

@@ -9,12 +9,6 @@ export default function CreateAnnouncement() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    // ✅ get query params
-    const classId = searchParams.get("classId");
-    const sectionId = searchParams.get("sectionId");
-    const subjectId = searchParams.get("subjectId");
-
-
     const {
         register,
         handleSubmit,
@@ -23,7 +17,7 @@ export default function CreateAnnouncement() {
 
     const onSubmit = (data) => {
         // TODO: Save to DB
-        addAnnouncement({ ...data, classId, sectionId, subjectId }).then(() => {
+        addAnnouncement(data).then(() => {
             router.back(); // back to announcements list 
         })
     };
@@ -85,7 +79,7 @@ export default function CreateAnnouncement() {
                         {/* Post Button */}
                         <button
                             type="submit"
-                            className="flex items-center justify-center gap-2 bg-[#5074b6] text-white w-full py-3 rounded-lg shadow hover:bg-blue-700 transition text-lg font-medium md:py-4 md:text-xl md:font-semibold md:rounded-xl"
+                            className="flex items-center justify-center gap-2 bg-blue-600 text-white w-full py-3 rounded-lg shadow hover:bg-blue-700 transition text-lg font-medium md:py-4 md:text-xl md:font-semibold md:rounded-xl"
                         >
                             Post Announcement
                         </button>

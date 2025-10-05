@@ -30,7 +30,11 @@ export default function EditAnnouncementPage() {
     }, [id, reset]);
 
     const onSubmit = (data) => {
-        updateAnnouncement(id, { ...data, classId, sectionId, subjectId }).then(res => {
+        updateAnnouncement(id, {
+            ...data, "classId": null,
+            "sectionId": null,
+            "subjectId": null
+        }).then(res => {
             router.back();
         })
     };
@@ -45,7 +49,7 @@ export default function EditAnnouncementPage() {
                 >
                     <ArrowLeft className="w-5 h-5 text-blue-600" />
                 </button>
-                <h1 className="text-lg font-bold text-[#5074b6] md:text-2xl">
+                <h1 className="text-lg font-bold text-blue-700 md:text-2xl">
                     Edit Announcement
                 </h1>
                 <div className="w-6" />
@@ -54,33 +58,7 @@ export default function EditAnnouncementPage() {
             {/* Main Content */}
             <main className="flex-1 p-4 md:p-10 md:flex md:justify-center md:items-start">
                 <div className="w-full max-w-xl bg-white md:rounded-2xl md:shadow-lg md:p-8 p-4">
-                    {/* Info Box */}
-                    <div className="bg-blue-50 rounded-xl p-4 mb-6 border border-blue-100">
-                        <div className="flex items-start gap-3">
-                            <div className="p-2 bg-blue-100 rounded-full">
-                                <Info className="w-5 h-5 text-blue-600" />
-                            </div>
-                            <div>
-                                <p className="text-gray-700 text-sm md:text-base">
-                                    Editing announcement for:
-                                </p>
-                                <div className="mt-2 space-y-1 text-sm md:text-base">
-                                    <div className="flex items-center gap-2 text-gray-800">
-                                        <GraduationCap className="w-4 h-4 text-blue-600" />
-                                        <span className="font-medium">Class {classNum}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-gray-800">
-                                        <BookOpen className="w-4 h-4 text-blue-600" />
-                                        <span className="font-medium">Section {section}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-[#5074b6]">
-                                        <SquarePen className="w-4 h-4" />
-                                        <span className="font-semibold">{subject}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     {/* Form */}
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

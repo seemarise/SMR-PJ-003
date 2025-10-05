@@ -1,5 +1,6 @@
 "use client";
 
+import { sessionService } from "@/services/sessionService";
 import { Bell } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation"; // ✅ Import this
@@ -7,6 +8,7 @@ import { useRouter } from "next/navigation"; // ✅ Import this
 export default function NavbarTop({ sharedTitle }) {
   const router = useRouter(); // ✅ Initialize it here
 
+  const user = sessionService.getUser()
   return (
     <header className="flex items-center justify-between px-4 py-2 shadow-md bg-white z-10 relative">
       {/* Profile */}
@@ -15,7 +17,7 @@ export default function NavbarTop({ sharedTitle }) {
         onClick={() => router.push("/profile")} // ✅ Works now
       >
         <Image
-          src="/profile.jpg"
+          src={user.profileImage}
           alt="Profile"
           fill
           className="object-cover"

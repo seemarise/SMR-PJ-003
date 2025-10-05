@@ -10,8 +10,11 @@ import {
     BookOpen,
     ArrowLeft,
 } from "lucide-react";
+import { sessionService } from "@/services/sessionService";
+import Image from "next/image";
 
 export default function TeacherDashboard() {
+    const user = sessionService.getUser()
     const menuItems = [
         {
             title: "Attendance",
@@ -64,19 +67,21 @@ export default function TeacherDashboard() {
                     {/* Teacher Card */}
                     <div className="bg-blue-50 rounded-xl px-4 py-3 mt-3 shadow-sm md:px-6 md:py-5 md:bg-white md:border md:border-blue-100 flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <img
-                                src="/teacher-avatar.png"
+                            <Image
+                                src={user.profileImage}
                                 alt="Teacher Avatar"
+                                height={100}
+                                width={100}
                                 className="w-16 h-16 rounded-full border-2 border-blue-300 md:w-20 md:h-20"
                             />
                             <div>
                                 <p className="text-gray-600 text-sm md:text-base">Welcome,</p>
                                 <h2 className="font-bold text-lg md:text-2xl text-gray-800">
-                                    Prakasavalli
+                                    {user.name}
                                 </h2>
                                 <span className="mt-1 inline-flex items-center bg-white border border-blue-600 text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
                                     <UserRound className="w-4 h-4 mr-2" />
-                                    Class 10 A
+                                    Class {user.classesAndSubjects[0].className} {user.classesAndSubjects[0].section}
                                 </span>
                             </div>
                         </div>

@@ -7,5 +7,11 @@ const getAllAnnouncements = (data) => {
 const deleteAnnouncement = (id) => {
     return apiClient.delete("/api/v1/announcement/teachers/delete/" + id);
 };
+const addAnnouncement = (data) => {
+    return apiClient.post("/api/v1/announcement/teachers/create", data);
+};
+const updateAnnouncement = (id, data) => {
+    return apiClient.put("/api/v1/announcement/teachers/update/" + id, data);
+};
 
-export { getAllAnnouncements, deleteAnnouncement };
+export { getAllAnnouncements, deleteAnnouncement, addAnnouncement, updateAnnouncement };
