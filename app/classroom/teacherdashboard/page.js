@@ -21,7 +21,7 @@ export default function TeacherDashboard() {
         {
             title: "Announcements",
             icon: Megaphone,
-            link: "/classroom/announcements",
+            link: "/classroom/teacherdashboard/announcement",
         },
         {
             title: "Remarks",
