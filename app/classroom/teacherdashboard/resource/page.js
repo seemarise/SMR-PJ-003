@@ -1,5 +1,5 @@
 "use client";
-
+import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
@@ -25,15 +25,16 @@ export default function ResourcesPage({ params }) {
     const [showAddChapter, setShowAddChapter] = useState(false);
     const [delChapterId, setDeleteChapterId] = useState("");
     const [chapterName, setChapterName] = useState("");
-
+    const showToast = (a, b = "success") => {
+        toast[b](a);
+    };
     async function fetchChapter() {
         let res = await getClassroomChapters();
         if (res.statusCode == 200) {
-            alert("chapters fetched successfully");
             setChapters(res.data);
         }
         else {
-            alert("Error");
+            showToast(res.message, "error");
         }
     };
     useEffect(() => {
@@ -44,7 +45,7 @@ export default function ResourcesPage({ params }) {
         let res = await removeChaptersById([delChapterId]);
         if (res.statusCode == 200) {
             setShowModal(false);
-            alert("Chapter Deleted Successfully !!!");
+            showToast("Chapter Deleted Successfully !!!", "error");
             setChapters((prev) => {
                 let data = {};
                 data.chapters = prev.chapters.filter((chapter) => {
@@ -55,7 +56,7 @@ export default function ResourcesPage({ params }) {
             setDeleteChapterId("");
         }
         else {
-            alert('Error');
+            showToast('Error', "error");
         }
     };
 
@@ -67,13 +68,13 @@ export default function ResourcesPage({ params }) {
             subjectId: "",
         });
         if (res.statusCode == 200) {
-            alert("Chapter added successfully");
+            showToast("Chapter added successfully");
             setChapterName("");
             setShowAddChapter(false);
             fetchChapter();
         }
         else {
-            alert("error");
+            showToast("Error", "error");
         }
     };
 

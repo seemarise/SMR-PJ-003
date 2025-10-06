@@ -9,6 +9,7 @@ import {
     BookOpen,
     GraduationCap,
 } from "lucide-react";
+import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { addModuleByChapterId, getAllModulesByChapterId, removeModuleById } from "@/services/classroomService/resourceApi";
@@ -29,16 +30,17 @@ export default function ChapterPage({ params }) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showAddTopic, setShowAddTopic] = useState(false);
     const [delTopicId, setDelTopicId] = useState("");
-
+    const showToast = (a, b = "success") => {
+        toast[b](a);
+    };
     async function fetchModulesByChapter() {
         let res = await getAllModulesByChapterId([chapter], { searchTag: search });
         if (res.statusCode == 200) {
-            alert("Modules fetched successfully");
             setTopics(res.data);
             setFilteredTopics(res.data);
         }
         else {
-            console.log("error");
+
         }
     }
     useEffect(() => {
@@ -61,7 +63,7 @@ export default function ChapterPage({ params }) {
     async function handleDelete() {
         let res = await removeModuleById([delTopicId]);
         if (res.statusCode == 200) {
-            alert("Deleted Successfully !");
+            showToast("Deleted Successfully !", "error");
             setTopics(prev => {
                 let data = {};
                 data.modules = prev.modules.filter((module) => {
@@ -80,7 +82,7 @@ export default function ChapterPage({ params }) {
             setShowDeleteModal(false);
         }
         else {
-            alert("Error !!!");
+            showToast("Error", "error");
         }
 
     };
@@ -97,13 +99,12 @@ export default function ChapterPage({ params }) {
     async function handleAddChapter() {
         let res = await addModuleByChapterId({ moduleName: addTopic, chapterId: chapter });
         if (res.statusCode == 200) {
-            alert("Module Added successfully !!");
             setAddTopic('');
             setShowAddTopic(false);
             fetchModulesByChapter();
         }
         else {
-            alert('Error');
+            showToast("Error", "error");
         }
     };
     // const filteredTopics = topics.filter((topic) =>
