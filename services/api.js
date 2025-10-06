@@ -36,33 +36,28 @@ class ApiClient {
           ? JSON.stringify(body)
           : undefined,
     };
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(url, config);
+        let data = await response.json();
+        if (!response.ok) {
 
-    try {
-      const response = await fetch(url, config);
+          // Optional: if 401, clear token and force logout
+          if (response.status === 401) {
+            sessionService.removeSession();
+            // console.warn("Unauthorized. Token removed.");
+          }
 
-      if (!response.ok) {
-        let errorMessage = "API Error";
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch {
-          // if not JSON, fallback to default
+          reject(data);
         }
 
-        // Optional: if 401, clear token and force logout
-        if (response.status === 401) {
-          sessionService.removeToken();
-          // console.warn("Unauthorized. Token removed.");
-        }
 
-        throw new Error(errorMessage);
+        resolve(data)
+      } catch (error) {
+        reject(error.message)
       }
+    })
 
-      return await response.json();
-    } catch (error) {
-      // console.error("API request failed:", error);
-      throw error; // rethrow so caller can handle
-    }
   }
 
   get(endpoint, params, options) {
