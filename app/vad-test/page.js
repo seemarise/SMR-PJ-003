@@ -62,7 +62,7 @@ function VadTestPage() {
     );
   } else {
     return (
-      <div className="flex h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
+      <div className="flex flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
         {/* Top Navbar */}
         {/* <NavbarTop /> */}
 
@@ -101,7 +101,7 @@ function VadTestPage() {
 
             {/* Right - Tasks Icon */}
             <ClipboardList
-              className="h-6 w-6 text-gray-700 cursor-pointer hover:text-blue-600 hover:scale-110 transition-all duration-200 active:scale-95 md:h-7 md:w-7"
+              className="h-6 w-6 text-gray-700 cursor-pointer hover:text-[#5074b6] hover:scale-110 transition-all duration-200 active:scale-95 md:h-7 md:w-7"
               onClick={() => setIsModalOpen(true)}
             />
           </div>

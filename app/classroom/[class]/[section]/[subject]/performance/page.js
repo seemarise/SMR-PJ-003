@@ -56,7 +56,7 @@ export default function StudentPerformancePage() {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-semibold">
@@ -98,7 +98,7 @@ export default function StudentPerformancePage() {
                                 There are no students assigned to this class yet.
                             </p>
                             <button
-                                className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition md:px-8 md:py-3"
+                                className="px-6 py-2 bg-[#5074b6] text-white font-semibold rounded-md shadow hover:bg-[#5074b6] transition md:px-8 md:py-3"
                                 onClick={handleRefresh}
                             >
                                 Refresh
@@ -120,7 +120,7 @@ export default function StudentPerformancePage() {
                                     >
                                         <div className="flex items-center gap-3 md:gap-4">
                                             {/* Number Badge */}
-                                            <div className="w-7 h-7 flex items-center justify-center bg-blue-100 text-blue-700 font-semibold rounded-full text-sm md:w-8 md:h-8 md:text-base">
+                                            <div className="w-7 h-7 flex items-center justify-center bg-blue-100 text-[#5074b6] font-semibold rounded-full text-sm md:w-8 md:h-8 md:text-base">
                                                 {index + 1}
                                             </div>
 

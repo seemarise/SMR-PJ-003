@@ -4,11 +4,17 @@ import { sessionService } from "@/services/sessionService";
 import { Bell } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation"; // ✅ Import this
+import { useEffect, useState } from "react";
 
 export default function NavbarTop({ sharedTitle }) {
   const router = useRouter(); // ✅ Initialize it here
 
-  const user = sessionService.getUser()
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    let u = sessionService.getUser()
+    setUser(u)
+  }, [])
   return (
     <header className="flex items-center justify-between px-4 py-2 shadow-md bg-white z-10 relative">
       {/* Profile */}
@@ -17,7 +23,7 @@ export default function NavbarTop({ sharedTitle }) {
         onClick={() => router.push("/profile")} // ✅ Works now
       >
         <Image
-          src={user?.profileImage}
+          src={user?.profileImage ?? null}
           alt="Profile"
           height={500}
           width={500}
@@ -27,7 +33,7 @@ export default function NavbarTop({ sharedTitle }) {
 
       {/* Center Title */}
       <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
-        <h1 className="text-2xl font-bold text-blue-600">
+        <h1 className="text-2xl font-bold text-[#5074b6]">
           VAD<span className="text-black">AI</span>
         </h1>
         <span className="text-white text-xs font-semibold px-3 py-1 bg-[#5074b6] rounded-full shadow-md -mb-2 z-10">

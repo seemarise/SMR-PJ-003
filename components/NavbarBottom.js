@@ -5,37 +5,13 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-// Example placeholder component
-const IconPlaceholder = () => (
-  <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
-);
-
-// Dynamically import icons with loading placeholder
-const PiExam = dynamic(
-  () => import("react-icons/pi").then((mod) => mod.PiExam),
-  { ssr: false, loading: () => <IconPlaceholder /> }
-);
-
-const SiGoogleclassroom = dynamic(
-  () => import("react-icons/si").then((mod) => mod.SiGoogleclassroom),
-  { ssr: false, loading: () => <IconPlaceholder /> }
-);
-
-const HiMiniComputerDesktop = dynamic(
-  () => import("react-icons/hi2").then((mod) => mod.HiMiniComputerDesktop),
-  { ssr: false, loading: () => <IconPlaceholder /> }
-);
-
-const MdTimeline = dynamic(
-  () => import("react-icons/md").then((mod) => mod.MdTimeline),
-  { ssr: false, loading: () => <IconPlaceholder /> }
-);
-
-const FaBrain = dynamic(
-  () => import("react-icons/fa").then((mod) => mod.FaBrain),
-  { ssr: false, loading: () => <IconPlaceholder /> }
-);
-
+import {
+  BookOpen,        // for PiExam (approximation)
+  School,          // for SiGoogleclassroom (approximation)
+  Monitor,         // for HiMiniComputerDesktop
+  Activity,        // for MdTimeline
+  Brain            // for FaBrain
+} from "lucide-react";
 
 
 // Helper function to get active label
@@ -50,19 +26,19 @@ export default function NavbarBottom({ setSharedTitle }) {
 
   // Define all items
   const leftItems = [
-    { icon: PiExam, label: "VAD Test", href: "/vad-test" },
-    { icon: SiGoogleclassroom, label: "Classroom", href: "/classroom" },
+    { icon: BookOpen, label: "VAD Test", href: "/vad-test" },
+    { icon: School, label: "Classroom", href: "/classroom" },
   ];
 
   const centerItem = {
-    icon: FaBrain,
+    icon: Brain,
     label: "VAD AI",
     href: "/ai",
   };
 
   const rightItems = [
-    { icon: HiMiniComputerDesktop, label: "Ethical Learning", href: "/ethical-learning" },
-    { icon: MdTimeline, label: "Timeline", href: "/timeline" },
+    { icon: Monitor, label: "Ethical Learning", href: "/ethical-learning" },
+    { icon: Activity, label: "Timeline", href: "/timeline" },
   ];
 
   const allItems = [...leftItems, centerItem, ...rightItems];
@@ -100,7 +76,7 @@ export default function NavbarBottom({ setSharedTitle }) {
             </div>
           </Link>
           {/* Always show active label below FAB */}
-          <span className="text-xs mt-2 text-black dark:text-blue-600">{activeLabel}</span>
+          <span className="text-xs mt-2 font-bold uppercase text-black dark:text-[#5074b6]">{activeLabel}</span>
         </div>
 
         {/* Right Items */}
@@ -125,7 +101,7 @@ function NavItem({ item, pathname }) {
       onAnimationEnd={(e) => e.currentTarget.classList.remove("touch-bounce")}
       className={`
                 flex flex-col items-center justify-center text-gray-700  transition-all duration-300
-                ${isActive ? "scale-110 text-yellow-200" : "hover:scale-105 hover:text-blue-300"}
+                ${isActive ? "scale-110 text-yellow-600" : "hover:scale-105 hover:text-blue-300"}
             `}
     >
       <Icon className="text-2xl mb-1" />

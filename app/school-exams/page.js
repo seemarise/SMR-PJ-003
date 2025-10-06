@@ -24,7 +24,7 @@ function ExamDetailsView({ exam, onBack }) {
           >
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
-          <h1 className="text-lg font-semibold text-blue-600 md:text-xl">Exam Details</h1>
+          <h1 className="text-lg font-semibold text-[#5074b6] md:text-xl">Exam Details</h1>
         </div>
       </div>
 
@@ -35,21 +35,21 @@ function ExamDetailsView({ exam, onBack }) {
           <h2 className="text-xl font-bold text-gray-900 md:text-3xl">
             {exam.title}
           </h2>
-          <p className="text-base text-blue-600 mt-1 md:text-lg">{exam.subject}</p>
+          <p className="text-base text-[#5074b6] mt-1 md:text-lg">{exam.subject}</p>
         </div>
 
         {/* Exam Info */}
         <div className="space-y-3 animate-in fade-in slide-in-from-bottom duration-500 delay-100 md:grid md:grid-cols-3 md:gap-4 md:space-y-0 md:bg-white md:p-6 md:rounded-xl md:shadow-sm">
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
-            <Calendar className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <Calendar className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             <span className="text-sm md:text-base">{exam.date}</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
-            <FileText className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <FileText className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             <span className="text-sm md:text-base">Total Marks: {exam.marks}</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
-            <ChevronRight className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <ChevronRight className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             <span className="text-sm md:text-base">{exam.mainTopics} Main Topics</span>
           </div>
         </div>
@@ -80,11 +80,10 @@ function ExamDetailsView({ exam, onBack }) {
               </button>
 
               <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  expandedTopics[topic.id]
-                    ? 'max-h-96 opacity-100'
-                    : 'max-h-0 opacity-0'
-                }`}
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedTopics[topic.id]
+                  ? 'max-h-96 opacity-100'
+                  : 'max-h-0 opacity-0'
+                  }`}
               >
                 <div className="px-5 pb-4 space-y-3">
                   {topic.subtopics?.map((subtopic, index) => (
@@ -93,7 +92,7 @@ function ExamDetailsView({ exam, onBack }) {
                       className="flex items-start gap-3 pl-2 animate-in fade-in slide-in-from-left duration-300"
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
-                      <div className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0 transition-transform hover:scale-150 duration-200" />
+                      <div className="w-2 h-2 rounded-full bg-[#5074b6] mt-2 flex-shrink-0 transition-transform hover:scale-150 duration-200" />
                       <span className="text-sm text-gray-700 md:text-base">{subtopic}</span>
                     </div>
                   ))}
@@ -201,13 +200,13 @@ function SchoolExamsPage() {
       {/* Header */}
       <div className="bg-white shadow-sm sticky top-0 z-10">
         <div className="px-4 py-4 flex items-center gap-4 md:max-w-5xl md:mx-auto">
-          <button 
+          <button
             onClick={handleBack}
             className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors active:scale-95 cursor-pointer"
           >
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
-          <h1 className="text-lg font-semibold text-blue-600 md:text-xl">School Exams</h1>
+          <h1 className="text-lg font-semibold text-[#5074b6] md:text-xl">School Exams</h1>
         </div>
       </div>
 
@@ -222,7 +221,7 @@ function SchoolExamsPage() {
               <select
                 value={selectedClass}
                 onChange={(e) => setSelectedClass(e.target.value)}
-                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-base"
+                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#5074b6] md:text-base"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',
@@ -240,7 +239,7 @@ function SchoolExamsPage() {
               <select
                 value={selectedSection}
                 onChange={(e) => setSelectedSection(e.target.value)}
-                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-base"
+                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#5074b6] md:text-base"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',
@@ -259,7 +258,7 @@ function SchoolExamsPage() {
               <select
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
-                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-base"
+                className="w-full px-4 py-3 bg-white border-none rounded-lg text-gray-800 font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#5074b6] md:text-base"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',
@@ -275,7 +274,7 @@ function SchoolExamsPage() {
           </div>
 
           {/* Apply Filters Button */}
-          <button className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors active:scale-95 cursor-pointer md:text-base">
+          <button className="w-full bg-[#5074b6] text-white font-semibold py-3 rounded-xl hover:bg-[#5074b6] transition-colors active:scale-95 cursor-pointer md:text-base">
             Apply Filters
           </button>
         </div>
@@ -294,7 +293,7 @@ function SchoolExamsPage() {
                     <h3 className="text-xl font-bold text-gray-900 md:text-2xl">{exam.title}</h3>
                     <p className="text-sm text-gray-500 mt-1 md:text-base">{exam.description}</p>
                   </div>
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-sm font-medium md:text-base md:px-4 md:py-2">
+                  <span className="bg-blue-100 text-[#5074b6] px-3 py-1 rounded-lg text-sm font-medium md:text-base md:px-4 md:py-2">
                     {exam.subject}
                   </span>
                 </div>
@@ -307,7 +306,7 @@ function SchoolExamsPage() {
                   </div>
                   <button
                     onClick={() => handleViewDetails(exam)}
-                    className="flex items-center gap-1 text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors active:scale-95 cursor-pointer md:text-base"
+                    className="flex items-center gap-1 text-[#5074b6] font-medium text-sm hover:text-[#5074b6] transition-colors active:scale-95 cursor-pointer md:text-base"
                   >
                     View details
                     <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function SubjectCard({ title, date, imageSrc, onClick }) {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl p-4 shadow-lg">
+    <div className="relative overflow-hidden bg-[#5074b6] text-white rounded-2xl p-4 shadow-lg">
       {/* Decorative background shapes */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-6 right-12 w-20 h-20 bg-blue-400 rounded-full blur-2xl"></div>
@@ -20,7 +20,7 @@ export default function SubjectCard({ title, date, imageSrc, onClick }) {
       <div className="relative">
         <div className="flex justify-between items-start mb-10">
           <h3 className="text-lg font-bold">{title}</h3>
-          <span className="text-xs bg-blue-500 bg-opacity-50 px-2 py-1 rounded-full">
+          <span className="text-xs bg-[#5074b6] bg-opacity-50 px-2 py-1 rounded-full">
             {date}
           </span>
         </div>
@@ -28,7 +28,7 @@ export default function SubjectCard({ title, date, imageSrc, onClick }) {
         <div className="mt-2">
           <button
             onClick={onClick}
-            className="bg-white text-blue-700 font-semibold px-5 py-2 rounded-full shadow-md hover:shadow-xl hover:scale-105 hover:bg-blue-50 transition-all duration-200 text-sm cursor-pointer active:scale-95"
+            className="bg-white text-[#5074b6] font-semibold px-5 py-2 rounded-full shadow-md hover:shadow-xl hover:scale-105 hover:bg-blue-50 transition-all duration-200 text-sm cursor-pointer active:scale-95"
           >
             View Details
           </button>

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaTrash } from "react-icons/fa";
+import { Trash } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 
 export default function EditAssignmentPage() {
@@ -32,7 +32,7 @@ export default function EditAssignmentPage() {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
@@ -40,7 +40,7 @@ export default function EditAssignmentPage() {
                         </h1>
 
                         <button className="text-red-500 hover:text-red-600 transition">
-                            <FaTrash size={20} className="md:w-6 md:h-6" />
+                            <Trash size={20} className="md:w-6 md:h-6" />
                         </button>
                     </div>
 
@@ -80,7 +80,7 @@ export default function EditAssignmentPage() {
                                 <button
                                     type="button"
                                     onClick={handleAddTopic}
-                                    className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                                    className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-[#5074b6] transition"
                                 >
                                     +
                                 </button>
@@ -90,7 +90,7 @@ export default function EditAssignmentPage() {
                                 {topics.map((topic) => (
                                     <div
                                         key={topic}
-                                        className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full flex items-center gap-2"
+                                        className="bg-blue-100 text-[#5074b6] px-3 py-1 rounded-full flex items-center gap-2"
                                     >
                                         <span>{topic}</span>
                                         <button onClick={() => handleDeleteTopic(topic)}>×</button>
@@ -143,7 +143,7 @@ export default function EditAssignmentPage() {
                             <label className="font-medium block mb-1">Documents</label>
                             <button
                                 type="button"
-                                className="border border-blue-500 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
+                                className="border border-[#5074b6] text-[#5074b6] px-4 py-2 rounded-lg hover:bg-blue-50 transition"
                             >
                                 Upload Document
                             </button>
@@ -160,7 +160,7 @@ export default function EditAssignmentPage() {
                         <div>
                             <label className="font-medium block mb-1">Add Images</label>
                             <div className="flex gap-2">
-                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-[#5074b6] transition">
                                     Add Image
                                 </button>
                                 <button className="border px-4 py-2 rounded-lg hover:bg-gray-50 transition">
@@ -184,7 +184,7 @@ export default function EditAssignmentPage() {
                             <div className="mt-3 p-3 border rounded-lg bg-gray-50 md:p-5 md:rounded-xl">
                                 <div className="flex justify-between items-center mb-2">
                                     <p className="font-medium">5 Questions</p>
-                                    <button className="text-blue-600 hover:underline">
+                                    <button className="text-[#5074b6] hover:underline">
                                         Edit Questions
                                     </button>
                                 </div>
@@ -203,7 +203,7 @@ export default function EditAssignmentPage() {
                         </div>
 
                         {/* Update Button */}
-                        <button className="w-full bg-[#5074b6] hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl">
+                        <button className="w-full bg-[#5074b6] hover:bg-[#5074b6] text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl">
                             Update Assignment
                         </button>
                     </form>

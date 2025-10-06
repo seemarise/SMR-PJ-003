@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   ArrowLeft,
   BookOpen,
@@ -10,7 +10,7 @@ import {
   Plus,
   GraduationCap,
 } from "lucide-react";
-import { getSubjectChaptersByClassSecAndSubId , removeChaptersById, addChaptersByClassSecAndSubId} from "@/services/classroomService/resourceApi";
+import { getSubjectChaptersByClassSecAndSubId, removeChaptersById, addChaptersByClassSecAndSubId } from "@/services/classroomService/resourceApi";
 
 export default function ResourcesPage({ params }) {
   const router = useRouter();
@@ -20,58 +20,58 @@ export default function ResourcesPage({ params }) {
   const classId = searchParams.get("class");
   const sectionId = searchParams.get("section");
   const subjectId = searchParams.get("subject");
-  const [chapters, setChapters] = useState({chapters:[]});
+  const [chapters, setChapters] = useState({ chapters: [] });
   const [showModal, setShowModal] = useState(false);
-  const [showAddChapter,setShowAddChapter] = useState(false);
+  const [showAddChapter, setShowAddChapter] = useState(false);
   const [delChapterId, setDeleteChapterId] = useState("");
-  const [chapterName,setChapterName] = useState("");
-  async function fetchSubjectChapter(){
-    let res = await getSubjectChaptersByClassSecAndSubId([subjectId], {classId,sectionId});
-    if (res.statusCode == 200){
+  const [chapterName, setChapterName] = useState("");
+  async function fetchSubjectChapter() {
+    let res = await getSubjectChaptersByClassSecAndSubId([subjectId], { classId, sectionId });
+    if (res.statusCode == 200) {
       setChapters(res.data);
     }
-    else{
+    else {
       alert("Error");
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchSubjectChapter();
-  },[]);
+  }, []);
 
-  async function handleDelete(){
-    let res = await removeChaptersById([delChapterId]); 
-    if (res.statusCode == 200){
+  async function handleDelete() {
+    let res = await removeChaptersById([delChapterId]);
+    if (res.statusCode == 200) {
       setShowModal(false);
       alert("Chapter Deleted Successfully !!!");
-      setChapters((prev)=>{
+      setChapters((prev) => {
         let data = {};
-        data.chapters = prev.chapters.filter((chapter)=> {
+        data.chapters = prev.chapters.filter((chapter) => {
           return chapter._id != delChapterId;
         })
         return data;
       });
       setDeleteChapterId("");
     }
-    else{
+    else {
       alert('Error');
     }
   };
 
-  async function handleAddChapter(){
+  async function handleAddChapter() {
     let res = await addChaptersByClassSecAndSubId({
       chapterName: chapterName,
       classId: classId,
       sectionId: sectionId,
       subjectId: subjectId,
     });
-    if (res.statusCode == 200){
+    if (res.statusCode == 200) {
       alert("Chapter added successfully");
       setChapterName("");
       setShowAddChapter(false);
       fetchSubjectChapter();
     }
-    else{
+    else {
       alert("error");
     }
   };
@@ -111,7 +111,7 @@ export default function ResourcesPage({ params }) {
               className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
               aria-label="Go back"
             >
-              <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+              <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             </button>
 
             <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
@@ -137,122 +137,122 @@ export default function ResourcesPage({ params }) {
 
           {/* Chapter Cards */}
           {
-           chapters.chapters.length != 0 && <div className="space-y-4 mt-6">
-            {chapters.chapters.map((chapter) => (
-              <div
-                key={chapter._id}
-                className="flex items-center justify-between bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition cursor-pointer md:p-5"
-                onClick={() =>
-                  router.push(
-                    `/classroom/${className}/${section}/${subject}/resources/${chapter._id}?chapterName=${chapter.chapterName}`
-                  )
-                }
-              >
-                <div className="flex items-center gap-4">
-                  <div className="bg-blue-100 p-3 rounded-xl flex items-center justify-center">
-                    <Folder className="text-[#5074b6] w-6 h-6 md:w-7 md:h-7" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-800 text-base md:text-lg">
-                      {chapter.chapterName}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Created: {timeAgo(chapter.createdAt)}
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeleteChapterId(chapter._id);
-                    setShowModal(true);
-                  }}
-                  className="text-red-400 hover:text-red-500 transition"
+            chapters.chapters.length != 0 && <div className="space-y-4 mt-6">
+              {chapters.chapters.map((chapter) => (
+                <div
+                  key={chapter._id}
+                  className="flex items-center justify-between bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition cursor-pointer md:p-5"
+                  onClick={() =>
+                    router.push(
+                      `/classroom/${className}/${section}/${subject}/resources/${chapter._id}?chapterName=${chapter.chapterName}`
+                    )
+                  }
                 >
-                  <Trash2 className="w-5 h-5 md:w-6 md:h-6" />
-                </button>
-              </div>
-            ))}
-          </div>
+                  <div className="flex items-center gap-4">
+                    <div className="bg-blue-100 p-3 rounded-xl flex items-center justify-center">
+                      <Folder className="text-[#5074b6] w-6 h-6 md:w-7 md:h-7" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800 text-base md:text-lg">
+                        {chapter.chapterName}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Created: {timeAgo(chapter.createdAt)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeleteChapterId(chapter._id);
+                      setShowModal(true);
+                    }}
+                    className="text-red-400 hover:text-red-500 transition"
+                  >
+                    <Trash2 className="w-5 h-5 md:w-6 md:h-6" />
+                  </button>
+                </div>
+              ))}
+            </div>
           }
           {showModal && (
-                            <div className="fixed inset-0 flex items-center justify-center bg-transparent pointer-events-auto z-50">
-                                <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mx-4">
-                                    <h2 className="text-lg font-semibold text-black mb-4">
-                                        Delete Chapter?
-                                    </h2>
-                                    <p className="text-sm text-black">
-                                        Are you sure you want to delete this chapter? This will also delete all modules and resources within this chapter. This action cannot be undone.
-                                    </p>
+            <div className="fixed inset-0 flex items-center justify-center bg-transparent pointer-events-auto z-50">
+              <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mx-4">
+                <h2 className="text-lg font-semibold text-black mb-4">
+                  Delete Chapter?
+                </h2>
+                <p className="text-sm text-black">
+                  Are you sure you want to delete this chapter? This will also delete all modules and resources within this chapter. This action cannot be undone.
+                </p>
 
-                                    <div className="flex justify-end gap-3 mt-6">
-                                        {/* Cancel Button */}
-                                        <button
-                                        className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
-                                        onClick={() => {
-                                            setDeleteChapterId("");
-                                            setShowModal(false);
-                                        }}
-                                        >
-                                        Cancel
-                                        </button>
+                <div className="flex justify-end gap-3 mt-6">
+                  {/* Cancel Button */}
+                  <button
+                    className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
+                    onClick={() => {
+                      setDeleteChapterId("");
+                      setShowModal(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
 
-                                        {/* Delete Button */}
-                                        <button
-                                        className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
-                                        onClick={() => handleDelete()}
-                                        >
-                                        Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                    )}
-                    {
-                      showAddChapter && (<div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-                                            <div className="bg-white rounded-2xl shadow-lg p-6 w-[90%] max-w-sm">
-                                              {/* Title */}
-                                              <h2 className="text-lg font-semibold text-center mb-4">
-                                                Add New Chapter
-                                              </h2>
+                  {/* Delete Button */}
+                  <button
+                    className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
+                    onClick={() => handleDelete()}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {
+            showAddChapter && (<div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+              <div className="bg-white rounded-2xl shadow-lg p-6 w-[90%] max-w-sm">
+                {/* Title */}
+                <h2 className="text-lg font-semibold text-center mb-4">
+                  Add New Chapter
+                </h2>
 
-                                              {/* Input */}
-                                              <input
-                                                type="text"
-                                                placeholder="Enter chapter name"
-                                                value={chapterName}
-                                                onChange={(e) => setChapterName(e.target.value)}
-                                                className="w-full border rounded-xl px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                              />
+                {/* Input */}
+                <input
+                  type="text"
+                  placeholder="Enter chapter name"
+                  value={chapterName}
+                  onChange={(e) => setChapterName(e.target.value)}
+                  className="w-full border rounded-xl px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#5074b6]"
+                />
 
-                                              {/* Buttons */}
-                                              <div className="flex justify-between">
-                                                <button
-                                                  onClick={()=>{
-                                                    setShowAddChapter(false);
-                                                    setChapterName("");
-                                                  }}
-                                                  className="px-4 py-2 rounded-xl text-gray-600 font-medium hover:bg-gray-100"
-                                                >
-                                                  Cancel
-                                                </button>
-                                                <button
-                                                  onClick={handleAddChapter}
-                                                  className="px-5 py-2 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700"
-                                                >
-                                                  Add Chapter
-                                                </button>
-                                              </div>
-                                            </div>
-                                        </div>)
-                    }
+                {/* Buttons */}
+                <div className="flex justify-between">
+                  <button
+                    onClick={() => {
+                      setShowAddChapter(false);
+                      setChapterName("");
+                    }}
+                    className="px-4 py-2 rounded-xl text-gray-600 font-medium hover:bg-gray-100"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleAddChapter}
+                    className="px-5 py-2 rounded-xl bg-[#5074b6] text-white font-medium hover:bg-[#5074b6]"
+                  >
+                    Add Chapter
+                  </button>
+                </div>
+              </div>
+            </div>)
+          }
           {/* Floating Add Button */}
           <button
-            onClick={()=>{
+            onClick={() => {
               setShowAddChapter(true);
             }}
-            className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+            className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
           >
             <Plus />
           </button>

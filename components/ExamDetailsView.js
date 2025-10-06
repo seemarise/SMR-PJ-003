@@ -17,13 +17,13 @@ export default function ExamDetailsView({ exam, onBack }) {
       {/* Header */}
       <div className="bg-white shadow-sm sticky top-0 z-10">
         <div className="px-4 py-4 flex items-center gap-4">
-          <button 
+          <button
             onClick={onBack}
             className="p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors active:scale-95 cursor-pointer"
           >
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
-          <h1 className="text-lg font-semibold text-blue-600">{exam.subject}</h1>
+          <h1 className="text-lg font-semibold text-[#5074b6]">{exam.subject}</h1>
         </div>
       </div>
 
@@ -32,7 +32,7 @@ export default function ExamDetailsView({ exam, onBack }) {
         {/* Title and Marks */}
         <div className="flex items-start justify-between">
           <h2 className="text-2xl font-bold text-gray-900">{exam.subject}</h2>
-          <span className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold">
+          <span className="bg-[#5074b6] text-white px-4 py-2 rounded-xl text-sm font-semibold">
             {exam.marks} marks
           </span>
         </div>
@@ -40,13 +40,13 @@ export default function ExamDetailsView({ exam, onBack }) {
         {/* Stats */}
         <div className="flex items-center gap-6 text-sm">
           <div className="flex items-center gap-2 text-gray-600">
-            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-[#5074b6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             <span>{exam.mainTopics} main topics</span>
           </div>
           <div className="flex items-center gap-2 text-gray-600">
-            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-[#5074b6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             <span>{exam.documents} documents</span>
@@ -63,24 +63,22 @@ export default function ExamDetailsView({ exam, onBack }) {
         <div className="flex border-b border-gray-200">
           <button
             onClick={() => setActiveTab("syllabus")}
-            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer ${
-              activeTab === "syllabus" ? "text-blue-600" : "text-gray-500"
-            }`}
+            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer ${activeTab === "syllabus" ? "text-[#5074b6]" : "text-gray-500"
+              }`}
           >
             Syllabus & Topics
             {activeTab === "syllabus" && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 animate-in slide-in-from-left duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5074b6] animate-in slide-in-from-left duration-300" />
             )}
           </button>
           <button
             onClick={() => setActiveTab("documents")}
-            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer ${
-              activeTab === "documents" ? "text-blue-600" : "text-gray-500"
-            }`}
+            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer ${activeTab === "documents" ? "text-[#5074b6]" : "text-gray-500"
+              }`}
           >
             Documents
             {activeTab === "documents" && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 animate-in slide-in-from-right duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5074b6] animate-in slide-in-from-right duration-300" />
             )}
           </button>
         </div>
@@ -113,21 +111,20 @@ export default function ExamDetailsView({ exam, onBack }) {
                   </div>
                 </button>
 
-                <div 
-                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    expandedTopics[topic.id] 
-                      ? 'max-h-96 opacity-100' 
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedTopics[topic.id]
+                      ? 'max-h-96 opacity-100'
                       : 'max-h-0 opacity-0'
-                  }`}
+                    }`}
                 >
                   <div className="px-5 pb-4 space-y-3">
                     {topic.subtopics.map((subtopic, index) => (
-                      <div 
-                        key={index} 
+                      <div
+                        key={index}
                         className="flex items-start gap-3 pl-2 animate-in fade-in slide-in-from-left duration-300"
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
-                        <div className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0" />
+                        <div className="w-2 h-2 rounded-full bg-[#5074b6] mt-2 flex-shrink-0" />
                         <span className="text-sm text-gray-700">{subtopic}</span>
                       </div>
                     ))}

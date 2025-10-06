@@ -20,31 +20,28 @@ const updateAttendence = (data) => {
 const getPeople = (data) => {
     return apiClient.get("/api/v1/teachers/classroom/get-all-students", data);
 };
-
-
-
-const getListOfAnnouncements = (body, options) => {
+const getListOfAnnouncements = () => {
     return apiClient.get("/api/v1/announcement/teachers/list-all");
 };
-const getAssignments = (queryParams, body, options) => {
+const getAssignments = (queryParams) => {
     return apiClient.get(concatenatePath("/api/v1/assignments/teachers/all-assignments/", queryParams));
 };
-const getSubmissions = (queryParams, body, options) => {
+const getSubmissions = (queryParams) => {
     return apiClient.get(concatenatePath("/api/v1/assignments/teachers/all-submissions/", queryParams));
 };
-const getSubmissionsInfoById = (queryParams, body, options) => {
+const getSubmissionsInfoById = (queryParams) => {
     return apiClient.get(concatenatePath("/api/v1/assignments/teachers/submission/", queryParams));
 };
 
-const approveSubmissionBySubId = (queryParams, body, options) => {
+const approveSubmissionBySubId = (queryParams) => {
     return apiClient.post(concatenatePath("/api/v1/assignments/teachers/approve-submission/", queryParams));
 };
 
-const rejectSubmissionBySubId = (queryParams, body, options) => {
+const rejectSubmissionBySubId = (queryParams, body) => {
     return apiClient.post(concatenatePath("/api/v1/assignments/teachers/reject-submission/", queryParams), body);
 };
 
-const deleteAssignmentById = (queryParams, body, options) => {
+const deleteAssignmentById = (queryParams) => {
     return apiClient.delete(concatenatePath("/api/v1/assignments/teachers/delete-assignment/", queryParams));
 };
 
