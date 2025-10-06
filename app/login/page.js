@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, GraduationCap, School } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import { loginApi } from "@/services/loginService/loginApi";
 import { sessionService } from "@/services/sessionService";
@@ -43,6 +42,39 @@ export default function LoginPage() {
     }
   };
 
+  const handleLogin = async () => {
+    let res = await loginApi[role].verifyOtp({
+      'email': email,
+      'otp': otp.join('')
+    }, {});
+    if (res.statusCode == 200) {
+      let data = {
+        token: res.data.tokens.access.token,
+        refreshToken: res.data.tokens.refresh.token,
+        Id: res.data[role][role == "teacher" ? (role + "sId") : (role + "Id")]
+      }
+      sessionService.setSession(data);
+      if (role == "teacher") {
+        sessionService.setUser(res.data.teacher)
+      }
+
+      router.replace("/");
+    }
+    else if (res.statusCode == 401) {
+      console.log(res.message);
+    }
+  }
+
+  const handleEmailEntry = async () => {
+    console.log("clicked", role);
+    let res = await loginApi[role].getOtp({ "email": email }, {});
+    if (res.statusCode == 200) {
+      setStep("otp");
+      setTimer(60);
+    }
+
+  }
+
   const renderChooseScreen = () => (
     <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gray-50">
       <h1 className="text-5xl font-bold text-[#5074b6] mb-6">VADAI</h1>
@@ -58,14 +90,8 @@ export default function LoginPage() {
           }}
           className="w-full bg-white p-5 rounded-2xl shadow-md flex items-center gap-4 border hover:shadow-lg transition"
         >
-          <div className="flex-shrink-0">
-            <Image
-              src="/student.png"
-              alt="Student"
-              width={50}
-              height={50}
-              className="rounded-xl"
-            />
+          <div className="flex-shrink-0 bg-blue-100 p-3 rounded-lg">
+            <GraduationCap color="#5074b6" />
           </div>
           <div className="flex-1 text-left">
             <p className="font-semibold text-lg">Student App</p>
@@ -84,14 +110,8 @@ export default function LoginPage() {
           }}
           className="w-full bg-white p-5 rounded-2xl shadow-md flex items-center gap-4 border hover:shadow-lg transition"
         >
-          <div className="flex-shrink-0">
-            <Image
-              src="/teacher.png"
-              alt="Teacher"
-              width={50}
-              height={50}
-              className="rounded-xl"
-            />
+          <div className="flex-shrink-0 bg-green-100 p-3 rounded-lg">
+            <School color="lightgreen" />
           </div>
           <div className="flex-1 text-left">
             <p className="font-semibold text-lg">Teacher App</p>
@@ -137,6 +157,11 @@ export default function LoginPage() {
           type="email"
           placeholder={role === "teacher" ? "teacher@school.edu" : "student@school.edu"}
           value={email}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleEmailEntry(); // Call your login function
+            }
+          }}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full max-w-md border p-4 rounded-xl mb-2 focus:ring-2 focus:ring-blue-400 outline-none"
         />
@@ -148,15 +173,7 @@ export default function LoginPage() {
         </div>
 
         <button
-          onClick={async () => {
-            console.log("clicked", role);
-            let res = await loginApi[role].getOtp({ "email": email }, {});
-            if (res.statusCode == 200) {
-              setStep("otp");
-              setTimer(60);
-            }
-
-          }}
+          onClick={handleEmailEntry}
           className="w-full max-w-md bg-[#5074b6] text-white py-3 rounded-xl text-lg font-semibold hover:bg-[#5074b6] transition"
         >
           Continue
@@ -203,6 +220,11 @@ export default function LoginPage() {
             type="text"
             maxLength="1"
             value={digit}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleLogin(); // Call your login function
+              }
+            }}
             onChange={(e) => handleOtpChange(i, e.target.value)}
             className="w-12 h-12 border rounded-xl text-center text-lg focus:ring-2 focus:ring-blue-400 outline-none"
           />
@@ -215,31 +237,7 @@ export default function LoginPage() {
             ? "bg-green-800 text-white hover:bg-green-700"
             : "bg-[#5074b6] text-white hover:bg-[#5074b6]"
           }`}
-        onClick={
-          async () => {
-            let res = await loginApi[role].verifyOtp({
-              'email': email,
-              'otp': otp.join('')
-            }, {});
-            if (res.statusCode == 200) {
-              let data = {
-                token: res.data.tokens.access.token,
-                refreshToken: res.data.tokens.refresh.token,
-                Id: res.data[role][role == "teacher" ? (role + "sId") : (role + "Id")]
-              }
-              sessionService.setSession(data);
-              if (role == "teacher") {
-                sessionService.setUser(res.data.teacher)
-              }
-
-              router.replace("/");
-              console.log(role + " login successful");
-            }
-            else if (res.statusCode == 401) {
-              console.log(res.meessage);
-            }
-          }
-        }
+        onClick={handleLogin}
       >
         Verify & Continue
       </button>
