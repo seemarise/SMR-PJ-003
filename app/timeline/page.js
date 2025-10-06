@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import withAuth from "../auth";
 
- function ProgressTrackingPage() {
+function ProgressTrackingPage() {
   const [selectedClass, setSelectedClass] = useState("10");
   const [selectedSection, setSelectedSection] = useState("A");
   const [selectedSubject, setSelectedSubject] = useState("English");
@@ -133,11 +133,10 @@ import withAuth from "../auth";
   };
 
   const renderMainView = () => (
-    <div className={`space-y-4 transition-all duration-300 ${
-      isTransitioning 
-        ? `opacity-0 ${activeTab === 'vad' ? 'translate-x-full' : '-translate-x-full'}` 
-        : 'opacity-100 translate-x-0'
-    }`}>
+    <div className={`space-y-4 transition-all duration-300 ${isTransitioning
+      ? `opacity-0 ${activeTab === 'vad' ? 'translate-x-full' : '-translate-x-full'}`
+      : 'opacity-100 translate-x-0'
+      }`}>
       {currentTests.map((test) => (
         <div
           key={test.id}
@@ -154,7 +153,7 @@ import withAuth from "../auth";
           <div className="flex items-center gap-4">
             <div className="flex-1 h-3 bg-blue-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-blue-600 rounded-full transition-all duration-500 ease-out"
+                className="h-full bg-[#5074b6] rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${test.progress}%` }}
               />
             </div>
@@ -173,15 +172,15 @@ import withAuth from "../auth";
         {selectedTest.topics.map((topic, idx) => {
           const topicKey = `topic-${selectedTest.id}-${idx}`;
           const isTopicCompleted = subtopicStates[topicKey] !== undefined ? subtopicStates[topicKey] : true;
-          
+
           return (
             <div
               key={idx}
               className="bg-white rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-lg"
             >
               <div className="flex items-center justify-between mb-4">
-                <div 
-                  className="flex-1 cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                <div
+                  className="flex-1 cursor-pointer hover:text-[#5074b6] transition-colors duration-200"
                   onClick={() => {
                     setSelectedTopic(topic);
                     setCurrentView("topic-detail");
@@ -201,17 +200,15 @@ import withAuth from "../auth";
                         [topicKey]: !isTopicCompleted
                       }));
                     }}
-                    className={`relative w-14 h-7 rounded-full transition-all duration-300 ${
-                      isTopicCompleted ? "bg-blue-600" : "bg-gray-300"
-                    }`}
+                    className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isTopicCompleted ? "bg-[#5074b6]" : "bg-gray-300"
+                      }`}
                   >
-                    <div 
-                      className={`absolute top-0.5 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md ${
-                        isTopicCompleted ? "right-0.5" : "left-0.5"
-                      }`} 
+                    <div
+                      className={`absolute top-0.5 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md ${isTopicCompleted ? "right-0.5" : "left-0.5"
+                        }`}
                     />
                   </button>
-                  <div 
+                  <div
                     className="cursor-pointer hover:bg-gray-100 rounded-full p-1 transition-colors duration-200"
                     onClick={() => {
                       setSelectedTopic(topic);
@@ -224,7 +221,7 @@ import withAuth from "../auth";
               </div>
               <div className="h-3 bg-blue-200 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-blue-600 rounded-full transition-all duration-500 ease-out"
+                  className="h-full bg-[#5074b6] rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${topic.progress}%` }}
                 />
               </div>
@@ -245,7 +242,7 @@ import withAuth from "../auth";
           <div className="flex items-center gap-4">
             <div className="flex-1 h-3 bg-blue-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-blue-600 rounded-full transition-all duration-500 ease-out"
+                className="h-full bg-[#5074b6] rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${selectedTopic.progress}%` }}
               />
             </div>
@@ -267,14 +264,12 @@ import withAuth from "../auth";
                     e.stopPropagation();
                     toggleSubtopic(selectedTopic.name, idx);
                   }}
-                  className={`relative w-14 h-7 rounded-full transition-all duration-300 ${
-                    isCompleted ? "bg-blue-600" : "bg-gray-300"
-                  }`}
+                  className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isCompleted ? "bg-[#5074b6]" : "bg-gray-300"
+                    }`}
                 >
-                  <div 
-                    className={`absolute top-0.5 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md ${
-                      isCompleted ? "right-0.5" : "left-0.5"
-                    }`} 
+                  <div
+                    className={`absolute top-0.5 w-6 h-6 bg-white rounded-full transition-all duration-300 shadow-md ${isCompleted ? "right-0.5" : "left-0.5"
+                      }`}
                   />
                 </button>
               </div>
@@ -306,12 +301,12 @@ import withAuth from "../auth";
               <ChevronLeft className="h-6 w-6" />
             </button>
           )}
-          <h1 className="text-2xl font-bold text-blue-600 flex-1 text-center transition-all duration-300">
+          <h1 className="text-2xl font-bold text-[#5074b6] flex-1 text-center transition-all duration-300">
             {currentView === "main"
               ? "Progress Tracking"
               : currentView === "test-detail"
-              ? selectedTest?.name
-              : selectedTopic?.name}
+                ? selectedTest?.name
+                : selectedTopic?.name}
           </h1>
           {currentView !== "main" && <div className="w-10" />}
         </div>
@@ -326,7 +321,7 @@ import withAuth from "../auth";
                   <select
                     value={selectedClass}
                     onChange={(e) => setSelectedClass(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg transition-all duration-200 hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg transition-all duration-200 hover:border-blue-300 focus:border-[#5074b6] focus:outline-none focus:ring-2 focus:ring-blue-200"
                   >
                     <option value="10">10</option>
                     <option value="9">9</option>
@@ -338,7 +333,7 @@ import withAuth from "../auth";
                   <select
                     value={selectedSection}
                     onChange={(e) => setSelectedSection(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg transition-all duration-200 hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg transition-all duration-200 hover:border-blue-300 focus:border-[#5074b6] focus:outline-none focus:ring-2 focus:ring-blue-200"
                   >
                     <option value="A">A</option>
                     <option value="B">B</option>
@@ -351,7 +346,7 @@ import withAuth from "../auth";
                 <select
                   value={selectedSubject}
                   onChange={(e) => setSelectedSubject(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg transition-all duration-200 hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg transition-all duration-200 hover:border-blue-300 focus:border-[#5074b6] focus:outline-none focus:ring-2 focus:ring-blue-200"
                 >
                   <option value="English">English</option>
                   <option value="Math">Math</option>
@@ -364,21 +359,19 @@ import withAuth from "../auth";
             <div className="flex gap-4 mt-4">
               <button
                 onClick={() => handleTabChange("vad")}
-                className={`flex-1 py-2 font-semibold transition-all duration-300 ${
-                  activeTab === "vad"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
+                className={`flex-1 py-2 font-semibold transition-all duration-300 ${activeTab === "vad"
+                  ? "text-[#5074b6] border-b-2 border-[#5074b6]"
+                  : "text-gray-500 hover:text-gray-700"
+                  }`}
               >
                 VAD Tests
               </button>
               <button
                 onClick={() => handleTabChange("school")}
-                className={`flex-1 py-2 font-semibold transition-all duration-300 ${
-                  activeTab === "school"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
+                className={`flex-1 py-2 font-semibold transition-all duration-300 ${activeTab === "school"
+                  ? "text-[#5074b6] border-b-2 border-[#5074b6]"
+                  : "text-gray-500 hover:text-gray-700"
+                  }`}
               >
                 School Exams
               </button>

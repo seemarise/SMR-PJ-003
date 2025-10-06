@@ -36,22 +36,22 @@ export default function TopicPage({ params }) {
   const handleBack = () => router.back();
   
 
-  async function deleteDocument(){
-    if (Object.keys(deleteDoc).length == 0){
-      return ;
+  async function deleteDocument() {
+    if (Object.keys(deleteDoc).length == 0) {
+      return;
     }
-    let res = await removeDocumentByModuleAndDocumentId([topic , deleteDoc.id ]);
-    if (res.statusCode == 200){
+    let res = await removeDocumentByModuleAndDocumentId([topic, deleteDoc.id]);
+    if (res.statusCode == 200) {
       alert("Deletion Successfull !!");
-      setDocuments((prev)=>{
+      setDocuments((prev) => {
         let data = {};
-        data.documents = prev.documents.filter((doc)=> doc._id != deleteDoc.id);
+        data.documents = prev.documents.filter((doc) => doc._id != deleteDoc.id);
         return data;
       });
       setShowDeleteModal(false);
       setDeleteDoc({});
     }
-    else{
+    else {
       alert("Error");
     }
   };
@@ -172,21 +172,21 @@ export default function TopicPage({ params }) {
     
   };
 
-  async function fetchModulesByChapter(){
-    let res = await getAllModulesByChapterId([chapter],{searchTag : '' });
-    if (res.statusCode == 200){
-      let filteredTopic = res.data.modules.find((module)=> module._id === topic);
+  async function fetchModulesByChapter() {
+    let res = await getAllModulesByChapterId([chapter], { searchTag: '' });
+    if (res.statusCode == 200) {
+      let filteredTopic = res.data.modules.find((module) => module._id === topic);
       console.log(filteredTopic);
       setDocuments(filteredTopic);
     }
-    else{
+    else {
       console.log("error");
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchModulesByChapter();
-  },[]);
+  }, []);
 
   function timeAgo(date) {
     const now = new Date();
@@ -214,7 +214,7 @@ export default function TopicPage({ params }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      {Object.keys(documents).length !=0  && (<main className="px-4 py-4 flex-1 md:px-8 md:py-10">
+      {Object.keys(documents).length != 0 && (<main className="px-4 py-4 flex-1 md:px-8 md:py-10">
         <div className="md:max-w-5xl md:mx-auto md:space-y-10">
           {/* Header */}
           <div className="flex items-center justify-between mb-6 md:mb-10">
@@ -223,7 +223,7 @@ export default function TopicPage({ params }) {
               className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
               aria-label="Go back"
             >
-              <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+              <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             </button>
 
             <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl capitalize">
@@ -315,10 +315,10 @@ export default function TopicPage({ params }) {
                         onClick={() => {
                           setDeleteDoc({
                             name: doc.name,
-                            id : doc._id
+                            id: doc._id
                           });
                           setShowDeleteModal(true);
-                      }}
+                        }}
                         className={`text-${isPdf ? "red" : "yellow"}-500 hover:text-${isPdf ? "red" : "yellow"
                           }-700 transition`}
                       >
@@ -331,38 +331,38 @@ export default function TopicPage({ params }) {
             )}
           </div>
           {showDeleteModal && (
-                            <div className="fixed inset-0 flex items-center justify-center bg-transparent pointer-events-auto z-50">
-                                <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mx-4">
-                                    <h2 className="text-lg font-semibold text-black mb-4">
-                                        Delete Document?
-                                    </h2>
-                                    <p className="text-sm text-black">
-                                        Are you sure you want to &apos;{deleteDoc.name}&apos;? This action cannot be undone.
-                                    </p>
+            <div className="fixed inset-0 flex items-center justify-center bg-transparent pointer-events-auto z-50">
+              <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mx-4">
+                <h2 className="text-lg font-semibold text-black mb-4">
+                  Delete Document?
+                </h2>
+                <p className="text-sm text-black">
+                  Are you sure you want to &apos;{deleteDoc.name}&apos;? This action cannot be undone.
+                </p>
 
-                                    <div className="flex justify-end gap-3 mt-6">
-                                        {/* Cancel Button */}
-                                        <button
-                                        className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
-                                        onClick={() => {
-                                            setDeleteDoc({});
-                                            setShowDeleteModal(false);
-                                        }}
-                                        >
-                                        Cancel
-                                        </button>
+                <div className="flex justify-end gap-3 mt-6">
+                  {/* Cancel Button */}
+                  <button
+                    className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
+                    onClick={() => {
+                      setDeleteDoc({});
+                      setShowDeleteModal(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
 
-                                        {/* Delete Button */}
-                                        <button
-                                        className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
-                                        onClick={deleteDocument}
-                                        >
-                                        Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                    )}
+                  {/* Delete Button */}
+                  <button
+                    className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
+                    onClick={deleteDocument}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           {
             showAddModal && (
     <div className="fixed inset-0 flex items-center justify-center bg-transparent  z-50">
@@ -506,14 +506,14 @@ export default function TopicPage({ params }) {
           }
           {/* Floating Add Button */}
           <button
-            onClick={()=> setShowAddModal(true)}
-            className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+            onClick={() => setShowAddModal(true)}
+            className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
           >
             <Plus />
           </button>
         </div>
       </main>)}
-      
+
     </div>
   );
 }

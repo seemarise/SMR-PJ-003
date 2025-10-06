@@ -17,9 +17,9 @@ export default function CreateAssignment() {
                     className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
                     aria-label="Go back"
                 >
-                    <ArrowLeft className="w-5 h-5 text-blue-600" />
+                    <ArrowLeft className="w-5 h-5 text-[#5074b6]" />
                 </button>
-                <h1 className="text-lg sm:text-xl font-semibold text-blue-700">
+                <h1 className="text-lg sm:text-xl font-semibold text-[#5074b6]">
                     English
                 </h1>
                 <div className="w-8" />
@@ -39,7 +39,7 @@ export default function CreateAssignment() {
                             <input
                                 type="text"
                                 placeholder="Enter lesson name"
-                                className="w-full border border-gray-300 focus:border-blue-500 focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition"
+                                className="w-full border border-gray-300 focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition"
                             />
                         </div>
 
@@ -51,7 +51,7 @@ export default function CreateAssignment() {
                             <textarea
                                 placeholder="Enter the assignment content"
                                 rows="3"
-                                className="w-full border border-gray-300 focus:border-blue-500 focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition resize-none"
+                                className="w-full border border-gray-300 focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition resize-none"
                             />
                         </div>
 
@@ -64,9 +64,9 @@ export default function CreateAssignment() {
                                 <input
                                     type="text"
                                     placeholder="Add a topic"
-                                    className="flex-grow border border-gray-300 p-2 rounded-md focus:border-blue-500 focus:ring-blue-200 focus:ring-2 outline-none transition mr-2"
+                                    className="flex-grow border border-gray-300 p-2 rounded-md focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 outline-none transition mr-2"
                                 />
-                                <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md">
+                                <button className="bg-[#5074b6] hover:bg-[#5074b6] text-white px-3 py-2 rounded-md">
                                     +
                                 </button>
                             </div>
@@ -80,7 +80,7 @@ export default function CreateAssignment() {
                             <input
                                 type="text"
                                 placeholder="Enter additional information (optional)"
-                                className="w-full border border-gray-300 p-2 rounded-md focus:border-blue-500 focus:ring-blue-200 focus:ring-2 outline-none transition"
+                                className="w-full border border-gray-300 p-2 rounded-md focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 outline-none transition"
                             />
                         </div>
 
@@ -91,7 +91,7 @@ export default function CreateAssignment() {
                             </label>
                             <input
                                 type="datetime-local"
-                                className="w-full border border-gray-300 p-2 rounded-md focus:border-blue-500 focus:ring-blue-200 focus:ring-2 outline-none transition"
+                                className="w-full border border-gray-300 p-2 rounded-md focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 outline-none transition"
                             />
                         </div>
 
@@ -103,7 +103,7 @@ export default function CreateAssignment() {
                             <textarea
                                 placeholder="Enter instructions for students"
                                 rows="3"
-                                className="w-full border border-gray-300 focus:border-blue-500 focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition resize-none"
+                                className="w-full border border-gray-300 focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition resize-none"
                             />
                         </div>
 
@@ -115,7 +115,7 @@ export default function CreateAssignment() {
                             <input
                                 type="text"
                                 placeholder="E.g., PDF, Word document, etc."
-                                className="w-full border border-gray-300 p-2 rounded-md focus:border-blue-500 focus:ring-blue-200 focus:ring-2 outline-none transition"
+                                className="w-full border border-gray-300 p-2 rounded-md focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 outline-none transition"
                             />
                         </div>
 
@@ -125,7 +125,7 @@ export default function CreateAssignment() {
                             <label className="font-medium block mb-1">Upload Document</label>
                             <input
                                 type="file"
-                                className="border border-blue-500 text-blue-600 px-4 py-2 rounded-lg"
+                                className="border border-[#5074b6] text-[#5074b6] px-4 py-2 rounded-lg"
                             />
 
                             <p className="text-sm text-gray-400 mt-1">No documents uploaded yet</p>
@@ -141,7 +141,7 @@ export default function CreateAssignment() {
                         <div>
                             <label className="font-medium block mb-1">Add Images</label>
                             <div className="flex gap-2">
-                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg">
                                     Add Image
                                 </button>
                                 <button className="border px-4 py-2 rounded-lg">📷</button>
@@ -154,7 +154,7 @@ export default function CreateAssignment() {
                         </div>
 
                         {/* Submit Button */}
-                        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition">
+                        <button className="w-full bg-[#5074b6] hover:bg-[#5074b6] text-white font-semibold py-3 rounded-md transition">
                             Create Assignment
                         </button>
                     </div>

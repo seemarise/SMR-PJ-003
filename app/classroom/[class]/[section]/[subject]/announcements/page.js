@@ -142,7 +142,7 @@ export default function AnnouncementsPage({ params }) {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
@@ -229,7 +229,7 @@ export default function AnnouncementsPage({ params }) {
                                 `/classroom/${className}/${section}/${subject}/announcements/create?classId=${classId}&sectionId=${sectionId}&subjectId=${subjectId}`
                             )
                         }
-                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
                     >
                         <Plus />
                     </button>
@@ -254,7 +254,7 @@ export default function AnnouncementsPage({ params }) {
 
                             <button
                                 onClick={handleEdit}
-                                className="flex items-center justify-center gap-2 w-full py-3 text-blue-600 font-medium border-b border-gray-200"
+                                className="flex items-center justify-center gap-2 w-full py-3 text-[#5074b6] font-medium border-b border-gray-200"
                             >
                                 <Pencil size={18} />
                                 Edit Announcement
@@ -280,7 +280,7 @@ export default function AnnouncementsPage({ params }) {
                         >
                             <button
                                 onClick={handleEdit}
-                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-blue-600 text-sm font-medium"
+                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-[#5074b6] text-sm font-medium"
                             >
                                 <Pencil size={16} /> Edit Announcement
                             </button>

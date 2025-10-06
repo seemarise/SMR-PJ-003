@@ -9,7 +9,7 @@ import {
     ArrowRight,
     Plus,
 } from "lucide-react";
-import { getAssignments,deleteAssignmentById } from "@/services/classroomService/classroomApi";
+import { getAssignments, deleteAssignmentById } from "@/services/classroomService/classroomApi";
 import { useState, useEffect } from "react";
 
 export default function AssignmentsPage({ params }) {
@@ -49,26 +49,26 @@ export default function AssignmentsPage({ params }) {
     //     },
     // ];
     async function fetchAssignments() {
-            let res = await getAssignments([subjectId]);
-            setAssignments(res.data.assignments);
+        let res = await getAssignments([subjectId]);
+        setAssignments(res.data.assignments);
     };
 
     useEffect(() => {
         fetchAssignments();
     }, []);
 
-    async function handleDeleteAssignment(){
-        if (deleteId == ""){
-            return ;
+    async function handleDeleteAssignment() {
+        if (deleteId == "") {
+            return;
         }
         let res = await deleteAssignmentById([deleteId]);
-        if (res.statusCode == 200 ){
+        if (res.statusCode == 200) {
             alert(res.message);
             setShowModal(false);
             setDeleteId("");
             fetchAssignments();
         }
-        else{
+        else {
             alert("error");
         }
     };
@@ -83,7 +83,7 @@ export default function AssignmentsPage({ params }) {
         });
     }
     return (
-        
+
         <div className="flex flex-col min-h-screen bg-gray-50">
             <main className="px-4 py-4 flex-1 md:px-8 md:py-10">
                 {/* Main container for desktop alignment */}
@@ -95,7 +95,7 @@ export default function AssignmentsPage({ params }) {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
@@ -162,7 +162,7 @@ export default function AssignmentsPage({ params }) {
                                                     `/classroom/${classId}/${section}/${subject}/assignments/${a._id}/edit`
                                                 );
                                             }}
-                                            className="text-blue-500 hover:text-blue-700 transition"
+                                            className="text-[#5074b6] hover:text-[#5074b6] transition"
                                         >
                                             <Pencil size={18} className="md:w-5 md:h-5" />
                                         </button>
@@ -187,7 +187,7 @@ export default function AssignmentsPage({ params }) {
                                                     `/classroom/${classId}/${section}/${subject}/assignments/${a._id}?title=${a.lesson}`
                                                 );
                                             }}
-                                            className="text-blue-600 hover:text-blue-700 transition"
+                                            className="text-[#5074b6] hover:text-[#5074b6] transition"
                                         >
                                             <ArrowRight size={18} className="md:w-5 md:h-5" />
                                         </button>
@@ -197,37 +197,37 @@ export default function AssignmentsPage({ params }) {
                         )))}
                     </div>
                     {showModal && (
-                            <div className="fixed inset-0 flex items-center justify-center bg-transparent pointer-events-auto z-50">
-                                <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mx-4">
-                                    <h2 className="text-lg font-semibold text-black mb-4">
-                                        Delete Assignment?
-                                    </h2>
-                                    <p className="text-sm text-black">
-                                        Are you sure you want to delete this assignment? This action cannot be undone and all student submissions will be deleted.
-                                    </p>
+                        <div className="fixed inset-0 flex items-center justify-center bg-transparent pointer-events-auto z-50">
+                            <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md mx-4">
+                                <h2 className="text-lg font-semibold text-black mb-4">
+                                    Delete Assignment?
+                                </h2>
+                                <p className="text-sm text-black">
+                                    Are you sure you want to delete this assignment? This action cannot be undone and all student submissions will be deleted.
+                                </p>
 
-                                    <div className="flex justify-end gap-3 mt-6">
-                                        {/* Cancel Button */}
-                                        <button
+                                <div className="flex justify-end gap-3 mt-6">
+                                    {/* Cancel Button */}
+                                    <button
                                         className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
                                         onClick={() => {
                                             setDeleteId("");
                                             setShowModal(false);
                                         }}
-                                        >
+                                    >
                                         Cancel
-                                        </button>
+                                    </button>
 
-                                        {/* Delete Button */}
-                                        <button
+                                    {/* Delete Button */}
+                                    <button
                                         className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
                                         onClick={() => handleDeleteAssignment()}
-                                        >
+                                    >
                                         Delete
-                                        </button>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
+                        </div>
                     )}
 
                     {/* Floating Add Button */}
@@ -237,7 +237,7 @@ export default function AssignmentsPage({ params }) {
                                 `/classroom/${classId}/${section}/${subject}/assignments/create`
                             )
                         }
-                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
                     >
                         <Plus />
                     </button>

@@ -1,5 +1,5 @@
 "use client";
-import Link  from "next/link";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getSubmissions } from "@/services/classroomService/classroomApi";
@@ -8,15 +8,15 @@ import React from "react";
 export default function AssignmentDetails({ params }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { class: className, section, subject } = React.use(params) ;
+  const { class: className, section, subject } = React.use(params);
   const title = searchParams.get("title");
   const [submissions, setSubmissions] = useState({
     "submissions": [],
     "submittedCount": 0
   });
-  
+
   const { id } = React.use(params);
-  
+
   useEffect(() => {
     async function fetchSubmissions() {
       let res = await getSubmissions([id]);
@@ -24,7 +24,7 @@ export default function AssignmentDetails({ params }) {
     };
     fetchSubmissions();
   }, []);
-  
+
   function formatDateTime(isoDate) {
     if (!isoDate) return "";
     const date = new Date(isoDate);
@@ -58,7 +58,7 @@ export default function AssignmentDetails({ params }) {
             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
             aria-label="Go back"
           >
-            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
           </button>
 
           <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
@@ -139,7 +139,7 @@ export default function AssignmentDetails({ params }) {
                     </p>
                   </div>
                   <Link key={`${sub.submittedBy._id}`} href={`${id}/submission/${sub._id}?title=${title} By ${sub.submittedBy.name}`}>
-                      <span className={`text-xl md:text-2xl ${arrowClass}`}>›</span>
+                    <span className={`text-xl md:text-2xl ${arrowClass}`}>›</span>
                   </Link>
                 </div>
               </div>

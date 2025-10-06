@@ -39,7 +39,7 @@ export default function StudentPerformanceReport({ params }) {
                             className="p-2 rounded-full bg-transparent hover:bg-blue-50 transition md:p-3 md:bg-blue-100 md:hover:bg-blue-200 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-gray-700 md:w-6 md:h-6 md:text-blue-600" />
+                            <ArrowLeft className="w-5 h-5 text-gray-700 md:w-6 md:h-6 md:text-[#5074b6]" />
                         </button>
 
                         <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl md:font-semibold text-center flex-1">
@@ -92,7 +92,7 @@ export default function StudentPerformanceReport({ params }) {
                             <button
                                 onClick={() => setActiveTab("school")}
                                 className={`flex-1 py-3 font-medium flex flex-col items-center transition md:py-4 ${activeTab === "school"
-                                    ? "text-blue-700 border-b-2 border-blue-700 bg-blue-50"
+                                    ? "text-[#5074b6] border-b-2 border-[#5074b6] bg-blue-50"
                                     : "text-gray-500 hover:bg-gray-50"
                                     }`}
                             >
@@ -104,7 +104,7 @@ export default function StudentPerformanceReport({ params }) {
                             <button
                                 onClick={() => setActiveTab("vad")}
                                 className={`flex-1 py-3 font-medium flex flex-col items-center transition md:py-4 ${activeTab === "vad"
-                                    ? "text-blue-700 border-b-2 border-blue-700 bg-blue-50"
+                                    ? "text-[#5074b6] border-b-2 border-[#5074b6] bg-blue-50"
                                     : "text-gray-500 hover:bg-gray-50"
                                     }`}
                             >
@@ -132,7 +132,7 @@ export default function StudentPerformanceReport({ params }) {
 
                             <button
                                 onClick={handleRefresh}
-                                className="px-5 py-1.5 bg-[#5074b6] text-white text-sm font-semibold rounded-md shadow hover:bg-blue-700 transition md:px-8 md:py-3 md:text-base"
+                                className="px-5 py-1.5 bg-[#5074b6] text-white text-sm font-semibold rounded-md shadow hover:bg-[#5074b6] transition md:px-8 md:py-3 md:text-base"
                             >
                                 Refresh
                             </button>

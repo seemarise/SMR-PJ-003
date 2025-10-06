@@ -58,7 +58,7 @@ export default function CommentsPage() {
                             onClick={() => router.back()}
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
@@ -75,7 +75,7 @@ export default function CommentsPage() {
 
                     {/* Announcement Info */}
                     <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 md:px-5 md:py-3">
-                        <Info className="w-4 h-4 text-blue-500" />
+                        <Info className="w-4 h-4 text-[#5074b6]" />
                         <span className="text-sm text-[#5074b6] md:text-base">
                             Announcement: <strong>English Lab</strong>
                         </span>
@@ -127,7 +127,7 @@ export default function CommentsPage() {
                 <button
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
-                    className="bg-blue-600 p-3 rounded-full text-white hover:bg-blue-700 transition"
+                    className="bg-[#5074b6] p-3 rounded-full text-white hover:bg-[#5074b6] transition"
                 >
                     <Send size={18} />
                 </button>

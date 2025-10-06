@@ -45,7 +45,7 @@ export default function LoginPage() {
 
   const renderChooseScreen = () => (
     <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gray-50">
-      <h1 className="text-5xl font-bold text-blue-700 mb-6">VADAI</h1>
+      <h1 className="text-5xl font-bold text-[#5074b6] mb-6">VADAI</h1>
       <h2 className="text-2xl font-semibold mb-2">Welcome to VADAI</h2>
       <p className="text-gray-500 mb-10">Choose how you want to use the app</p>
 
@@ -122,7 +122,7 @@ export default function LoginPage() {
 
       {/* Main centered content */}
       <div className="flex flex-1 flex-col items-center justify-center">
-        <h1 className="text-5xl font-bold text-blue-700 mb-3">VADAI</h1>
+        <h1 className="text-5xl font-bold text-[#5074b6] mb-3">VADAI</h1>
         <h2 className="text-lg font-semibold text-center mb-10 text-gray-600">
           {role === "teacher"
             ? "👩‍🏫 Welcome to VADAI Teacher Platform ✨"
@@ -157,7 +157,7 @@ export default function LoginPage() {
             }
 
           }}
-          className="w-full max-w-md bg-blue-600 text-white py-3 rounded-xl text-lg font-semibold hover:bg-blue-700 transition"
+          className="w-full max-w-md bg-[#5074b6] text-white py-3 rounded-xl text-lg font-semibold hover:bg-[#5074b6] transition"
         >
           Continue
         </button>
@@ -179,12 +179,12 @@ export default function LoginPage() {
         <ArrowLeft className="text-gray-400 w-5 h-5" />
       </button>
 
-      <h1 className="text-5xl font-bold text-blue-700 mb-4">VADAI</h1>
+      <h1 className="text-5xl font-bold text-[#5074b6] mb-4">VADAI</h1>
 
       <span
         className={`px-4 py-1 rounded-full text-sm mb-4 ${role === "teacher"
           ? "bg-green-100 text-green-600"
-          : "bg-blue-100 text-blue-600"
+          : "bg-blue-100 text-[#5074b6]"
           }`}
       >
         {role === "teacher" ? "Teacher Portal" : "Student Portal"}
@@ -213,7 +213,7 @@ export default function LoginPage() {
         className={`w-full max-w-md py-3 rounded-xl text-lg font-semibold hover:transition-colors transition
     ${role === "teacher"
             ? "bg-green-800 text-white hover:bg-green-700"
-            : "bg-blue-600 text-white hover:bg-blue-700"
+            : "bg-[#5074b6] text-white hover:bg-[#5074b6]"
           }`}
         onClick={
           async () => {
@@ -248,7 +248,7 @@ export default function LoginPage() {
         {timer > 0 ? (
           <p className="text-sm text-gray-500 ">
             Resend OTP in{" "}
-            <span className={`${role === "teacher" ? "text-green-800" : "text-blue-600"} font-semibold`}>
+            <span className={`${role === "teacher" ? "text-green-800" : "text-[#5074b6]"} font-semibold`}>
               {timer}s
             </span>
           </p>
@@ -258,7 +258,7 @@ export default function LoginPage() {
             className={`w-full py-3 rounded-xl text-lg font-semibold transition
         ${role === "teacher"
                 ? "bg-green-100 text-green-800 hover:bg-green-200"
-                : "bg-gray-200 text-blue-600 hover:bg-gray-300"
+                : "bg-gray-200 text-[#5074b6] hover:bg-gray-300"
               }`}
           >
             Resend OTP

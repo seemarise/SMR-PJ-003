@@ -38,7 +38,7 @@ export default function VadTestDetails({ testData, onBack }) {
           >
             <ArrowLeft className="w-6 h-6 text-gray-700" />
           </button>
-          <h1 className="text-lg font-semibold text-blue-600 md:text-xl">VAD Test Details</h1>
+          <h1 className="text-lg font-semibold text-[#5074b6] md:text-xl">VAD Test Details</h1>
         </div>
       </div>
 
@@ -49,21 +49,21 @@ export default function VadTestDetails({ testData, onBack }) {
           <h2 className="text-xl font-bold text-gray-900 md:text-3xl">
             {testData.name}
           </h2>
-          <p className="text-base text-blue-600 mt-1 md:text-lg">{testData.subject}</p>
+          <p className="text-base text-[#5074b6] mt-1 md:text-lg">{testData.subject}</p>
         </div>
 
         {/* Test Info */}
         <div className="space-y-3 animate-in fade-in slide-in-from-bottom duration-500 delay-100 md:grid md:grid-cols-3 md:gap-4 md:space-y-0 md:bg-white md:p-6 md:rounded-xl md:shadow-sm">
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
-            <Calendar className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <Calendar className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             <span className="text-sm md:text-base">{moment(testData.date).format("DD MMM YYYY")}</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
-            <Clock className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <Clock className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             <span className="text-sm md:text-base">{moment.utc(testData.startTime).format("hh:mm A") + " - " + moment.utc(testData.endTime).format("hh:mm A")}</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 transition-transform hover:translate-x-1 duration-200">
-            <Info className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+            <Info className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             <span className="text-sm md:text-base">Duration: {formatMinutes(testData.durationInMinutes)}</span>
           </div>
         </div>
@@ -72,22 +72,22 @@ export default function VadTestDetails({ testData, onBack }) {
         <div className="flex border-b border-gray-200 animate-in fade-in slide-in-from-bottom duration-500 delay-200">
           <button
             onClick={() => setActiveTab('syllabus')}
-            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer md:text-base ${activeTab === 'syllabus' ? 'text-blue-600' : 'text-gray-500'
+            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer md:text-base ${activeTab === 'syllabus' ? 'text-[#5074b6]' : 'text-gray-500'
               }`}
           >
             Syllabus & Topics
             {activeTab === 'syllabus' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 animate-in slide-in-from-left duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5074b6] animate-in slide-in-from-left duration-300" />
             )}
           </button>
           <button
             onClick={() => setActiveTab('documents')}
-            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer md:text-base ${activeTab === 'documents' ? 'text-blue-600' : 'text-gray-500'
+            className={`flex-1 pb-3 text-sm font-medium transition-all duration-300 relative cursor-pointer md:text-base ${activeTab === 'documents' ? 'text-[#5074b6]' : 'text-gray-500'
               }`}
           >
             Documents
             {activeTab === 'documents' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 animate-in slide-in-from-right duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5074b6] animate-in slide-in-from-right duration-300" />
             )}
           </button>
         </div>
@@ -131,7 +131,7 @@ export default function VadTestDetails({ testData, onBack }) {
                         className="flex items-start gap-3 pl-2 animate-in fade-in slide-in-from-left duration-300"
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
-                        <div className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0 transition-transform hover:scale-150 duration-200" />
+                        <div className="w-2 h-2 rounded-full bg-[#5074b6] mt-2 flex-shrink-0 transition-transform hover:scale-150 duration-200" />
                         <span className="text-sm text-gray-700 md:text-base">{subtopic.name}</span>
                       </div>
                     ))}
@@ -160,7 +160,7 @@ export default function VadTestDetails({ testData, onBack }) {
                   </div>
                 </div>
                 <Link href={doc.link} target='_blank' download={true} className="p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all duration-200 active:scale-95 hover:rotate-12">
-                  <Download className="w-5 h-5 text-blue-600" />
+                  <Download className="w-5 h-5 text-[#5074b6]" />
                 </Link>
               </div>
             ))}

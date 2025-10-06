@@ -4,10 +4,16 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { sessionService } from "@/services/sessionService";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
     const router = useRouter();
-    const user = sessionService.getUser();
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        let u = sessionService.getUser()
+        setUser(u)
+    }, [])
 
     return (
         <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
@@ -21,7 +27,7 @@ export default function ProfilePage() {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="absolute left-1/2 -translate-x-1/2 text-lg font-semibold text-[#5074b6] md:text-3xl">
@@ -77,7 +83,7 @@ export default function ProfilePage() {
                                 Teaching Assignments
                             </h3>
                             <div className="space-y-3">
-                                {user.classesAndSubjects.map((a, i) => (
+                                {user.classesAndSubjects?.map((a, i) => (
                                     <div
                                         key={i}
                                         className="border border-gray-200 rounded-xl p-3 bg-white shadow-sm md:p-4 md:hover:shadow-md md:transition"
@@ -96,10 +102,10 @@ export default function ProfilePage() {
 
                         {/* Buttons */}
                         <div className="flex flex-col gap-3 mt-8 md:flex-row md:justify-between md:gap-5">
-                            <button className="bg-[#5074b6] text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-blue-700 transition">
+                            <button className="bg-[#5074b6] text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-[#5074b6] transition">
                                 Watch Tutorial
                             </button>
-                            <button className="bg-blue-100 text-blue-700 py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-blue-200 transition">
+                            <button className="bg-blue-100 text-[#5074b6] py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-blue-200 transition">
                                 Share Feedback
                             </button>
                             <button className="bg-red-500 text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition">
@@ -117,7 +123,7 @@ export default function ProfilePage() {
 function Section({ title, children }) {
     return (
         <div className="mb-6 md:mb-8">
-            <h3 className="font-semibold text-blue-700 mb-2 md:text-xl">{title}</h3>
+            <h3 className="font-semibold text-[#5074b6] mb-2 md:text-xl">{title}</h3>
             <div className="space-y-2 md:space-y-3">{children}</div>
         </div>
     );

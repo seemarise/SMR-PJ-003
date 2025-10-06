@@ -26,7 +26,7 @@ export default function PerformancePage() {
               href="/classroom/teacherdashboard"
               className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
             >
-              <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+              <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             </Link>
 
             <div className="absolute left-1/2 -translate-x-1/2 text-center">
@@ -38,7 +38,7 @@ export default function PerformancePage() {
 
           {/* Students List */}
           <div>
-            <p className="text-blue-700 mt-3 font-semibold text-base md:text-xl">
+            <p className="text-[#5074b6] mt-3 font-semibold text-base md:text-xl">
               Students
             </p>
 
@@ -62,7 +62,7 @@ export default function PerformancePage() {
                       <p className="text-sm text-gray-500">{student.class}</p>
                     </div>
                   </div>
-                  <BarChart2 className="text-blue-600 w-5 h-5 md:w-6 md:h-6" />
+                  <BarChart2 className="text-[#5074b6] w-5 h-5 md:w-6 md:h-6" />
                 </Link>
               ))}
             </div>

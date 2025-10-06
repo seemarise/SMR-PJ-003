@@ -30,7 +30,7 @@ export default function StudentPerformancePage({ params }) {
               href="/classroom/teacherdashboard/performance"
               className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
             >
-              <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+              <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             </Link>
 
             <h1 className="text-lg font-bold text-blue-800 md:text-2xl">
@@ -38,7 +38,7 @@ export default function StudentPerformancePage({ params }) {
             </h1>
 
             <button className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3">
-              <RefreshCcw className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+              <RefreshCcw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             </button>
           </div>
 
@@ -63,8 +63,8 @@ export default function StudentPerformancePage({ params }) {
             <button
               onClick={() => setActiveTab("school")}
               className={`flex-1 text-center py-2 rounded-md font-medium transition ${activeTab === "school"
-                ? "bg-blue-600 text-white"
-                : "text-gray-600 hover:text-blue-600"
+                ? "bg-[#5074b6] text-white"
+                : "text-gray-600 hover:text-[#5074b6]"
                 }`}
             >
               School Performance
@@ -72,8 +72,8 @@ export default function StudentPerformancePage({ params }) {
             <button
               onClick={() => setActiveTab("vad")}
               className={`flex-1 text-center py-2 rounded-md font-medium transition ${activeTab === "vad"
-                ? "bg-blue-600 text-white"
-                : "text-gray-600 hover:text-blue-600"
+                ? "bg-[#5074b6] text-white"
+                : "text-gray-600 hover:text-[#5074b6]"
                 }`}
             >
               VAD Performance

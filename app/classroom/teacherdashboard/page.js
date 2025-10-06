@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
     UserRound,
@@ -14,7 +14,13 @@ import { sessionService } from "@/services/sessionService";
 import Image from "next/image";
 
 export default function TeacherDashboard() {
-    const user = sessionService.getUser()
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        let u = sessionService.getUser()
+        setUser(u)
+    }, [])
+
     const menuItems = [
         {
             title: "Attendance",
@@ -54,7 +60,7 @@ export default function TeacherDashboard() {
                             href="/classroom"
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </Link>
 
                         <div className="absolute left-1/2 -translate-x-1/2 text-center">
@@ -79,7 +85,7 @@ export default function TeacherDashboard() {
                                 <h2 className="font-bold text-lg md:text-2xl text-gray-800">
                                     {user.name}
                                 </h2>
-                                <span className="mt-1 inline-flex items-center bg-white border border-blue-600 text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
+                                <span className="mt-1 inline-flex items-center bg-white border border-[#5074b6] text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
                                     <UserRound className="w-4 h-4 mr-2" />
                                     Class {user.className + " " + user.section}
                                 </span>

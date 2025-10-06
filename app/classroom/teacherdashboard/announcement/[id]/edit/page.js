@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ArrowLeft, Info, BookOpen, GraduationCap, SquarePen } from "lucide-react";
 import { updateAnnouncement } from "@/services/classroomService/announcementApi";
@@ -14,7 +14,12 @@ export default function EditAnnouncementPage() {
     const searchParams = useSearchParams();
     const title = searchParams.get("title");
     const description = searchParams.get("description");
-    const user = sessionService.getUser()
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        let u = sessionService.getUser()
+        setUser(u)
+    }, [])
     const {
         register,
         handleSubmit,
@@ -45,9 +50,9 @@ export default function EditAnnouncementPage() {
                     onClick={() => router.back()}
                     className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
                 >
-                    <ArrowLeft className="w-5 h-5 text-blue-600" />
+                    <ArrowLeft className="w-5 h-5 text-[#5074b6]" />
                 </button>
-                <h1 className="text-lg font-bold text-blue-700 md:text-2xl">
+                <h1 className="text-lg font-bold text-[#5074b6] md:text-2xl">
                     Edit Announcement
                 </h1>
                 <div className="w-6" />
@@ -68,7 +73,7 @@ export default function EditAnnouncementPage() {
                                 type="text"
                                 placeholder="Enter title"
                                 {...register("title", { required: "Title is required" })}
-                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-[#5074b6] focus:outline-none"
                             />
                             {errors.title && (
                                 <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
@@ -85,7 +90,7 @@ export default function EditAnnouncementPage() {
                                 {...register("description", {
                                     required: "Description is required",
                                 })}
-                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-[#5074b6] focus:outline-none"
                             />
                             {errors.description && (
                                 <p className="text-red-500 text-sm mt-1">
@@ -97,7 +102,7 @@ export default function EditAnnouncementPage() {
                         {/* Update Button */}
                         <button
                             type="submit"
-                            className="w-full mt-8 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+                            className="w-full mt-8 bg-[#5074b6] text-white py-3 rounded-xl font-semibold hover:bg-[#5074b6] transition"
                         >
                             Update Announcement
                         </button>

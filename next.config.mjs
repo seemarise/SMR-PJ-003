@@ -1,5 +1,15 @@
-/** @type {import('next').NextConfig} */
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+const bundleAnalyzer = withBundleAnalyzer({
+    enabled: process.env.ANALYZE === 'true',
+});
+
+
 const nextConfig = {
+    reactStrictMode: true,
+    experimental: {
+        appDir: true, // make sure this is enabled for App Router
+    },
     images: {
         remotePatterns: [
             {
@@ -11,4 +21,4 @@ const nextConfig = {
     },
 };
 
-export default nextConfig;
+export default bundleAnalyzer(nextConfig);

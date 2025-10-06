@@ -51,7 +51,7 @@ export default function StudentRemarkDetailPage() {
                             onClick={() => router.back()}
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:absolute md:left-0 md:p-3 md:shadow-sm"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-700 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="text-lg font-bold text-blue-800 md:text-3xl text-center">
@@ -59,7 +59,7 @@ export default function StudentRemarkDetailPage() {
                         </h1>
 
                         <button className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:absolute md:right-0 md:p-3 md:shadow-sm">
-                            <RefreshCw className="w-5 h-5 text-blue-700 md:w-6 md:h-6" />
+                            <RefreshCw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
                     </div>
 
@@ -93,7 +93,7 @@ export default function StudentRemarkDetailPage() {
                         />
                         <button
                             onClick={handleSubmit}
-                            className="mt-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium text-sm md:text-base md:px-6 md:py-3 md:rounded-xl transition"
+                            className="mt-3 bg-[#5074b6] hover:bg-[#5074b6] text-white px-4 py-2 rounded-lg font-medium text-sm md:text-base md:px-6 md:py-3 md:rounded-xl transition"
                         >
                             Submit Remark
                         </button>

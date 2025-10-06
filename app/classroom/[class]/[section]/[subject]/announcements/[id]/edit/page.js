@@ -43,7 +43,7 @@ export default function EditAnnouncementPage() {
                     onClick={() => router.back()}
                     className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
                 >
-                    <ArrowLeft className="w-5 h-5 text-blue-600" />
+                    <ArrowLeft className="w-5 h-5 text-[#5074b6]" />
                 </button>
                 <h1 className="text-lg font-bold text-[#5074b6] md:text-2xl">
                     Edit Announcement
@@ -58,7 +58,7 @@ export default function EditAnnouncementPage() {
                     <div className="bg-blue-50 rounded-xl p-4 mb-6 border border-blue-100">
                         <div className="flex items-start gap-3">
                             <div className="p-2 bg-blue-100 rounded-full">
-                                <Info className="w-5 h-5 text-blue-600" />
+                                <Info className="w-5 h-5 text-[#5074b6]" />
                             </div>
                             <div>
                                 <p className="text-gray-700 text-sm md:text-base">
@@ -66,11 +66,11 @@ export default function EditAnnouncementPage() {
                                 </p>
                                 <div className="mt-2 space-y-1 text-sm md:text-base">
                                     <div className="flex items-center gap-2 text-gray-800">
-                                        <GraduationCap className="w-4 h-4 text-blue-600" />
+                                        <GraduationCap className="w-4 h-4 text-[#5074b6]" />
                                         <span className="font-medium">Class {classNum}</span>
                                     </div>
                                     <div className="flex items-center gap-2 text-gray-800">
-                                        <BookOpen className="w-4 h-4 text-blue-600" />
+                                        <BookOpen className="w-4 h-4 text-[#5074b6]" />
                                         <span className="font-medium">Section {section}</span>
                                     </div>
                                     <div className="flex items-center gap-2 text-[#5074b6]">
@@ -92,7 +92,7 @@ export default function EditAnnouncementPage() {
                                 type="text"
                                 placeholder="Enter title"
                                 {...register("title", { required: "Title is required" })}
-                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-[#5074b6] focus:outline-none"
                             />
                             {errors.title && (
                                 <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
@@ -109,7 +109,7 @@ export default function EditAnnouncementPage() {
                                 {...register("description", {
                                     required: "Description is required",
                                 })}
-                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                className="w-full border border-gray-300 rounded-xl p-3 text-gray-800 focus:ring-2 focus:ring-[#5074b6] focus:outline-none"
                             />
                             {errors.description && (
                                 <p className="text-red-500 text-sm mt-1">
@@ -121,7 +121,7 @@ export default function EditAnnouncementPage() {
                         {/* Update Button */}
                         <button
                             type="submit"
-                            className="w-full mt-8 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+                            className="w-full mt-8 bg-[#5074b6] text-white py-3 rounded-xl font-semibold hover:bg-[#5074b6] transition"
                         >
                             Update Announcement
                         </button>

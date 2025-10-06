@@ -34,7 +34,7 @@ export default function StudentRemarksPage() {
                             onClick={() => router.back()}
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:absolute md:left-0 md:p-3 md:shadow-sm"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-700 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         {/* Title */}

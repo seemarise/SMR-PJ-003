@@ -39,10 +39,10 @@ export default function CreateAnnouncement() {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
-                        <h1 className="text-lg font-semibold text-blue-600 md:text-3xl md:font-bold">
+                        <h1 className="text-lg font-semibold text-[#5074b6] md:text-3xl md:font-bold">
                             Create Announcement
                         </h1>
 
@@ -85,7 +85,7 @@ export default function CreateAnnouncement() {
                         {/* Post Button */}
                         <button
                             type="submit"
-                            className="flex items-center justify-center gap-2 bg-[#5074b6] text-white w-full py-3 rounded-lg shadow hover:bg-blue-700 transition text-lg font-medium md:py-4 md:text-xl md:font-semibold md:rounded-xl"
+                            className="flex items-center justify-center gap-2 bg-[#5074b6] text-white w-full py-3 rounded-lg shadow hover:bg-[#5074b6] transition text-lg font-medium md:py-4 md:text-xl md:font-semibold md:rounded-xl"
                         >
                             Post Announcement
                         </button>

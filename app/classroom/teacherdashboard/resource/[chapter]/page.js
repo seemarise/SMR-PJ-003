@@ -61,10 +61,10 @@ export default function ChapterPage({ params }) {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
-                        <h1 className="text-xl font-bold text-blue-700 md:text-3xl">
+                        <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
                             Modules
                         </h1>
 
@@ -74,7 +74,7 @@ export default function ChapterPage({ params }) {
                     {/* Chapter Info */}
                     <div className="bg-blue-50 rounded-xl p-4 shadow-sm flex flex-col gap-1 md:p-6">
                         <div className="flex items-center gap-2">
-                            <Folder className="text-blue-700 w-5 h-5 md:w-6 md:h-6" />
+                            <Folder className="text-[#5074b6] w-5 h-5 md:w-6 md:h-6" />
                             <p className="text-blue-900 font-semibold text-lg capitalize">
                                 {chapter.replace("-", " ")}
                             </p>
@@ -107,7 +107,7 @@ export default function ChapterPage({ params }) {
                                 {/* Left Content */}
                                 <div className="flex items-center gap-4">
                                     <div className="bg-blue-100 p-3 rounded-xl flex items-center justify-center">
-                                        <FileText className="text-blue-700 w-6 h-6 md:w-7 md:h-7" />
+                                        <FileText className="text-[#5074b6] w-6 h-6 md:w-7 md:h-7" />
                                     </div>
                                     <div>
                                         <p className="font-semibold text-gray-800 text-base md:text-lg">
@@ -116,7 +116,7 @@ export default function ChapterPage({ params }) {
                                         <p className="text-sm text-gray-500">
                                             Created: {topic.createdAt}
                                         </p>
-                                        <p className="text-sm text-blue-600 mt-1">
+                                        <p className="text-sm text-[#5074b6] mt-1">
                                             {topic.documents} Document
                                             {topic.documents !== 1 ? "s" : ""}
                                         </p>
@@ -140,7 +140,7 @@ export default function ChapterPage({ params }) {
                     {/* Floating Add Button */}
                     <button
                         onClick={handleAdd}
-                        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg text-2xl hover:bg-blue-700 transition md:p-5 md:bottom-10 md:right-10"
+                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
                     >
                         <Plus />
                     </button>
