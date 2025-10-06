@@ -10,25 +10,31 @@ import {
   BookOpen,
   GraduationCap,
   ExternalLink,
+  X
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import React from "react";
-import { getAllModulesByChapterId, removeDocumentByModuleAndDocumentId } from "@/services/classroomService/resourceApi";
+import { getAllModulesByChapterId, removeDocumentByModuleAndDocumentId, getSignedUrl, addDocumentsByModuleId } from "@/services/classroomService/resourceApi";
 import { useSearchParams } from "next/navigation";
 
 export default function TopicPage({ params }) {
-  const { class: className, section, subject, chapter, topic } = React.use(params);
+  const { chapter, topic } = React.use(params);
   const searchParams = useSearchParams();
   const chapterName = searchParams.get("chapterName");
   const router = useRouter();
-
+  const fileInputRef = useRef(null);
   const [documents, setDocuments] = useState({});
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteDoc, setDeleteDoc] = useState({});
   const [activeTab, setActiveTab] = useState("upload");
+  const [webLink, setWebLink] = useState({ "linkName": "", "webLink": "" });
+  const [files, setFiles] = useState([]); // uploaded files
+  const [groupName, setGroupName] = useState("");
+  const [error, setError] = useState("");
   const handleBack = () => router.back();
+
 
   async function deleteDocument() {
     if (Object.keys(deleteDoc).length == 0) {
@@ -50,8 +56,120 @@ export default function TopicPage({ params }) {
     }
   };
 
-  const handleAdd = () => {
-    alert("Add document clicked!");
+  const handleAddFilesClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+
+    // filter out > 10 MB files
+    const validFiles = [];
+    let rejected = false;
+    selectedFiles.forEach((file) => {
+      if (file.size <= 10 * 1024 * 1024) {
+        validFiles.push(file);
+      } else {
+        rejected = true;
+      }
+    });
+
+    if (rejected) {
+      setError("Some files were not added because they exceed 10MB.");
+      setTimeout(() => setError(""), 4000);
+    }
+
+    setFiles((prev) => [...prev, ...validFiles]);
+  };
+
+  const removeFile = (index) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleUploadSubmit = async () => {
+    console.log("Uploading files:", files);
+    console.log("Group name:", groupName);
+    // onClose();
+    try {
+      let bodyObj = { documents: [] };
+
+      for (const file of files) {
+        let objFile = {};
+
+        const res = await getSignedUrl({
+          fileName: file.name,
+          fieldName: 'Module/Documents'
+        });
+        console.log("hi", res);
+        const url = res.data.signedUrl;
+        const uploadRes = await fetch(url, {
+          method: "PUT",
+          headers: { "Content-Type": file.type },
+          body: file,
+        });
+        console.log(uploadRes.url.split('?')[0]);
+        if (!uploadRes.ok) {
+          throw new Error(`Failed to upload ${file.name}`);
+        }
+        objFile['type'] = "document/" + file.type.split('/')[1];
+        objFile['link'] = uploadRes.url.split('?')[0];
+        objFile['name'] = file.name;
+        bodyObj.documents.push(objFile);
+      };
+      alert("All files uploaded successfully!");
+
+      console.log(bodyObj);
+      let res = await addDocumentsByModuleId([topic], bodyObj);
+      if (res.statusCode == 200) {
+        alert("Uploaded Successfull");
+        handleAddDocumnetCancel();
+        fetchModulesByChapter();
+      }
+      console.log("after coming", res);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  };
+  const handleEditLinkName = (e) => {
+    setWebLink(prev => ({ ...prev, linkName: e.target.value }))
+  };
+  const handleEditWebLink = (e) => {
+    setWebLink(prev => ({ ...prev, webLink: e.target.value }))
+  };
+  const handleAddDocumnetCancel = () => {
+    setFiles([]);
+    setGroupName("");
+    setWebLink({ "linkName": "", "webLink": "" });
+    setActiveTab("upload");
+    setShowAddModal(false);
+  };
+  const handleLinkSubmit = async () => {
+    console.log("Link submitted");
+    if (webLink.linkName.trim() == '') {
+      alert("Please enter a name for the link");
+    }
+    if (webLink.webLink.trim() == '') {
+      alert("Please enter web link");
+    }
+    if (webLink.webLink.startsWith("http://") || webLink.webLink.startsWith("https://")) {
+      let res = await addDocumentsByModuleId([topic], {
+        documents: [{
+          type: "document/link",
+          link: webLink.webLink,
+          name: webLink.linkName,
+        }]
+      });
+      if (res.statusCode == 200) {
+        alert("Uploaded Successfull");
+        handleAddDocumnetCancel();
+        fetchModulesByChapter();
+      }
+    }
+    else {
+      alert("Please enter a valid URL starting with http:// or https://");
+    }
+
   };
 
   async function fetchModulesByChapter() {
@@ -246,96 +364,143 @@ export default function TopicPage({ params }) {
             </div>
           )}
           {
-            showAddModal && (<div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
-              <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6">
-                {/* Title */}
-                <h2 className="text-lg font-semibold mb-4 text-center">Add New Documents</h2>
+            showAddModal && (
+              <div className="fixed inset-0 flex items-center justify-center bg-transparent  z-50">
+                <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6">
+                  <h2 className="text-lg font-semibold mb-4 text-center">Add New Documents</h2>
 
-                {/* Tab Buttons */}
-                <div className="flex mb-6">
-                  <button
-                    onClick={() => setActiveTab("upload")}
-                    className={`flex-1 py-2 rounded-l-lg ${activeTab === "upload" ? "bg-[#5074b6] text-white" : "bg-gray-100"
-                      }`}
-                  >
-                    Upload Files
-                  </button>
-                  <button
-                    onClick={() => setActiveTab("link")}
-                    className={`flex-1 py-2 rounded-r-lg ${activeTab === "link" ? "bg-[#5074b6] text-white" : "bg-gray-100"
-                      }`}
-                  >
-                    Web Link
-                  </button>
+                  {/* Tab Switch */}
+                  <div className="flex mb-6">
+                    <button
+                      onClick={() => setActiveTab("upload")}
+                      className={`flex-1 py-2 rounded-l-lg ${activeTab === "upload" ? "bg-[#5074b6] text-white" : "bg-gray-100"
+                        }`}
+                    >
+                      Upload Files
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("link")}
+                      className={`flex-1 py-2 rounded-r-lg ${activeTab === "link" ? "bg-[#5074b6] text-white" : "bg-gray-100"
+                        }`}
+                    >
+                      Web Link
+                    </button>
+                  </div>
+
+                  {/* Upload Files */}
+                  {activeTab === "upload" && (
+                    <div>
+                      <label className="block text-sm mb-2">Group Name (Optional)</label>
+                      <input
+                        type="text"
+                        value={groupName}
+                        onChange={(e) => setGroupName(e.target.value)}
+                        placeholder="Enter name for these documents..."
+                        className="w-full p-2 border rounded mb-4"
+                      />
+
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-sm">Upload Files ({files.length})</span>
+                        <button
+                          onClick={handleAddFilesClick}
+                          className="bg-[#5074b6] text-white px-4 py-1 rounded"
+                        >
+                          Add Files
+                        </button>
+                      </div>
+
+                      {/* Hidden File Input */}
+                      <input
+                        type="file"
+                        multiple
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+
+                      {/* Error Message */}
+                      {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
+
+                      {/* File List with Remove */}
+                      {files.length > 0 && (
+                        <ul className="mb-4 text-sm text-gray-700 max-h-28 overflow-y-auto space-y-2">
+                          {files.map((file, i) => (
+                            <li
+                              key={i}
+                              className="flex justify-between items-center bg-gray-100 px-2 py-1 rounded"
+                            >
+                              <span className="truncate mr-2">
+                                {file.name} ({Math.round(file.size / 1024)} KB)
+                              </span>
+                              <button
+                                onClick={() => removeFile(i)}
+                                className="text-red-500 hover:text-red-700"
+                              >
+                                <X size={16} />
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      <p className="text-xs text-gray-500 mb-4">
+                        Note: Each file size should be less than 10MB
+                      </p>
+
+                      <div className="flex justify-between">
+                        <button onClick={handleAddDocumnetCancel} className="px-4 py-2 rounded bg-gray-200">
+                          Cancel
+                        </button>
+                        <button
+                          onClick={handleUploadSubmit}
+                          className="px-4 py-2 rounded bg-[#5074b6] text-white"
+                          disabled={files.length === 0}
+                        >
+                          Add Documents
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Web Link */}
+                  {activeTab === "link" && (
+                    <div>
+                      <label className="block text-sm mb-2">Link Name</label>
+                      <input
+                        type="text"
+                        placeholder="Enter link name"
+                        className="w-full p-2 border rounded mb-4"
+                        onChange={(e) => handleEditLinkName(e)}
+                      />
+
+                      <label className="block text-sm mb-2">Web Link</label>
+                      <input
+                        type="url"
+                        placeholder="Enter URL (https://...)"
+                        className="w-full p-2 border rounded mb-4"
+                        onChange={(e) => handleEditWebLink(e)}
+                      />
+
+                      <p className="text-xs text-gray-500 mb-4">
+                        Note: Web links must be valid URLs beginning with http:// or https://
+                      </p>
+
+                      <div className="flex justify-between">
+                        <button onClick={handleAddDocumnetCancel} className="px-4 py-2 rounded bg-gray-200">
+                          Cancel
+                        </button>
+                        <button
+                          onClick={handleLinkSubmit}
+                          className="px-4 py-2 rounded bg-[#5074b6] text-white"
+                        >
+                          Add Link
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-
-                {/* Upload Files Content */}
-                {activeTab === "upload" && (
-                  <div>
-                    <label className="block text-sm mb-2">Group Name (Optional)</label>
-                    <input
-                      type="text"
-                      placeholder="Enter name for these documents..."
-                      className="w-full p-2 border rounded mb-4"
-                    />
-
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm">Upload Files (0)</span>
-                      <button className="bg-[#5074b6] text-white px-4 py-1 rounded">Add Files</button>
-                    </div>
-
-                    <div className="w-full h-20 border-2 border-dashed flex items-center justify-center text-gray-400 text-sm rounded mb-4">
-                      No files selected
-                    </div>
-
-                    <p className="text-xs text-gray-500 mb-4">
-                      Note: Each file size should be less than 10MB
-                    </p>
-
-                    <div className="flex justify-between">
-                      <button onClick={() => { setShowAddModal(false); }} className="px-4 py-2 rounded bg-gray-200">
-                        Cancel
-                      </button>
-                      <button className="px-4 py-2 rounded bg-[#5074b6] text-white">
-                        Add Documents
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Web Link Content */}
-                {activeTab === "link" && (
-                  <div>
-                    <label className="block text-sm mb-2">Link Name</label>
-                    <input
-                      type="text"
-                      placeholder="Enter link name"
-                      className="w-full p-2 border rounded mb-4"
-                    />
-
-                    <label className="block text-sm mb-2">Web Link</label>
-                    <input
-                      type="url"
-                      placeholder="Enter URL (https://...)"
-                      className="w-full p-2 border rounded mb-4"
-                    />
-
-                    <p className="text-xs text-gray-500 mb-4">
-                      Note: Web links must be valid URLs beginning with http:// or https://
-                    </p>
-
-                    <div className="flex justify-between">
-                      <button onClick={() => setShowAddModal(false)} className="px-4 py-2 rounded bg-gray-200">
-                        Cancel
-                      </button>
-                      <button className="px-4 py-2 rounded bg-[#5074b6] text-white">
-                        Add Link
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
-            </div>)
+            )
           }
           {/* Floating Add Button */}
           <button

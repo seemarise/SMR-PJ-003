@@ -47,6 +47,7 @@ export const sessionService = {
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(REFRESH_TOKEN_KEY);
         localStorage.removeItem(USER_KEY);
+        localStorage.removeItem(USER);
       }
     } catch (error) {
       // console.error("Error removing session from localStorage:", error);

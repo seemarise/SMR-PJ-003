@@ -9,6 +9,10 @@ const concatenatePath = (url, arr, obj = {}) => {
   return url+ "/" + strArr + query;
 };
 
+const getClassroomChapters = ()=>{
+    return apiClient.get("/api/v1/chapters/teachers/get-classroom-chapters");
+};
+
 const getSubjectChaptersByClassSecAndSubId = (queryParams=[],searchParams={}) => {
     return apiClient.get(concatenatePath("/api/v1/chapters/teachers/all-chapters",queryParams,searchParams));
 };
@@ -38,10 +42,19 @@ const addDocumentByChapterId = (queryParams=[],body)=>{
 };
 
 const removeDocumentByModuleAndDocumentId = (queryParams=[],body)=>{
-    return apiClient.delete("/api/v1/chapters/teachers/remove-document/",queryParams,body);
+    return apiClient.delete(concatenatePath("/api/v1/chapters/teachers/remove-document",queryParams),body);
 };
 
-export { 
+const getSignedUrl = (body)=>{
+  return apiClient.post("/api/v1/signed-url/get-signed-url",body);
+};
+
+const addDocumentsByModuleId = (queryParams,body)=>{
+  return apiClient.post(concatenatePath("/api/v1/chapters/teachers/add-document",queryParams),body);
+}
+
+
+export {  getClassroomChapters,
           getSubjectChaptersByClassSecAndSubId ,
           addChaptersByClassSecAndSubId,
           removeChaptersById,
@@ -49,5 +62,7 @@ export {
           addModuleByChapterId,
           removeModuleById,
           addDocumentByChapterId,
-          removeDocumentByModuleAndDocumentId
+          removeDocumentByModuleAndDocumentId,
+          getSignedUrl,
+          addDocumentsByModuleId
 };

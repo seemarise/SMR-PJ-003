@@ -1,72 +1,75 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import React from "react";
+import { ArrowLeft, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function CreateAssignment() {
+export default function CreateAssignment({ params }) {
     const [multipleChoice, setMultipleChoice] = useState(false);
+    const [showQuestions, setShowQuestions] = useState(false);
+    const [showAllStudent, setShowAllStudent] = useState(false);
+    const { class: classId, section, subject } = React.use(params);
     const router = useRouter();
 
     return (
-        <main className="min-h-screen bg-gray-50 flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 bg-white shadow-sm sticky top-0 z-10">
-                <button
-                    onClick={() => router.back()}
-                    className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
-                    aria-label="Go back"
-                >
-                    <ArrowLeft className="w-5 h-5 text-[#5074b6]" />
-                </button>
-                <h1 className="text-lg sm:text-xl font-semibold text-[#5074b6]">
-                    English
-                </h1>
-                <div className="w-8" />
-            </div>
+        <div className="flex flex-col min-h-screen bg-gray-50">
+            {/* Main content */}
+            <main className="px-4 py-4 flex-1 md:px-8 md:py-10">
+                {/* Desktop container */}
+                <div className="md:max-w-5xl md:mx-auto md:space-y-10">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-6 md:mb-10">
+                        <button
+                            onClick={() => router.back()}
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            aria-label="Go back"
+                        >
+                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                        </button>
 
-            {/* Form */}
-            <section className="flex-1 flex justify-center items-start">
-                <div className="w-full bg-white shadow-md rounded-xl p-6 sm:p-8">
+                        <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
+                            Create Assignment
+                        </h1>
 
+                        <div className="w-6" />
+                    </div>
 
-                    <div className="space-y-5">
+                    {/* Form */}
+                    <form className="space-y-4 md:space-y-6 bg-white rounded-lg shadow-sm p-4 md:p-8 md:rounded-xl">
                         {/* Lesson Name */}
                         <div>
-                            <label className="block font-medium mb-1 text-gray-700">
-                                Lesson Name
-                            </label>
+                            <label className="font-medium block mb-1">Lesson Name</label>
                             <input
                                 type="text"
                                 placeholder="Enter lesson name"
-                                className="w-full border border-gray-300 focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition"
+                                className="w-full border rounded-lg px-3 py-2 md:px-4 md:py-3"
                             />
                         </div>
 
                         {/* Content */}
                         <div>
-                            <label className="block font-medium mb-1 text-gray-700">
-                                Content
-                            </label>
+                            <label className="font-medium block mb-1">Content</label>
                             <textarea
-                                placeholder="Enter the assignment content"
-                                rows="3"
-                                className="w-full border border-gray-300 focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition resize-none"
+                                rows={4}
+                                placeholder="Enter content"
+                                className="w-full border rounded-lg px-3 py-2 md:px-4 md:py-3 resize-none"
                             />
                         </div>
 
                         {/* Topics */}
                         <div>
-                            <label className="block font-medium mb-1 text-gray-700">
-                                Topics
-                            </label>
-                            <div className="flex items-center">
+                            <label className="font-medium block mb-1">Topics</label>
+                            <div className="flex gap-2">
                                 <input
                                     type="text"
                                     placeholder="Add a topic"
-                                    className="flex-grow border border-gray-300 p-2 rounded-md focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 outline-none transition mr-2"
+                                    className="border rounded-lg px-3 py-2 flex-1 md:px-4 md:py-3"
                                 />
-                                <button className="bg-[#5074b6] hover:bg-[#5074b6] text-white px-3 py-2 rounded-md">
+                                <button
+                                    type="button"
+                                    className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                                >
                                     +
                                 </button>
                             </div>
@@ -74,92 +77,145 @@ export default function CreateAssignment() {
 
                         {/* Additional Info */}
                         <div>
-                            <label className="block font-medium mb-1 text-gray-700">
-                                Additional Information
-                            </label>
+                            <label className="font-medium block mb-1">Additional Information</label>
                             <input
                                 type="text"
-                                placeholder="Enter additional information (optional)"
-                                className="w-full border border-gray-300 p-2 rounded-md focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 outline-none transition"
+                                placeholder="Enter details"
+                                className="w-full border rounded-lg px-3 py-2 md:px-4 md:py-3"
                             />
                         </div>
 
                         {/* Due Date */}
                         <div>
-                            <label className="block font-medium mb-1 text-gray-700">
-                                Due Date
-                            </label>
+                            <label className="font-medium block mb-1">Due Date</label>
                             <input
                                 type="datetime-local"
-                                className="w-full border border-gray-300 p-2 rounded-md focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 outline-none transition"
+                                className="w-full border rounded-lg px-3 py-2 md:px-4 md:py-3"
                             />
                         </div>
 
                         {/* Instructions */}
                         <div>
-                            <label className="block font-medium mb-1 text-gray-700">
-                                Instructions
-                            </label>
+                            <label className="font-medium block mb-1">Instructions</label>
                             <textarea
-                                placeholder="Enter instructions for students"
-                                rows="3"
-                                className="w-full border border-gray-300 focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 p-2 rounded-md outline-none transition resize-none"
+                                placeholder="Add any specific instructions"
+                                rows={3}
+                                className="w-full border rounded-lg px-3 py-2 md:px-4 md:py-3 resize-none"
                             />
                         </div>
 
                         {/* Submission Format */}
                         <div>
-                            <label className="block font-medium mb-1 text-gray-700">
-                                Submission Format
-                            </label>
+                            <label className="font-medium block mb-1">Submission Format</label>
                             <input
                                 type="text"
-                                placeholder="E.g., PDF, Word document, etc."
-                                className="w-full border border-gray-300 p-2 rounded-md focus:border-[#5074b6] focus:ring-blue-200 focus:ring-2 outline-none transition"
+                                placeholder="E.g., PDF, Word doc"
+                                className="w-full border rounded-lg px-3 py-2 md:px-4 md:py-3"
                             />
                         </div>
-
 
                         {/* Upload Document */}
                         <div>
                             <label className="font-medium block mb-1">Upload Document</label>
-                            <input
-                                type="file"
-                                className="border border-[#5074b6] text-[#5074b6] px-4 py-2 rounded-lg"
-                            />
-
+                            <button
+                                type="button"
+                                className="border border-blue-500 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
+                            >
+                                Upload Document
+                            </button>
                             <p className="text-sm text-gray-400 mt-1">No documents uploaded yet</p>
                         </div>
 
                         {/* Assign To */}
-                        <div className="flex items-center justify-between mt-4">
-                            <label className="font-medium">Assign To</label>
-                            <input type="checkbox" defaultChecked className="toggle-switch" />
+                        <div className="flex flex-col items-center justify-between mt-4">
+                            <div className="font-medium w-full">Assign To</div>
+                            <div className="flex items-center justify-between w-full">
+                                All Students
+                                <ToggleSwitch checked={showAllStudent} onChange={() => setShowAllStudent(!showAllStudent)} />
+                            </div>
+                            {
+                                showAllStudent && (
+                                    <div className="w-full">
+                                        <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex justify-center items-center transition"
+                                            type="button"
+                                            onClick={() =>
+                                                router.push(
+                                                    `/classroom/${classId}/${section}/${subject}/assignments/create/select-student`
+                                                )
+                                            }>
+                                            +  Select Student
+                                        </button>
+                                    </div>
+                                )
+                            }
                         </div>
 
                         {/* Add Images */}
                         <div>
                             <label className="font-medium block mb-1">Add Images</label>
                             <div className="flex gap-2">
-                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg">
+                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                                     Add Image
                                 </button>
-                                <button className="border px-4 py-2 rounded-lg">📷</button>
+                                <button className="border px-4 py-2 rounded-lg hover:bg-gray-50 transition">
+                                    📷
+                                </button>
                             </div>
-
                         </div>
-                        <div className="flex items-center justify-between">
-                            <label className="font-medium">Questions</label>
-                            <input type="checkbox" defaultChecked />
+
+                        {/* Questions Section */}
+                        <div className="mt-6">
+                            <div className="flex items-center justify-between">
+                                <label className="font-medium">Questions</label>
+                                <ToggleSwitch checked={showQuestions} onChange={() => setShowQuestions(!showQuestions)} /> </div>
+
+                            {showQuestions && (
+                                <div className="mt-3 p-3 border rounded-lg bg-gray-50 md:p-5 md:rounded-xl">
+                                    <div className="flex justify-between items-center mb-2">
+                                        <p className="font-medium">0 Questions</p>
+                                        <button
+                                            onClick={() =>
+                                                router.push(
+                                                    `/classroom/${classId}/${section}/${subject}/assignments/create/edit-question`
+                                                )
+                                            }
+                                            type="button"
+                                            className="flex items-center gap-1 text-blue-600 hover:underline"
+                                        >
+                                            <Pencil className="w-4 h-4" />
+                                            Edit Questions
+                                        </button>
+                                    </div>
+
+                                    <div className="flex gap-2 mt-3 flex-wrap">
+                                        <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition">
+                                            + Generate with AI
+                                        </button>
+                                        <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition">
+                                            + Add Questions
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Submit Button */}
-                        <button className="w-full bg-[#5074b6] hover:bg-[#5074b6] text-white font-semibold py-3 rounded-md transition">
+                        <button className="w-full bg-[#5074b6] hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl">
                             Create Assignment
                         </button>
-                    </div>
+                    </form>
                 </div>
-            </section>
-        </main>
+            </main>
+        </div>
+    );
+}
+
+
+function ToggleSwitch({ checked, onChange }) {
+    return (
+        <label className="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" checked={checked} onChange={onChange} className="sr-only peer" />
+            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
+        </label>
     );
 }
