@@ -17,7 +17,8 @@ export default function TeacherDashboard() {
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        let u = sessionService.getUser()
+        let u = sessionService.getUser();
+        console.log('user', u);
         setUser(u)
     }, [])
 
@@ -45,7 +46,7 @@ export default function TeacherDashboard() {
         {
             title: "Resources",
             icon: BookOpen,
-            link: "/classroom/teacherdashboard/resource",
+            link: `/classroom/teacherdashboard/resource?classId=${user?.classId}&sectionId=${user?.sectionId}`,
         },
     ];
 
