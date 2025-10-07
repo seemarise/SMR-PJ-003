@@ -2,15 +2,49 @@
 
 import { useState } from "react";
 import React from "react";
-import { ArrowLeft, Pencil } from "lucide-react";
+import { ArrowLeft, Pencil, Camera, Image } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function CreateAssignment({ params }) {
     const [multipleChoice, setMultipleChoice] = useState(false);
     const [showQuestions, setShowQuestions] = useState(false);
     const [showAllStudent, setShowAllStudent] = useState(false);
+    const [showImageSourcePopup, setShowImageSourcePopup] = useState(false);
     const { class: classId, section, subject } = React.use(params);
     const router = useRouter();
+
+    const handleImageFromGallery = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Handle the selected image file
+                console.log('Selected image:', file);
+                // You can add logic here to display the image or upload it
+            }
+        };
+        input.click();
+        setShowImageSourcePopup(false);
+    };
+
+    const handleTakePhoto = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.capture = 'camera';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Handle the captured photo
+                console.log('Captured photo:', file);
+                // You can add logic here to display the image or upload it
+            }
+        };
+        input.click();
+        setShowImageSourcePopup(false);
+    };
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
@@ -50,11 +84,20 @@ export default function CreateAssignment({ params }) {
                         {/* Content */}
                         <div>
                             <label className="font-medium block mb-1">Content</label>
-                            <textarea
-                                rows={4}
-                                placeholder="Enter content"
-                                className="w-full border rounded-lg px-3 py-2 md:px-4 md:py-3 resize-none"
-                            />
+                            <div className="relative">
+                                <textarea
+                                    rows={4}
+                                    placeholder="Enter the assignment content"
+                                    className="w-full border rounded-lg px-3 py-2 md:px-4 md:py-3 resize-none pr-12"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowImageSourcePopup(true)}
+                                    className="absolute right-3 top-2 p-2 text-gray-500 hover:text-blue-600 transition-colors"
+                                >
+                                    <Camera className="w-5 h-5" />
+                                </button>
+                            </div>
                         </div>
 
                         {/* Topics */}
@@ -206,6 +249,41 @@ export default function CreateAssignment({ params }) {
                     </form>
                 </div>
             </main>
+
+            {/* Image Source Popup */}
+            {showImageSourcePopup && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-6 mx-4 w-full max-w-sm">
+                        <h3 className="text-lg font-semibold mb-4">Choose File Source</h3>
+                        <div className="space-y-3">
+                            <button
+                                onClick={handleImageFromGallery}
+                                className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors"
+                            >
+                                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <Image className="w-4 h-4 text-blue-600" />
+                                </div>
+                                <span>Image from Gallery</span>
+                            </button>
+                            <button
+                                onClick={handleTakePhoto}
+                                className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors"
+                            >
+                                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <Camera className="w-4 h-4 text-blue-600" />
+                                </div>
+                                <span>Take Photo</span>
+                            </button>
+                        </div>
+                        <button
+                            onClick={() => setShowImageSourcePopup(false)}
+                            className="w-full mt-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
