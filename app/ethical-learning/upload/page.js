@@ -10,8 +10,9 @@ export default function UploadCompendiumPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [websiteLink, setWebsiteLink] = useState("");
-  const [category, setCategory] = useState("Health");
-  const [subCategory, setSubCategory] = useState("Mental");
+  const [websiteLinks, setWebsiteLinks] = useState([]);
+  const [category, setCategory] = useState("General");
+  const [subCategory, setSubCategory] = useState("Industry");
   const [coverImage, setCoverImage] = useState("");
   const [image, setImage] = useState("");
   const [showQuizModal, setShowQuizModal] = useState(false);
@@ -31,13 +32,40 @@ export default function UploadCompendiumPage() {
         setTitle(d.title || "");
         setContent(d.content || "");
         setWebsiteLink(d.websiteLink || "");
-        setCategory(d.category || "Health");
-        setSubCategory(d.subCategory || "Mental");
+        setWebsiteLinks(d.websiteLinks || []);
+        setCategory(d.category || "General");
+        setSubCategory(d.subCategory || "Industry");
         setCoverImage(d.coverImage || "");
         setImage(d.image || "");
       } catch {}
     }
   }, []);
+
+  // Function to add website link
+  const addWebsiteLink = () => {
+    if (websiteLink.trim()) {
+      const newLink = {
+        id: Date.now().toString(),
+        url: websiteLink.trim(),
+        displayName: websiteLink.trim()
+      };
+      setWebsiteLinks([...websiteLinks, newLink]);
+      setWebsiteLink("");
+    }
+  };
+
+  // Function to remove website link
+  const removeWebsiteLink = (id) => {
+    setWebsiteLinks(websiteLinks.filter(link => link.id !== id));
+  };
+
+  // Handle Enter key press for website link input
+  const handleWebsiteKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addWebsiteLink();
+    }
+  };
 
   function toDataURL(file, cb) {
     const reader = new FileReader();
@@ -61,6 +89,7 @@ export default function UploadCompendiumPage() {
       title,
       content,
       websiteLink,
+      websiteLinks,
       category,
       subCategory,
       coverImage,
@@ -89,7 +118,7 @@ export default function UploadCompendiumPage() {
           >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
-          <h1 className="text-xl font-semibold text-blue-700">Create Compendium</h1>
+          <h1 className="text-xl font-semibold text-[#5074b6]">Upload Compendium</h1>
         </div>
 
       <form onSubmit={handleSubmit} className="space-y-5 md:max-w-5xl md:mx-auto md:bg-white md:rounded-xl md:shadow-sm md:p-6">
@@ -119,7 +148,7 @@ export default function UploadCompendiumPage() {
             <ImageIcon className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
           </div>
           <p className="text-xs text-gray-500 mt-1">
-            <strong>Note:</strong> Only add website links and images if they help students understand your compendium.
+            <strong>Note:</strong> The Textual content you provide for the compendium is more than enough. Only add website links and images to this compendium if you truly believe that they would help students understand your compendium.
           </p>
         </div>
 
@@ -130,11 +159,43 @@ export default function UploadCompendiumPage() {
             <input
               value={websiteLink}
               onChange={(e) => setWebsiteLink(e.target.value)}
+              onKeyPress={handleWebsiteKeyPress}
               placeholder="Enter website link and tap icon"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm mt-1"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 pr-12 text-sm mt-1"
             />
-            <Send className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
+            <button
+              type="button"
+              onClick={addWebsiteLink}
+              className="absolute right-2 top-2 w-8 h-8 bg-[#5074b6] rounded-full flex items-center justify-center hover:bg-[#3d5a94] transition"
+            >
+              <Send className="w-4 h-4 text-white" />
+            </button>
           </div>
+          
+          {/* Website Links Tiles */}
+          {websiteLinks.length > 0 && (
+            <div className="mt-3 space-y-2">
+              {websiteLinks.map((link) => (
+                <div key={link.id} className="flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2">
+                  <a 
+                    href={link.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline hover:text-blue-800 truncate flex-1"
+                  >
+                    {link.displayName}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => removeWebsiteLink(link.id)}
+                    className="ml-2 text-red-500 hover:text-red-700 font-bold text-lg"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Cover Image */}
@@ -182,8 +243,9 @@ export default function UploadCompendiumPage() {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="border border-gray-300 rounded-md px-2 py-1 text-sm"
+              className="border border-gray-300 rounded-md px-2 py-1 text-sm bg-[#5074b6] text-white"
             >
+              <option>General</option>
               <option>Health</option>
               <option>Education</option>
               <option>Society</option>
@@ -193,13 +255,13 @@ export default function UploadCompendiumPage() {
           <div>
             <span className="font-medium text-gray-700">Subcategory:</span>
             <div className="flex gap-3 mt-2">
-              {["Mental", "Physical"].map((s) => (
+              {["Industry", "People", "Others", "Tools", "Culture"].map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => setSubCategory(s)}
                   className={`px-4 py-1 rounded-full text-sm font-medium ${
-                    subCategory === s ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
+                    subCategory === s ? "bg-[#5074b6] text-white" : "bg-gray-200 text-gray-700"
                   }`}
                 >
                   {s}
@@ -218,6 +280,7 @@ export default function UploadCompendiumPage() {
                 title,
                 content,
                 websiteLink,
+                websiteLinks,
                 category,
                 subCategory,
                 coverImage,
@@ -227,14 +290,14 @@ export default function UploadCompendiumPage() {
               sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
               setShowQuizModal(true);
             }}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-[#5074b6] text-white rounded-md hover:bg-[#3d5a94]"
           >
             Create Quiz
           </button>
 
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 flex-1"
+            className="px-4 py-2 bg-[#5074b6] text-white rounded-md hover:bg-[#3d5a94] flex-1"
           >
             Submit
           </button>
@@ -251,6 +314,7 @@ export default function UploadCompendiumPage() {
               title,
               content,
               websiteLink,
+              websiteLinks,
               category,
               subCategory,
               coverImage,

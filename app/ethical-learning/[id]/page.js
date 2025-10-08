@@ -40,7 +40,7 @@ export default function CompendiumDetailPage() {
           >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
-          <h1 className="text-xl font-semibold text-blue-700 truncate">
+          <h1 className="text-xl font-semibold text-[#5074b6] truncate">
             {compendium.title}
           </h1>
         </div>
@@ -75,14 +75,35 @@ export default function CompendiumDetailPage() {
             {compendium.content}
           </div>
 
-          {/* Website Link */}
+          {/* Website Links */}
+          {compendium.websiteLinks && compendium.websiteLinks.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-sm font-medium text-gray-700 mb-2">Related Links:</h3>
+              <div className="space-y-2">
+                {compendium.websiteLinks.map((link) => (
+                  <div key={link.id} className="flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2">
+                    <a 
+                      href={link.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[#5074b6] underline hover:text-[#3d5a94] truncate flex-1"
+                    >
+                      {link.displayName}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Legacy Website Link */}
           {compendium.websiteLink && (
             <div className="mt-4">
               <a
                 href={compendium.websiteLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 underline text-sm"
+                className="text-[#5074b6] underline text-sm"
               >
                 Visit Linked Website
               </a>

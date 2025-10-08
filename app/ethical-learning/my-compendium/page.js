@@ -1,16 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Plus, FileText, Search, Star, Pin } from "lucide-react";
+import { ArrowLeft, Star, Pin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import EthicalInfoModal from "@/components/EthicalLearningModal";
 
-export default function CompendiaPage() {
-  const [category, setCategory] = useState("Health");
-  const [activeTab, setActiveTab] = useState("Mental");
+export default function MyCompendiumPage() {
   const [compendia, setCompendia] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
 
   // Load saved compendia from localStorage
@@ -59,91 +55,29 @@ export default function CompendiaPage() {
     return 0;
   });
 
-  // Check if there are any starred compendia
-  const hasStarredCompendia = compendia.some(item => item.isStarred);
+  // Filter for starred items only
+  const starredCompendia = sortedCompendia.filter((c) => c.isStarred === true);
 
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
       <main className="flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10 animate-in fade-in duration-300">
-        {/* Title Row - Matching the image design */}
-        <div className="relative flex items-center justify-between md:max-w-5xl md:mx-auto">
-          {/* Left - + Create Button */}
+        {/* Header */}
+        <div className="flex items-center gap-3 md:max-w-5xl md:mx-auto">
           <button
-            onClick={() => router.push("/ethical-learning/upload")}
-            className="w-12 h-12 bg-[#5074b6] rounded-full flex items-center justify-center text-white hover:bg-[#3d5a94] transition-all duration-200 active:scale-95 shadow-lg"
+            onClick={() => router.back()}
+            className="p-2 rounded-full hover:bg-gray-100 transition"
           >
-            <Plus className="w-6 h-6" />
+            <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
-
-          {/* Center Title with red wavy underline */}
-          <div className="absolute left-1/2 -translate-x-1/2 text-center">
-            <h2 className="text-2xl font-bold text-black">Compendia</h2>
-            <div className="w-32 h-2 mx-auto mt-1">
-              <svg viewBox="0 0 120 8" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-red-500">
-                <path d="M4 4 C12 1, 20 7, 28 4 S44 1, 52 4 S68 7, 76 4 S92 1, 100 4 S116 7, 116 4" stroke="currentColor" strokeWidth="2" fill="transparent" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-          </div>
-
-          {/* Right - My Compendium Button */}
-          <button
-            onClick={() => router.push("/ethical-learning/my-compendium")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-              hasStarredCompendia 
-                ? "bg-[#5074b6] text-white hover:bg-[#3d5a94]" 
-                : "bg-gray-300 text-white hover:bg-gray-400"
-            }`}
-          >
+          <h1 className="text-xl font-semibold text-[#5074b6]">
             My Compendium
-          </button>
+          </h1>
         </div>
 
-        {/* Category Section - Matching image design */}
-        <div className="flex flex-wrap items-center gap-3 md:max-w-5xl md:mx-auto">
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-gray-700">Category:</span>
-            <div className="bg-[#5074b6] text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-              Health
-              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Tabs - Matching image design */}
-        <div className="flex gap-2 md:max-w-5xl md:mx-auto">
-          {["Mental", "Physical"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-                activeTab === tab
-                  ? "bg-[#5074b6] text-white"
-                  : "text-black"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
-        {/* Search Bar - Matching image design */}
-        <div className="relative md:max-w-5xl md:mx-auto">
-          <input
-            type="text"
-            placeholder="Search Keywords of Compendia"
-            className="w-full bg-white border border-gray-300 rounded-full px-4 py-3 pr-14 text-sm focus:ring-2 focus:ring-[#5074b6] focus:border-[#5074b6]"
-          />
-          <button className="absolute right-2 top-2 w-8 h-8 bg-[#5074b6] rounded-full flex items-center justify-center hover:bg-[#3d5a94] transition">
-            <Search className="w-4 h-4 text-white" />
-          </button>
-        </div>
-
-        {/* Compendia Cards - Matching image design */}
+        {/* Compendia Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:max-w-5xl md:mx-auto">
-          {sortedCompendia.length > 0 ? (
-            sortedCompendia.map((item, index) => (
+          {starredCompendia.length > 0 ? (
+            starredCompendia.map((item, index) => (
               <div
                 key={index}
                 className="relative bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden flex flex-col h-full"
@@ -212,17 +146,19 @@ export default function CompendiaPage() {
               </div>
             ))
           ) : (
-            <p className="text-gray-500 text-center w-full mt-10">
-              No compendia uploaded yet.
-            </p>
+            <div className="col-span-full text-center py-20">
+              <Star className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 text-lg mb-2">No starred compendia yet</p>
+              <p className="text-gray-400 text-sm">Star some compendia to see them here</p>
+              <button
+                onClick={() => router.push("/ethical-learning")}
+                className="mt-4 px-6 py-2 bg-[#5074b6] text-white rounded-lg hover:bg-[#3d5a94] transition"
+              >
+                Browse Compendia
+              </button>
+            </div>
           )}
         </div>
-
-        {/* Ethical Info Modal */}
-        <EthicalInfoModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
       </main>
     </div>
   );
