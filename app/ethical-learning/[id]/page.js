@@ -22,6 +22,27 @@ export default function CompendiumDetailPage() {
     setCompendium(found);
   }, [id]);
 
+  // Function to toggle pin status and manage pin order
+  const togglePin = (itemId) => {
+    const saved = JSON.parse(localStorage.getItem("compendia") || "[]");
+    const updatedCompendia = saved.map(item => {
+      if (item.id === itemId) {
+        const isCurrentlyPinned = item.isPinned;
+        return { 
+          ...item, 
+          isPinned: !isCurrentlyPinned,
+          pinOrder: !isCurrentlyPinned ? Date.now() : null
+        };
+      }
+      return item;
+    });
+    localStorage.setItem("compendia", JSON.stringify(updatedCompendia));
+    setCompendium(updatedCompendia.find(c => c.id === id));
+    setToastText(isCurrentlyPinned ? "Unpinned" : "Pinned");
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 1200);
+  };
+
   if (!compendium)
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-600">
@@ -131,11 +152,15 @@ export default function CompendiumDetailPage() {
         {/* Action Buttons Row */}
         <div className="mt-6 flex gap-3 md:max-w-5xl md:mx-auto">
           <button
-            onClick={() => alert("Pin feature")}
-            className="flex-1 bg-white border border-gray-300 rounded-lg py-2.5 text-sm font-medium hover:bg-gray-50 flex items-center justify-center gap-2"
+            onClick={() => togglePin(compendium.id)}
+            className={`flex-1 border rounded-lg py-2.5 text-sm font-medium flex items-center justify-center gap-2 transition ${
+              compendium.isPinned 
+                ? "bg-[#5074b6] text-white border-[#5074b6] hover:bg-[#3d5a94]" 
+                : "bg-white border-gray-300 hover:bg-gray-50"
+            }`}
           >
             <Pin className="w-4 h-4" />
-            Pin
+            {compendium.isPinned ? "Unpin" : "Pin"}
           </button>
 
           <button
