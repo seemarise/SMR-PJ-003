@@ -1,6 +1,7 @@
 
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import { ToastContainer, toast } from 'react-toastify';
 
 export const metadata = {
   title: "Vadai APP",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="flex flex-col min-h-screen overflow-y-auto bg-white">
         <LayoutWrapper>{children}</LayoutWrapper>
+        <ToastContainer />
       </body>
 
     </html>

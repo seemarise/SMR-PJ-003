@@ -21,7 +21,8 @@ export default function LayoutWrapper({ children }) {
     const hideNavbarExactPaths = ["/login", "/profile"];
     const shouldHideNavbar =
         hideNavbarExactPaths.includes(pathname) ||
-        (pathname.startsWith("/classroom") && pathname !== "/classroom");
+        (pathname.startsWith("/classroom") && pathname !== "/classroom") ||
+        (pathname.startsWith("/student/classroom") && pathname !== "/student/classroom");
 
     return (
         <div className="h-full w-full flex flex-col relative">
