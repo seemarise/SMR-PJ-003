@@ -2,7 +2,6 @@
 
 import { getStudentClassroomModules } from "@/services/classroomService/studentClassroomApi";
 import {
-    Folder,
     FileText,
     ArrowLeft,
     Search,

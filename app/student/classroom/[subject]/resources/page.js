@@ -1,20 +1,21 @@
 "use client";
 
+import { getStudentClassroomChapters } from "@/services/classroomService/studentClassroomApi";
 import { ArrowLeft } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ChaptersPage() {
     const router = useRouter();
-
-    const chapters = [
-        "Chapter 1: Prose",
-        "Chapter 2: Poem",
-        "Chapter 3: Supplementary Reader",
-        "Chapter 4: Grammar",
-        "Chapter 5: Tenses",
-        "Chapter 6: Reading Comprehension",
-    ];
     const { subject } = useParams();
+
+    const [chapters, setChapters] = useState([])
+
+    useEffect(() => {
+        getStudentClassroomChapters({ subjectId: subject }).then(res => {
+            setChapters(res.data.chapters)
+        })
+    }, [])
 
     const slugify = (title) =>
         title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -47,7 +48,7 @@ export default function ChaptersPage() {
                         (
                             <div key={index} className="flex items-center gap-4 py-3 md:py-4 cursor-pointer" onClick={() =>
                                 router.push(
-                                    `/student/classroom/${subject}/resources/${slugify(chapter)}`
+                                    `/student/classroom/studentdashboard/resource/${chapter._id}`
                                 )
                             }>
                                 {/* Circle Number */}
@@ -57,12 +58,15 @@ export default function ChaptersPage() {
                                     {index + 1}
                                 </div> {/* Chapter Title */}
                                 <p className="text-[15px] text-gray-800 font-medium md:text-lg cursor-pointer">
-                                    {chapter}
+                                    {chapter.chapterName}
                                 </p>
                             </div>
                         )
                         )}
                     </div>
+                    {chapters.length == 0 && <div className="mt-48 flex items-center justify-center">
+                        Hmm... nothing here yet! Try again?
+                    </div>}
                 </div>
             </main>
         </div>

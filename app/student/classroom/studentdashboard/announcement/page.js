@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { sessionService } from "@/services/sessionService";
-import { deleteAnnouncement, getAllAnnouncements } from "@/services/classroomService/announcementApi";
+import { getStudentClassroomAnnouncement } from "@/services/classroomService/studentClassroomApi";
 
 export default function AnnouncementPage() {
     const router = useRouter();
@@ -27,7 +27,7 @@ export default function AnnouncementPage() {
         };
 
         try {
-            const res = await getAllAnnouncements(params);
+            const res = await getStudentClassroomAnnouncement(params);
             const newData = res.data?.announcements || [];
 
             if (newData.length > 0) {
@@ -136,6 +136,10 @@ export default function AnnouncementPage() {
                             </div>
                         ))}
                     </div>
+
+                    {announcements.length == 0 && <div className="mt-48 flex items-center justify-center">
+                        Hmm... nothing here yet! Try again?
+                    </div>}
 
 
                 </div>

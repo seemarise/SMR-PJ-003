@@ -5,36 +5,40 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { sessionService } from "@/services/sessionService";
+import { getStudentAttendence } from "@/services/classroomService/studentClassroomApi";
+import moment from "moment";
 
 export default function AttendanceCalendar() {
     const today = new Date();
     const [user, setUser] = useState({});
+    const [attendence, setAttendence] = useState([])
     const [view, setView] = useState({ year: today.getFullYear(), month: today.getMonth() });
+    const [daysInMonth, setDaysInMonth] = useState(0)
 
     useEffect(() => {
         let u = sessionService.getUser();
         setUser(u);
     }, []);
 
-    function seededRandom(seed) {
-        return function () {
-            seed = (seed * 1664525 + 1013904223) % 4294967296;
-            return seed / 4294967296;
-        };
-    }
+    useEffect(() => {
+        getStudentAttendence({ ...view, month: view.month + 1 }).then(res => {
+            setAttendence(res.data.attendance)
+        })
+    }, [view])
+
 
     function getMonthMatrix(year, month) {
         const first = new Date(year, month, 1);
         const last = new Date(year, month + 1, 0);
         const daysInMonth = last.getDate();
         const startWeekday = first.getDay();
-
+        setDaysInMonth(daysInMonth)
         const weeks = [];
         let week = new Array(7).fill(null).map(() => ({ day: null }));
         let day = 1;
 
         for (let i = startWeekday; i < 7 && day <= daysInMonth; i++) {
-            week[i] = { day };
+            week[i] = { day, date: new Date(year, month, day).toLocaleDateString() };
             day++;
         }
         weeks.push(week);
@@ -42,7 +46,7 @@ export default function AttendanceCalendar() {
         while (day <= daysInMonth) {
             week = new Array(7).fill(null).map(() => ({ day: null }));
             for (let i = 0; i < 7 && day <= daysInMonth; i++) {
-                week[i] = { day };
+                week[i] = { day, date: new Date(year, month, day).toLocaleDateString() };
                 day++;
             }
             weeks.push(week);
@@ -50,39 +54,11 @@ export default function AttendanceCalendar() {
         return weeks;
     }
 
-    function generateStatusForMonth(year, month) {
-        const rng = seededRandom(year * 100 + month + 12345);
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const map = {};
-
-        for (let d = 1; d <= daysInMonth; d++) {
-            const r = rng();
-            if (r < 0.7) map[d] = "present";
-            else if (r < 0.85) map[d] = "absent";
-            else if (r < 0.95) map[d] = "holiday";
-            else map[d] = "none";
-        }
-
-        for (let d = 1; d <= daysInMonth; d++) {
-            const wd = new Date(year, month, d).getDay();
-            if (wd === 0) map[d] = "holiday";
-        }
-        return map;
-    }
-
-    const statuses = useMemo(() => generateStatusForMonth(view.year, view.month), [view]);
     const weeks = useMemo(() => getMonthMatrix(view.year, view.month), [view]);
 
-    const stats = useMemo(() => {
-        const counts = { present: 0, absent: 0, holiday: 0, none: 0 };
-        const daysInMonth = new Date(view.year, view.month + 1, 0).getDate();
-        for (let d = 1; d <= daysInMonth; d++) {
-            const s = statuses[d] || "none";
-            counts[s] = (counts[s] || 0) + 1;
-        }
-        const presentPercent = Math.round((counts.present / (daysInMonth - counts.holiday)) * 1000) / 10 || 0;
-        return { counts, presentPercent };
-    }, [statuses, view]);
+    const presentPercent = useMemo(() => {
+        return Math.round((attendence.filter(a => a.status == 'present').length ?? 0 / (attendence.filter(a => a.status == 'present' || a.status == 'absent').length ?? 1)) * 1000) / 10
+    }, [attendence, daysInMonth]);
 
     function prevMonth() {
         setView(({ year, month }) => {
@@ -124,21 +100,21 @@ export default function AttendanceCalendar() {
                                     <div className="text-slate-400 text-sm mt-1">Class {user.className || "10"} - {user.section || "A"}</div>
                                 </div>
                                 <div className="ml-4">
-                                    <div className="px-4 py-2 rounded-full bg-rose-200 text-rose-900 font-semibold">{stats.presentPercent}%</div>
+                                    <div className={`px-4 py-2 rounded-full font-semibold ${presentPercent > 70 ? "text-emerald-900 bg-emerald-200" : "text-rose-900 bg-rose-200"}`}>{presentPercent}%</div>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-3 text-center divide-x border-t border-slate-100">
                                 <div className="py-4 bg-emerald-50">
-                                    <div className="text-2xl font-bold text-emerald-600">{stats.counts.present}</div>
+                                    <div className="text-2xl font-bold text-emerald-600">{attendence.filter(a => a.status == 'present').length}</div>
                                     <div className="text-sm text-slate-600">Present</div>
                                 </div>
                                 <div className="py-4 bg-rose-50">
-                                    <div className="text-2xl font-bold text-rose-600">{stats.counts.absent}</div>
+                                    <div className="text-2xl font-bold text-rose-600">{attendence.filter(a => a.status == 'absent').length}</div>
                                     <div className="text-sm text-slate-600">Absent</div>
                                 </div>
                                 <div className="py-4 bg-sky-50">
-                                    <div className="text-2xl font-bold text-sky-600">{stats.counts.holiday}</div>
+                                    <div className="text-2xl font-bold text-sky-600">{attendence.filter(a => a.status == 'holiday').length}</div>
                                     <div className="text-sm text-slate-600">Holiday</div>
                                 </div>
                             </div>
@@ -175,13 +151,14 @@ export default function AttendanceCalendar() {
                                         {week.map((cell, ci) => {
                                             if (!cell || cell.day == null) return <div key={ci} className="h-10 rounded-md" />;
                                             const day = cell.day;
-                                            const status = statuses[day] || "none";
+                                            let att = attendence.find(a => moment(a.date).diff(moment(cell.date)) == 0) ?? [];
+
 
                                             const base = "h-10 flex items-center justify-center rounded-md font-medium";
 
                                             return (
                                                 <div key={ci} className="relative">
-                                                    <div className={`${base} ${status === "none" ? "bg-gray-50 text-slate-500" : "text-white"} ${status === "present" ? "bg-emerald-500" : ""} ${status === "absent" ? "bg-rose-500" : ""} ${status === "holiday" ? "bg-sky-600" : ""}`}>{day}</div>
+                                                    <div className={`${base} ${att.status === "no-record" ? "bg-gray-50 text-slate-500" : "text-white"} ${att.status === "present" ? "bg-emerald-500" : ""} ${att.status === "absent" ? "bg-rose-500" : ""} ${att.status === "holiday" ? "bg-sky-600" : ""}`}>{day}</div>
                                                 </div>
                                             );
                                         })}

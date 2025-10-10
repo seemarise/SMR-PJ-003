@@ -5,43 +5,21 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { sessionService } from "@/services/sessionService";
+import { getStudentClassroomRemark } from "@/services/classroomService/studentClassroomApi";
+import moment from "moment";
 
 export default function RemarksPage() {
     const router = useRouter();
     const [user, setUser] = useState({});
+    const [remarks, setRemark] = useState([])
 
     useEffect(() => {
         let u = sessionService.getUser();
         setUser(u);
+        getStudentClassroomRemark().then((res) => {
+            setRemark(res.data.remarks)
+        })
     }, []);
-
-    const remarks = [
-        {
-            id: 1,
-            name: "Prakasavalli",
-            avatar: "/teacher.png", // replace with actual image path
-            timeAgo: "3 days ago",
-            text: "h bsbsq sv zc s s sf f",
-            tag: "Classroom",
-        },
-        {
-            id: 2,
-            name: "Prakasavalli",
-            avatar: "/teacher.png",
-            timeAgo: "3 days ago",
-            text: "ghknc",
-            tag: "Classroom",
-        },
-        {
-            id: 3,
-            name: "Prakasavalli",
-            avatar: "/teacher.png",
-            timeAgo: "1 week ago",
-            text: "You did good in quiz",
-            tag: "Classroom",
-        },
-    ];
-
     return (
         <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
             <main className="flex-1 px-4 py-6 md:px-8 md:py-10">
@@ -75,29 +53,29 @@ export default function RemarksPage() {
                                     <div className="flex justify-between items-center bg-[#EEF3FB] px-4 py-2 md:px-6 md:py-3">
                                         <div className="flex items-center gap-3">
                                             <Image
-                                                src={remark.avatar}
-                                                alt={remark.name}
+                                                src={remark.senderProfile.profileImage}
+                                                alt={remark.senderProfile.name}
                                                 width={40}
                                                 height={40}
                                                 className="rounded-full border border-gray-200"
                                             />
                                             <div className="flex flex-col">
                                                 <span className="font-semibold text-[#1C1C1C] text-[15px]">
-                                                    {remark.name}
+                                                    {remark.senderProfile.name}
                                                 </span>
                                                 <span className="text-gray-500 text-sm">
-                                                    {remark.timeAgo}
+                                                    {moment(remark.remarkedAt).fromNow()}
                                                 </span>
                                             </div>
                                         </div>
                                         <span className="bg-green-500 text-white text-xs font-medium px-3 py-1 rounded-full">
-                                            {remark.tag}
+                                            {remark.remarkedOn}
                                         </span>
                                     </div>
 
                                     {/* Body */}
                                     <div className="px-4 py-3 md:px-6 md:py-4 text-gray-800 text-[15px] leading-relaxed">
-                                        {remark.text}
+                                        {remark.remarks}
                                     </div>
                                 </div>
                             ))}

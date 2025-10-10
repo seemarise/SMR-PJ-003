@@ -10,6 +10,7 @@ export default function SubjectDetailPage() {
 
     const announcements = Number(searchParams.get("announcements")) || 0;
     const assignments = Number(searchParams.get("assignments")) || 0;
+    const subjectname = searchParams.get("subject") || '';
 
     return (
         <div className="flex flex-col min-h-screen bg-white md:bg-gray-50">
@@ -27,7 +28,7 @@ export default function SubjectDetailPage() {
 
                         <div className="absolute left-1/2 -translate-x-1/2 text-center">
                             <h1 className="text-[22px] md:text-[30px] font-bold text-[#5074b6]">
-                                {subject}
+                                {subjectname}
                             </h1>
                         </div>
 
@@ -42,9 +43,10 @@ export default function SubjectDetailPage() {
 
                     {/* ===== Curriculum Card ===== */}
                     <div className="rounded-2xl border-2 border-[#5074b6] overflow-hidden mb-6 shadow-sm md:w-[80%] md:mx-auto md:mb-10"
-                        onClick={() =>
-                            router.push(`/student/classroom/${subject}/curriculum`)
-                        }>
+                    // onClick={() =>
+                    //     router.push(`/student/classroom/${subject}/curriculum`)
+                    // }
+                    >
                         <div className="flex justify-between items-center bg-[#5074b6] px-6 py-5">
                             <span className="text-white text-[20px] font-semibold md:text-[22px]"
                             >

@@ -1,38 +1,24 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     ArrowLeft,
     BookOpen,
     Folder,
-    Trash2,
-    Plus,
-    GraduationCap,
 } from "lucide-react";
+import { getStudentClassroomChapters } from "@/services/classroomService/studentClassroomApi";
 
 export default function ResourcesPage({ params }) {
     const router = useRouter();
     // const params = useParams();
-    const { class: className, section, subject } = params;
+    const [chapters, setChapters] = useState([])
 
-    const [chapters, setChapters] = useState([
-        { id: 1, name: "Chapter 1", createdAt: "1 week ago" },
-        { id: 2, name: "Chapter 2", createdAt: "1 week ago" },
-        { id: 3, name: "Chapter 3", createdAt: "1 week ago" },
-    ]);
-
-    const handleDelete = (id) => {
-        setChapters(chapters.filter((chapter) => chapter.id !== id));
-    };
-
-    const handleAdd = () => {
-        const newId = chapters.length + 1;
-        setChapters([
-            ...chapters,
-            { id: newId, name: `Chapter ${newId}`, createdAt: "Just now" },
-        ]);
-    };
+    useEffect(() => {
+        getStudentClassroomChapters().then(res => {
+            setChapters(res.data.chapters)
+        })
+    }, [])
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
@@ -55,50 +41,29 @@ export default function ResourcesPage({ params }) {
                         <div className="w-6 md:w-8" />
                     </div>
 
-                    {/* Subject Info */}
-                    <div className="bg-blue-50 rounded-xl p-4 shadow-sm flex items-center gap-3 md:p-6">
-                        <BookOpen className="text-[#5074b6] w-6 h-6 md:w-7 md:h-7" />
-                        <div>
-                            <p className="font-semibold text-gray-800 md:text-lg capitalize">
-                                Classroom Resources
-                            </p>
-                            <p className="text-sm text-gray-500 flex items-center gap-2">
-                                Educational resources available to all your classes
-                            </p>
-                        </div>
-                    </div>
-
                     {/* Chapter Cards */}
-                    <div className="space-y-4 mt-6">
-                        {chapters.map((chapter) => (
-                            <div
-                                key={chapter.id}
-                                className="flex items-center justify-between bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition cursor-pointer md:p-5"
-                                onClick={() =>
-                                    router.push(
-                                        `/student/classroom/studentdashboard/resource/${chapter.name
-                                            .toLowerCase()
-                                            .replace(/\s+/g, "-")}`
-                                    )
-                                }
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div className="bg-blue-100 p-3 rounded-xl flex items-center justify-center">
-                                        <Folder className="text-[#5074b6] w-6 h-6 md:w-7 md:h-7" />
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold text-gray-800 text-base md:text-lg">
-                                            {chapter.name}
-                                        </p>
-                                        <p className="text-sm text-gray-500">
-                                            Created: {chapter.createdAt}
-                                        </p>
-                                    </div>
-                                </div>
+                    <div className="flex flex-col divide-y divide-gray-200">
+                        {chapters.map((chapter, index) => (
+                            <div key={index} className="flex items-center gap-4 py-3 md:py-4 cursor-pointer" onClick={() =>
+                                router.push(
+                                    `/student/classroom/studentdashboard/resource/${chapter._id}`
+                                )
+                            }>
+                                {/* Circle Number */}
+                                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#5074b6] text-white font-semibold text-sm md:w-10 md:h-10 md:text-base"
 
+                                >
+                                    {index + 1}
+                                </div> {/* Chapter Title */}
+                                <p className="text-[15px] text-gray-800 font-medium md:text-lg cursor-pointer">
+                                    {chapter.chapterName}
+                                </p>
                             </div>
                         ))}
                     </div>
+                    {chapters.length == 0 && <div className="mt-48 flex items-center justify-center">
+                        Hmm... nothing here yet! Try again?
+                    </div>}
 
                 </div>
             </main>

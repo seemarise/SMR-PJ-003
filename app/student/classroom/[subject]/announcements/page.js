@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { ArrowLeft, MessageSquare, MoreVertical } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { sessionService } from "@/services/sessionService";
-import { deleteAnnouncement, getAllAnnouncements } from "@/services/classroomService/announcementApi";
+import { getStudentClassroomAnnouncement } from "@/services/classroomService/studentClassroomApi";
 
 export default function AnnouncementPage() {
     const router = useRouter();
     const [user, setUser] = useState({});
+    const { subject } = useParams();
     const [announcements, setAnnouncements] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -24,10 +25,11 @@ export default function AnnouncementPage() {
         let params = {
             pageNumber: page,
             pageSize: 10,
+            subjectId: subject
         };
 
         try {
-            const res = await getAllAnnouncements(params);
+            const res = await getStudentClassroomAnnouncement(params);
             const newData = res.data?.announcements || [];
 
             if (newData.length > 0) {
@@ -62,11 +64,10 @@ export default function AnnouncementPage() {
                 <div className="md:max-w-5xl md:mx-auto md:space-y-10">
                     {/* Header Row */}
                     <div className="relative flex items-center justify-between">
-                        <button
-                            onClick={() => router.back()}
-                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                        <button onClick={() => router.back()}
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
                         >
-                            <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
                         <div className="absolute left-1/2 -translate-x-1/2 text-center">
                             <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl">
@@ -124,7 +125,11 @@ export default function AnnouncementPage() {
                                 {/* Footer */}
                                 <div
                                     className="flex justify-start items-center gap-1 mt-4 text-[#5074b6] text-sm md:text-base hover:underline cursor-pointer"
-
+                                    onClick={() =>
+                                        router.push(
+                                            `/student/classroom/studentdashboard/announcement/${a._id}/comment`
+                                        )
+                                    }
                                 >
                                     <MessageSquare size={16} />
                                     Comments
@@ -132,6 +137,10 @@ export default function AnnouncementPage() {
                             </div>
                         ))}
                     </div>
+
+                    {announcements.length == 0 && <div className="mt-48 flex items-center justify-center">
+                        Hmm... nothing here yet! Try again?
+                    </div>}
 
 
                 </div>

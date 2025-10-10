@@ -6,7 +6,6 @@ import {
     UserRound,
     Megaphone,
     FileText,
-    BarChart2,
     BookOpen,
     ArrowLeft,
 } from "lucide-react";
@@ -79,7 +78,7 @@ export default function StudentDashboard() {
                                 <p className="text-gray-600 text-sm md:text-base">Welcome,</p>
                                 <h2 className="font-bold flex items-center justify-between text-lg md:text-2xl text-gray-800">
                                     {user.name}
-                                    <span className="text-left font-normal text-sm">School Name</span>
+                                    <span className="text-left font-normal text-sm">{user.school}</span>
                                 </h2>
                                 <span className="mt-1 inline-flex items-center bg-white border border-[#5074b6] text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
                                     <UserRound className="w-4 h-4 mr-2" />
