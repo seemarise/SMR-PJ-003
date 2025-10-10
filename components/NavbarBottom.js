@@ -3,15 +3,17 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   BookOpen,        // for PiExam (approximation)
   School,          // for SiGoogleclassroom (approximation)
   Monitor,         // for HiMiniComputerDesktop
   Activity,        // for MdTimeline
-  Brain            // for FaBrain
+  Brain,            // for FaBrain
+  Lightbulb
 } from "lucide-react";
+import { sessionService } from "@/services/sessionService";
 
 
 // Helper function to get active label
@@ -22,23 +24,25 @@ function getActiveLabel(path, items) {
 
 export default function NavbarBottom({ setSharedTitle }) {
   const pathname = usePathname();
+  const [user, setUser] = useState(sessionService.getUser() ?? {})
 
 
   // Define all items
   const leftItems = [
-    { icon: BookOpen, label: "VAD Test", href: "/vad-test" },
-    { icon: School, label: "Classroom", href: "/classroom" },
+    { icon: BookOpen, label: "VAD Test", href: user.studentId ? "/student/vad-test" : "/vad-test", display: !user.studentId },
+    { icon: School, label: "Classroom", href: user.studentId ? "/student/classroom" : "/classroom", display: true },
   ];
 
   const centerItem = {
     icon: Brain,
     label: "VAD AI",
     href: "/ai",
+    display: false
   };
 
   const rightItems = [
-    { icon: Monitor, label: "Ethical Learning", href: "/ethical-learning" },
-    { icon: Activity, label: "Timeline", href: "/timeline" },
+    { icon: Monitor, label: "Ethical Learning", href: "/ethical-learning", display: true },
+    (!user.studentId ? { icon: Activity, label: "Timeline", href: "/timeline", display: true } : { icon: Lightbulb, label: "Career Game", href: "/career-game", display: false }),
   ];
 
   const allItems = [...leftItems, centerItem, ...rightItems];
@@ -57,13 +61,13 @@ export default function NavbarBottom({ setSharedTitle }) {
       <nav className="relative flex justify-between items-center w-[95%] bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg px-4 py-2">
         {/* Left Items */}
         <div className="flex flex-1 pr-10 justify-evenly">
-          {leftItems.map((item) => (
+          {leftItems.filter(x => x.display).map((item) => (
             <NavItem key={item.label} item={item} pathname={pathname} />
           ))}
         </div>
 
         {/* Center FAB */}
-        <div className="absolute -top-9 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center">
+        {/* <div className="absolute -top-9 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center">
           <Link href={centerItem.href}>
             <div
               className={`
@@ -75,13 +79,12 @@ export default function NavbarBottom({ setSharedTitle }) {
               <centerItem.icon className="text-2xl" />
             </div>
           </Link>
-          {/* Always show active label below FAB */}
           <span className="text-xs mt-2 font-bold uppercase text-black dark:text-[#5074b6]">{activeLabel}</span>
-        </div>
+        </div> */}
 
         {/* Right Items */}
         <div className="flex flex-1 justify-evenly">
-          {rightItems.map((item) => (
+          {rightItems.filter(x => x.display).map((item) => (
             <NavItem key={item.label} item={item} pathname={pathname} />
           ))}
         </div>

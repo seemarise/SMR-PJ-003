@@ -102,12 +102,12 @@ export default function ProfilePage() {
 
                         {/* Buttons */}
                         <div className="flex flex-col gap-3 mt-8 md:flex-row md:justify-between md:gap-5">
-                            <button className="bg-[#5074b6] text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-[#5074b6] transition">
+                            {/* <button className="bg-[#5074b6] text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-[#5074b6] transition">
                                 Watch Tutorial
                             </button>
                             <button className="bg-blue-100 text-[#5074b6] py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-blue-200 transition">
                                 Share Feedback
-                            </button>
+                            </button> */}
                             <button className="bg-red-500 cursor-pointer text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition" onClick={() => { sessionService.removeSession(); router.replace("/login") }}>
                                 Logout
                             </button>
