@@ -20,7 +20,7 @@ export default function NavbarTop({ sharedTitle }) {
       {/* Profile */}
       <div
         className="w-10 h-10 relative rounded-full overflow-hidden cursor-pointer"
-        onClick={() => router.push("/profile")} // ✅ Works now
+        onClick={() => router.push(!user.studentId ? "/profile" : "/student/profile")} // ✅ Works now
       >
         <Image
           src={user?.profileImage ?? null}

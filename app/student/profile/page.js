@@ -62,7 +62,7 @@ export default function ProfilePage() {
                     {/* Info Sections */}
                     <div className="md:bg-white md:p-6 md:rounded-2xl md:shadow-md md:border md:border-blue-100 md:space-y-6">
                         <Section title="Basic Information">
-                            <Info label="Student ID" value={user.teachersId} />
+                            <Info label="Student ID" value={user.studentId} />
                             <Info label="Name" value={user.name} />
                         </Section>
 
@@ -71,8 +71,8 @@ export default function ProfilePage() {
                             <Info label="Class " value={user.className + " - " + user.section} />
                             <Info label="Roll Number" value={122231} />
                             <Info label="Subjects" value={
-                                user.classesAndSubjects?.map((a, i) => (
-                                    a.subjectName + " "
+                                user.subjects?.map((a, i) => (
+                                    a.subjectName + ", "
                                 ))
                             } />
                             <Info label="Learning Index" value={0.0} />
@@ -81,20 +81,21 @@ export default function ProfilePage() {
                         <Section title="Contact Information">
                             <Info label="Email" value={user.email} />
                             <Info label="Phone Number" value={user.phoneNumber} />
-                            <Info label="Student WhatsApp Number" value={user.teachersWhatsappNumber} />
-                            <Info label="Parent WhatsApp Number" value={user.teachersWhatsappNumber} />
+                            <Info label="Student WhatsApp Number" value={user.studentWhatsappNumber} />
+                            <Info label="Parent WhatsApp Number" value={user.parentWhatsappNumber
+                            } />
                         </Section>
 
 
                         {/* Buttons */}
                         <div className="flex flex-col gap-3 mt-8 md:flex-row md:justify-between md:gap-5">
-                            <button className="bg-[#5074b6] text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-[#5074b6] transition">
+                            {/* <button className="bg-[#5074b6] text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-[#5074b6] transition">
                                 Watch Tutorial
                             </button>
                             <button className="bg-blue-100 text-[#5074b6] py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-blue-200 transition">
                                 Share Feedback
-                            </button>
-                            <button className="bg-red-500 text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition">
+                            </button> */}
+                            <button className="bg-red-500 text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition" onClick={() => { sessionService.removeSession(); router.push("/login") }}>
                                 Logout
                             </button>
                         </div>
