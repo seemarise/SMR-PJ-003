@@ -3,7 +3,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
-import { ToastContainer, toast } from 'react-toastify';
 
 export const metadata = {
   title: "Vadai APP",
