@@ -6,6 +6,7 @@ import { ArrowRight, GraduationCap, School } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import { loginApi } from "@/services/loginService/loginApi";
 import { sessionService } from "@/services/sessionService";
+import { toast } from "react-toastify";
 export default function LoginPage() {
   const router = useRouter();
   const [step, setStep] = useState("choose"); // choose | email | otp
@@ -43,26 +44,33 @@ export default function LoginPage() {
   };
 
   const handleLogin = async () => {
-    let res = await loginApi[role].verifyOtp({
-      'email': email,
-      'otp': otp.join('')
-    }, {});
-    if (res.statusCode == 200) {
-      let data = {
-        token: res.data.tokens.access.token,
-        refreshToken: res.data.tokens.refresh.token,
-        Id: res.data[role][role == "teacher" ? (role + "sId") : (role + "Id")]
-      }
-      sessionService.setSession(data);
-      if (role == "teacher") {
-        sessionService.setUser(res.data.teacher)
-      }
+    try {
+      let res = await loginApi[role].verifyOtp({
+        'email': email,
+        'otp': otp.join('')
+      }, {});
 
-      router.replace("/");
+      console.log(res)
+      if (res.statusCode == 200) {
+        toast.success("Logged In")
+        let data = {
+          token: res.data.tokens.access.token,
+          refreshToken: res.data.tokens.refresh.token,
+          Id: res.data[role][role == "teacher" ? (role + "sId") : (role + "Id")]
+        }
+        sessionService.setSession(data);
+        if (role == "teacher") {
+          sessionService.setUser(res.data.teacher)
+        } else {
+          sessionService.setUser(res.data.student)
+        }
+
+        router.replace("/");
+      }
+    } catch (error) {
+      toast.error(error.message)
     }
-    else if (res.statusCode == 401) {
-      console.log(res.message);
-    }
+
   }
 
   const handleEmailEntry = async () => {
@@ -72,7 +80,6 @@ export default function LoginPage() {
       setStep("otp");
       setTimer(60);
     }
-
   }
 
   const renderChooseScreen = () => (

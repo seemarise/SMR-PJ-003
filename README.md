@@ -13,3 +13,6 @@
 ### Teacher Credential
     englishteacher@vadaiapp.com
 
+### BUG Sheet
+     https://docs.google.com/spreadsheets/d/1fqTfrSlMx1aRlPCZuhJnAmCq-Zi7FQDvTHxKv3oiU0I/edit?usp=sharing
+

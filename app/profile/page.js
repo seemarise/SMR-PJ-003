@@ -108,7 +108,7 @@ export default function ProfilePage() {
                             <button className="bg-blue-100 text-[#5074b6] py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-blue-200 transition">
                                 Share Feedback
                             </button> */}
-                            <button className="bg-red-500 text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition" onClick={() => { sessionService.removeSession(); router.push("/login") }}>
+                            <button className="bg-red-500 cursor-pointer text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition" onClick={() => { sessionService.removeSession(); router.replace("/login") }}>
                                 Logout
                             </button>
                         </div>
