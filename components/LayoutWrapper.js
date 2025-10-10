@@ -18,10 +18,11 @@ export default function LayoutWrapper({ children }) {
     const [sharedTitle, setSharedTitle] = useState("");
 
     // Hide navbar on these exact paths
-    const hideNavbarExactPaths = ["/login", "/profile"];
+    const hideNavbarExactPaths = ["/login", "/profile", "/ai", "/student/profile"];
     const shouldHideNavbar =
         hideNavbarExactPaths.includes(pathname) ||
-        (pathname.startsWith("/classroom") && pathname !== "/classroom");
+        (pathname.startsWith("/classroom") && pathname !== "/classroom") ||
+        (pathname.startsWith("/student/classroom") && pathname !== "/student/classroom");
 
     return (
         <div className="h-full w-full flex flex-col relative">

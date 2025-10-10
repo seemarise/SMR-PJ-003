@@ -53,7 +53,7 @@ export default function ProfilePage() {
                                     {user.name}
                                 </h2>
                                 <span className="bg-blue-100 text-[#5074b6] text-xs md:text-sm font-semibold px-3 py-1 rounded-full mt-1 inline-block">
-                                    Status: {user.accountStatus?.toUpperCase()}
+                                    Learning Index: 0.0
                                 </span>
                             </div>
                         </div>
@@ -62,43 +62,30 @@ export default function ProfilePage() {
                     {/* Info Sections */}
                     <div className="md:bg-white md:p-6 md:rounded-2xl md:shadow-md md:border md:border-blue-100 md:space-y-6">
                         <Section title="Basic Information">
-                            <Info label="Teacher ID" value={user.teachersId} />
+                            <Info label="Student ID" value={user.studentId} />
                             <Info label="Name" value={user.name} />
-                            <Info label="Email" value={user.email} />
                         </Section>
 
                         <Section title="School Information">
                             <Info label="School" value={user.school} />
-                            <Info label="Class Teacher" value={user.className + " - " + user.section} />
+                            <Info label="Class " value={user.className + " - " + user.section} />
+                            <Info label="Roll Number" value={122231} />
+                            <Info label="Subjects" value={
+                                user.subjects?.map((a, i) => (
+                                    a.subjectName + ", "
+                                ))
+                            } />
+                            <Info label="Learning Index" value={0.0} />
                         </Section>
 
                         <Section title="Contact Information">
+                            <Info label="Email" value={user.email} />
                             <Info label="Phone Number" value={user.phoneNumber} />
-                            <Info label="WhatsApp Number" value={user.teachersWhatsappNumber} />
+                            <Info label="Student WhatsApp Number" value={user.studentWhatsappNumber} />
+                            <Info label="Parent WhatsApp Number" value={user.parentWhatsappNumber
+                            } />
                         </Section>
 
-                        {/* Teaching Assignments */}
-                        <div>
-                            <h3 className="font-semibold text-[#5074b6] mb-2 md:text-xl">
-                                Teaching Assignments
-                            </h3>
-                            <div className="space-y-3">
-                                {user.classesAndSubjects?.map((a, i) => (
-                                    <div
-                                        key={i}
-                                        className="border border-gray-200 rounded-xl p-3 bg-white shadow-sm md:p-4 md:hover:shadow-md md:transition"
-                                    >
-                                        <p className="text-sm font-medium text-gray-800 md:text-base">
-                                            Class {a.className + " - " + a.section}
-                                        </p>
-                                        <p className="text-sm text-gray-600 md:text-base">
-                                            Subject: {a.subjectName}
-                                        </p>
-                                        <p className="text-xs text-gray-500 mt-1">ID: {a.sectionId}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
 
                         {/* Buttons */}
                         <div className="flex flex-col gap-3 mt-8 md:flex-row md:justify-between md:gap-5">
@@ -108,7 +95,7 @@ export default function ProfilePage() {
                             <button className="bg-blue-100 text-[#5074b6] py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-blue-200 transition">
                                 Share Feedback
                             </button> */}
-                            <button className="bg-red-500 cursor-pointer text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition" onClick={() => { sessionService.removeSession(); router.replace("/login") }}>
+                            <button className="bg-red-500 text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition" onClick={() => { sessionService.removeSession(); router.push("/login") }}>
                                 Logout
                             </button>
                         </div>
