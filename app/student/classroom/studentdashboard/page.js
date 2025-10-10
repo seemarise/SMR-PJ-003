@@ -76,11 +76,13 @@ export default function StudentDashboard() {
                             />
                             <div className="w-full">
                                 <p className="text-gray-600 text-sm md:text-base">Welcome,</p>
-                                <h2 className="font-bold flex items-center justify-between text-lg md:text-2xl text-gray-800">
+                                <h2 className="font-bold flex items-center justify-between text-lg md:text-2xl text-gray-800 md:inline">
                                     {user.name}
-                                    <span className="text-left font-normal text-sm">{user.school}</span>
                                 </h2>
-                                <span className="mt-1 inline-flex items-center bg-white border border-[#5074b6] text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
+                                <br />
+                                <span className="text-left font-normal text-sm">{user.school}</span>
+                                <br />
+                                <span className="mt-1 inline-flex items-center  bg-white border border-[#5074b6] text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
                                     <UserRound className="w-4 h-4 mr-2" />
                                     Class {user.className + " " + user.section}
                                 </span>
