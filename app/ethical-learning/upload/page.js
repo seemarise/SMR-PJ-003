@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ArrowLeft, Image as ImageIcon, Send } from "lucide-react";
+import { ArrowLeft, Image as ImageIcon, Send, Loader2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CreateQuizModal from "../../../components/CreateQuizModal";
 import ManualQuizEditor from "../../../components/ManualQuizEditor";
@@ -17,18 +17,19 @@ export default function UploadCompendiumPage() {
   };
 
   const [compendiaData, setCompendiaData] = useState({
-    title: "",
-    content: "",
-    websiteLink: "",
-    categoryId: "",
-    subCategoryId: "",
+    title: "", content: "", websiteLink: "", categoryId: "", subCategoryId: "",
     arrWebsiteLink: [],
-    coverImage: null,
-    images: [],
+    // Cover Image
+    coverImageFile: null,      // The File object
+    coverImagePreview: null,   // The preview URL
+    // Other Images
+    imageFiles: [],            // Array of File objects
+    imagePreviews: [],         // Array of preview URLs
     quiz: [],
   });
 
   // ... (all other state variables remain the same)
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [category, setCategory] = useState([]);
   const [selCategory, setSelCategory] = useState(-1);
   const [openDd, setOpenDd] = useState(false);
@@ -120,32 +121,117 @@ export default function UploadCompendiumPage() {
   const handleCoverImageFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    toDataURL(file, (dataUrl) => {
-      setCompendiaData(prev => ({ ...prev, coverImage: dataUrl }));
-    });
-  };
-
-  const handleMultipleImagesFile = async (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length === 0) return;
-    const readFileAsPromise = (file) => {
-      return new Promise(resolve => {
-        toDataURL(file, dataUrl => resolve(dataUrl));
-      });
-    };
-    const promises = files.map(readFileAsPromise);
-    const newDataUrls = await Promise.all(promises);
     setCompendiaData(prev => ({
       ...prev,
-      images: [...(prev.images || []), ...newDataUrls],
+      coverImageFile: file,
+      coverImagePreview: URL.createObjectURL(file) // Create a preview URL
+    }));
+  };
+
+  const handleMultipleImagesFile = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    const newFiles = [...compendiaData.imageFiles, ...files];
+    const newPreviews = newFiles.map(file => URL.createObjectURL(file));
+
+    setCompendiaData(prev => ({
+      ...prev,
+      imageFiles: newFiles,
+      imagePreviews: newPreviews
     }));
   };
 
   const handleRemoveImage = (indexToRemove) => {
     setCompendiaData(prev => ({
       ...prev,
-      images: prev.images.filter((_, index) => index !== indexToRemove),
+      imageFiles: prev.imageFiles.filter((_, index) => index !== indexToRemove),
+      imagePreviews: prev.imagePreviews.filter((_, index) => index !== indexToRemove),
     }));
+  };
+
+  // NEW: Reusable helper function to upload a single file
+  const uploadFile = async (file) => {
+    try {
+      // 1. Get signed URL from our backend
+      const { uploadUrl, publicUrl } = await getSignedUrl(file);
+
+      // 2. Upload the file to the signed URL (e.g., to S3)
+      const uploadResponse = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error(`Failed to upload ${file.name}`);
+      }
+
+      // 3. Return the final public URL of the uploaded file
+      return publicUrl;
+    } catch (error) {
+      console.error('Upload failed for file:', file.name, error);
+      throw error; // Re-throw error to be caught by handleSubmit
+    }
+  };
+
+
+  // REWRITTEN: handleSubmit now orchestrates the entire upload process
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    showToast("Starting submission process...", "info");
+
+    try {
+      let uploadedCoverUrl = null;
+      let uploadedImageUrls = [];
+
+      // Step 1: Upload the cover image if it exists
+      if (compendiaData.coverImageFile) {
+        showToast("Uploading cover image...", "info");
+        uploadedCoverUrl = await uploadFile(compendiaData.coverImageFile);
+      }
+
+      // Step 2: Upload all other images in parallel
+      if (compendiaData.imageFiles.length > 0) {
+        showToast(`Uploading ${compendiaData.imageFiles.length} images...`, "info");
+        uploadedImageUrls = await Promise.all(
+          compendiaData.imageFiles.map(file => uploadFile(file))
+        );
+      }
+
+      // Step 3: Construct the final payload with the new URLs
+      const finalPayload = {
+        title: compendiaData.title,
+        content: compendiaData.content,
+        websiteLinks: compendiaData.arrWebsiteLink,
+        category: selCategory,
+        subCategory: selSubCat,
+        coverImage: uploadedCoverUrl, // URL of uploaded cover image
+        images: uploadedImageUrls,     // Array of URLs of other images
+        quiz: compendiaData.quiz,
+      };
+
+      // Step 4: Submit the final data to your backend
+      showToast("Submitting compendium data...", "info");
+      await submitCompendiumData(finalPayload);
+
+      // Kept your localStorage logic as a fallback/example
+      const saved = JSON.parse(localStorage.getItem("compendia") || "[]");
+      saved.unshift({ ...finalPayload, id: Date.now().toString(), createdAt: new Date().toISOString() });
+      localStorage.setItem("compendia", JSON.stringify(saved));
+
+      // Final Success state
+      showToast("Compendium submitted successfully!", "success");
+      sessionStorage.removeItem("compendium_draft");
+      router.push("/ethical-learning");
+
+    } catch (error) {
+      console.error("Submission failed:", error);
+      showToast("An error occurred during submission. Please try again.", "error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const removeWebsiteLink = (linkToRemove) => {
@@ -155,24 +241,7 @@ export default function UploadCompendiumPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const id = Date.now().toString();
-    const newCompendium = {
-      id,
-      ...compendiaData,
-      websiteLinks: compendiaData.arrWebsiteLink,
-      category: selCategory,
-      subCategory: selSubCat,
-      createdAt: new Date().toISOString(),
-    };
 
-    const saved = JSON.parse(localStorage.getItem("compendia") || "[]");
-    saved.unshift(newCompendium);
-    localStorage.setItem("compendia", JSON.stringify(saved));
-    sessionStorage.removeItem("compendium_draft");
-    router.push("/ethical-learning");
-  };
 
   const handleCategoryChange = (id) => {
     setSelCategory(id);
@@ -296,7 +365,6 @@ export default function UploadCompendiumPage() {
             )}
           </div>
 
-          {/* Cover Image (Single) */}
           <div>
             <label className="font-medium text-gray-700">Cover Image:</label>
             <div className="flex gap-3 items-center mt-1">
@@ -304,13 +372,13 @@ export default function UploadCompendiumPage() {
                 Add Image
                 <input type="file" accept="image/*" onChange={handleCoverImageFile} className="hidden" />
               </label>
-              {compendiaData.coverImage && (
-                <img src={compendiaData.coverImage} alt="cover" className="w-28 h-16 object-cover rounded-md" />
+              {compendiaData.coverImagePreview && (
+                <img src={compendiaData.coverImagePreview} alt="cover" className="w-28 h-16 object-cover rounded-md" />
               )}
             </div>
           </div>
 
-          {/* Images (Multiple) */}
+          {/* Multiple Images Preview */}
           <div>
             <label className="font-medium text-gray-700">Images:</label>
             <div className="flex flex-col gap-3 mt-1">
@@ -319,7 +387,7 @@ export default function UploadCompendiumPage() {
                 <input type="file" accept="image/*" onChange={handleMultipleImagesFile} className="hidden" multiple />
               </label>
               <div className="flex gap-3 items-center flex-wrap">
-                {compendiaData.images?.map((imgSrc, index) => (
+                {compendiaData.imagePreviews?.map((imgSrc, index) => (
                   <div key={index} className="relative">
                     <img src={imgSrc} alt={`img-${index}`} className="w-28 h-16 object-cover rounded-md" />
                     <button
@@ -327,7 +395,7 @@ export default function UploadCompendiumPage() {
                       onClick={() => handleRemoveImage(index)}
                       className="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold leading-none hover:bg-red-700"
                     >
-                      ×
+                      <X size={12} />
                     </button>
                   </div>
                 ))}
@@ -413,9 +481,17 @@ export default function UploadCompendiumPage() {
             </button>
             <button
               type="submit"
-              className="w-full sm:w-auto flex-1 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold"
+              className="w-full sm:w-auto flex-1 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold flex items-center justify-center disabled:bg-green-400 disabled:cursor-not-allowed"
+              disabled={isSubmitting}
             >
-              Submit Compendium
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                'Submit Compendium'
+              )}
             </button>
           </div>
         </form>

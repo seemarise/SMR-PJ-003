@@ -59,7 +59,7 @@ export default function QuizQuestionsPreview({ questions, onEdit, onDeleteReques
         </div>
         {totalQuestions > 3 && (
           <div className="pt-2 text-center">
-            <button className="text-sm font-semibold text-[#5074b6] hover:underline">
+            <button type="button" className="text-sm font-semibold text-[#5074b6] hover:underline">
               View all {totalQuestions} questions
             </button>
           </div>
