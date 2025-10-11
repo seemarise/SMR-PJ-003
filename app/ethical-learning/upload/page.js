@@ -47,7 +47,24 @@ export default function UploadCompendiumPage() {
     }
     fetchCategory();
   }, []);
+  useEffect(() => {
+    // Check if any modal is currently open
+    const isModalOpen = isEditingQuiz || isConfirmModalOpen || showQuizModal;
 
+    if (isModalOpen) {
+      // When a modal is open, disable scrolling on the body
+      document.body.style.overflow = 'hidden';
+    } else {
+      // When all modals are closed, restore scrolling
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup function: This will run when the component is unmounted
+    // to ensure scrolling is restored.
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isEditingQuiz, isConfirmModalOpen, showQuizModal]);
   async function fetchCategory() {
     let res = await getCompendiaCategories();
     if (res.statusCode == 200) {
