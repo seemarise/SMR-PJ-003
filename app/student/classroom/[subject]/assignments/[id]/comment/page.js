@@ -186,31 +186,31 @@ export default function CommentsPage() {
                 </div>
             </main>
 
-            {/* ===== Footer (Input) ===== */}
-            <footer className="fixed bottom-0 left-0 right-0 bg-white flex items-center gap-3 px-4 py-3 md:px-8 md:py-4 shadow-sm pb-1">
-                <div className="flex items-center flex-1 bg-gray-100 rounded-full px-4 py-2 md:py-2 max-w-5xl mx-auto">
-                    <Image
-                        src="/user.png"
-                        alt="you"
-                        width={10}
-                        height={10}
-                        className="rounded-full object-cover mr-2"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Write a comment..."
-                        value={commentText}
-                        onChange={(e) => setCommentText(e.target.value)}
-                        className="flex-1 bg-transparent outline-none text-sm md:text-base"
-                    />
-                </div>
-                <button
-                    onClick={handleAddComment}
-                    className="bg-[#5074b6] p-3 rounded-full text-white hover:bg-[#3d5f9b] transition cursor-pointer"
-                >
-                    <Send size={18} />
-                </button>
-            </footer>
+			{/* ===== Footer (Input) ===== */}
+			<footer className="fixed bottom-0 left-0 right-0 bg-white flex items-center px-4 py-3 md:px-8 md:py-4 shadow-sm pb-1">
+				<div className="relative flex items-center flex-1 bg-gray-100 rounded-full px-2 py-2 md:px-3 md:py-3 max-w-5xl mx-auto">
+					<Image
+						src="/profile.jpg"
+						alt="Profile"
+						width={40}
+						height={40}
+						className="h-10 w-10 rounded-full overflow-hidden object-cover mr-3 ring-2 ring-white"
+					/>
+					<input
+						type="text"
+						placeholder="Write a comment..."
+						value={commentText}
+						onChange={(e) => setCommentText(e.target.value)}
+						className="flex-1 bg-transparent outline-none text-sm md:text-base pr-16 md:pr-20"
+					/>
+					<button
+						onClick={handleAddComment}
+						className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 bg-[#5074b6] h-10 w-10 md:h-10 md:w-10 rounded-full text-white flex items-center justify-center shadow-sm hover:bg-[#3d5f9b] transition"
+					>
+						<Send size={18} />
+					</button>
+				</div>
+			</footer>
 
             {/* ===== Popup Options ===== */}
             {showOptions && (

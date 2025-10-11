@@ -83,6 +83,14 @@ class ApiClient {
       params,
     });
   }
+  async upload(url, file) {
+    let response = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": file.type },
+      body: file,
+    })
+    return response?.url?.split("?")[0]
+  };
 }
 
 export const apiClient = new ApiClient();
