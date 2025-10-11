@@ -65,7 +65,7 @@ export default function EditQuestionsPage({ onSubmit }) {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
@@ -81,7 +81,7 @@ export default function EditQuestionsPage({ onSubmit }) {
                     {/* Tabs */}
                     <div className="flex w-full max-w-2xl justify-center gap-10 border-b border-gray-300 mb-4 mx-auto">
                         <button
-                            className={`pb-2 text-sm font-medium ${tab === "mcq"
+                            className={`pb-2 cursor-pointer text-sm font-medium ${tab === "mcq"
                                 ? "text-blue-600 border-b-2 border-blue-600"
                                 : "text-gray-500"
                                 }`}
@@ -93,7 +93,7 @@ export default function EditQuestionsPage({ onSubmit }) {
                             MCQs
                         </button>
                         <button
-                            className={`pb-2 text-sm font-medium ${tab === "descriptive"
+                            className={`pb-2 text-sm cursor-pointer font-medium ${tab === "descriptive"
                                 ? "text-blue-600 border-b-2 border-blue-600"
                                 : "text-gray-500"
                                 }`}
@@ -111,6 +111,7 @@ export default function EditQuestionsPage({ onSubmit }) {
                         <button
                             onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
                             disabled={currentIndex === 0}
+                            className="cursor-pointer"
                         >
                             <ArrowLeft className="w-6 h-6 text-gray-600" />
                         </button>
@@ -123,6 +124,7 @@ export default function EditQuestionsPage({ onSubmit }) {
                                     Math.min(prev + 1, questions.length - 1)
                                 )
                             }
+                            className="cursor-pointer"
                             disabled={currentIndex === questions.length - 1}
                         >
                             <ArrowRight className="w-6 h-6 text-gray-600" />
@@ -213,19 +215,19 @@ export default function EditQuestionsPage({ onSubmit }) {
                     <div className="w-full max-w-2xl flex flex-col gap-3 mt-6 mx-auto">
                         <button
                             onClick={handleAddQuestion}
-                            className="flex justify-center items-center gap-2 bg-blue-600 text-white py-3 rounded-full font-semibold shadow-md hover:bg-blue-700 transition"
+                            className="flex justify-center items-center gap-2 bg-blue-600 text-white py-3 rounded-full font-semibold shadow-md hover:bg-[#5d88d3] transition cursor-pointer"
                         >
                             <Plus size={18} /> Add Question
                         </button>
                         <button
                             onClick={handleRemoveQuestion}
-                            className="flex justify-center items-center gap-2 bg-red-500 text-white py-3 rounded-full font-semibold shadow-md hover:bg-red-600 transition"
+                            className="flex justify-center items-center gap-2 bg-red-500 text-white py-3 rounded-full font-semibold shadow-md hover:bg-red-600 transition cursor-pointer"
                         >
                             <Trash2 size={18} /> Remove Current Question
                         </button>
                         <button
                             onClick={handleSaveAndReturn}
-                            className="flex justify-center items-center gap-2 bg-green-600 text-white py-3 rounded-full font-semibold shadow-md hover:bg-green-700 transition"
+                            className="flex justify-center items-center gap-2 bg-green-600 text-white py-3 rounded-full font-semibold shadow-md hover:bg-green-700 transition cursor-pointer"
                         >
                             <Save size={18} /> Save & Return
                         </button>

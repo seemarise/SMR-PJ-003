@@ -49,18 +49,18 @@ export default function StudentRemarkDetailPage() {
                     <div className="relative flex items-center justify-between md:justify-center">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:absolute md:left-0 md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:absolute md:left-0 md:p-3 md:shadow-sm cursor-pointer"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
-                        <h1 className="text-lg font-bold text-blue-800 md:text-3xl text-center">
+                        <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl text-center">
                             Student Remarks
                         </h1>
-
+                        {/* 
                         <button className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:absolute md:right-0 md:p-3 md:shadow-sm">
                             <RefreshCw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* Student Info */}
@@ -93,7 +93,7 @@ export default function StudentRemarkDetailPage() {
                         />
                         <button
                             onClick={handleSubmit}
-                            className="mt-3 bg-[#5074b6] hover:bg-[#5074b6] text-white px-4 py-2 rounded-lg font-medium text-sm md:text-base md:px-6 md:py-3 md:rounded-xl transition"
+                            className="mt-3 bg-[#5074b6] hover:bg-[#5d88d3] text-white px-4 py-2 rounded-lg font-medium text-sm md:text-base md:px-6 md:py-3 md:rounded-xl transition cursor-pointer"
                         >
                             Submit Remark
                         </button>
@@ -102,10 +102,10 @@ export default function StudentRemarkDetailPage() {
                     {/* Remarks History */}
                     <div className="mt-6">
                         <div className="flex items-center justify-between">
-                            <h3 className="font-semibold text-blue-800 text-base md:text-xl">
+                            <h3 className="font-semibold text-[#5074b6] text-base md:text-xl">
                                 Remarks History
                             </h3>
-                            <RefreshCw className="w-4 h-4 text-gray-500 md:w-5 md:h-5 cursor-pointer" />
+                            {/* <RefreshCw className="w-4 h-4 text-gray-500 md:w-5 md:h-5 cursor-pointer" /> */}
                         </div>
 
                         {/* No remarks yet */}

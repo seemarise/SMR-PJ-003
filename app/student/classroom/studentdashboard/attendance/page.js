@@ -121,13 +121,13 @@ export default function AttendanceCalendar() {
                         </div>
 
                         <div className="flex items-center justify-between bg-blue-600 text-white rounded-xl px-4 py-3 mb-4">
-                            <button onClick={prevMonth} aria-label="previous month" className="p-2">
+                            <button onClick={prevMonth} aria-label="previous month" className="p-2 cursor-pointer">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15 18L9 12L15 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </button>
                             <div className="font-semibold text-lg">{monthLabel}</div>
-                            <button onClick={nextMonth} aria-label="next month" className="p-2">
+                            <button onClick={nextMonth} aria-label="next month" className="p-2 cursor-pointer">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9 18L15 12L9 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>

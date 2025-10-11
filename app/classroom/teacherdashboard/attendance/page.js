@@ -64,7 +64,7 @@ export default function AttendancePage() {
                     {/* Back Button */}
                     <button
                         onClick={() => router.back()}
-                        className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                        className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm cursor-pointer"
                     >
                         <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                     </button>
@@ -81,7 +81,7 @@ export default function AttendancePage() {
                         {!isEditing ? (
                             <button
                                 onClick={() => setIsEditing(true)}
-                                className="p-1 md:p-2"
+                                className="p-1 md:p-2 cursor-pointer"
                             >
                                 <Pencil className="w-5 h-5 text-[#5074b6] hover:scale-110 transition md:w-6 md:h-6" />
                             </button>
@@ -89,13 +89,13 @@ export default function AttendancePage() {
                             <>
                                 <button
                                     onClick={() => setIsEditing(false)}
-                                    className="text-red-500 font-medium hover:underline text-sm md:text-base"
+                                    className="text-red-500 font-medium hover:underline text-sm md:text-base cursor-pointer"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleSubmitAttendence}
-                                    className="text-[#5074b6] font-medium hover:underline text-sm md:text-base"
+                                    className="text-[#5074b6] font-medium hover:underline text-sm md:text-base cursor-pointer"
                                 >
                                     Save
                                 </button>
@@ -106,7 +106,7 @@ export default function AttendancePage() {
 
                 {/* Date Selector (Now with input type="date") */}
                 <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex items-center justify-between mb-6 md:p-6 md:rounded-2xl md:bg-blue-50 md:border-blue-100">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 ">
                         <CalendarDays className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         <div>
                             <p className="text-gray-500 text-sm font-medium">Date</p>
@@ -118,7 +118,7 @@ export default function AttendancePage() {
                             />
                         </div>
                     </div>
-                    <span className="text-gray-400 text-lg md:text-xl">▾</span>
+                    {/* <span className="text-gray-400 text-lg md:text-xl">▾</span> */}
                 </div>
 
                 {/* Student List */}
@@ -136,7 +136,7 @@ export default function AttendancePage() {
                                     alt={student.name}
                                     className="w-12 h-12 rounded-full object-cover border border-gray-200 md:w-14 md:h-14"
                                 />
-                                <p className="font-semibold text-gray-800 text-base md:text-lg">
+                                <p className="font-semibold cursor-default text-gray-800 text-base md:text-lg">
                                     {student.name}
                                 </p>
                             </div>
@@ -161,8 +161,8 @@ export default function AttendancePage() {
                                     <button
                                         onClick={() => toggleStatus(student._id, "present")}
                                         className={`p-2 rounded-full border transition ${changedAttendence[student._id]?.status === "present"
-                                            ? "bg-green-500 border-green-500 text-white"
-                                            : "border-green-400 text-green-500 hover:bg-green-50"
+                                            ? "bg-green-500 border-green-500 text-white cursor-pointer"
+                                            : "border-green-400 text-green-500 hover:bg-green-50 cursor-pointer"
                                             }`}
                                     >
                                         <CheckCircle className="w-5 h-5" />
@@ -170,8 +170,8 @@ export default function AttendancePage() {
                                     <button
                                         onClick={() => toggleStatus(student._id, "absent")}
                                         className={`p-2 rounded-full border transition ${changedAttendence[student._id]?.status === "absent"
-                                            ? "bg-red-500 border-red-500 text-white"
-                                            : "border-red-400 text-red-500 hover:bg-red-50"
+                                            ? "bg-red-500 border-red-500 text-white cursor-pointer"
+                                            : "border-red-400 text-red-500 hover:bg-red-50 cursor-pointer"
                                             }`}
                                     >
                                         <XCircle className="w-5 h-5" />

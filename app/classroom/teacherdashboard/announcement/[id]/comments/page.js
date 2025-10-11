@@ -56,7 +56,7 @@ export default function CommentsPage() {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
@@ -64,13 +64,13 @@ export default function CommentsPage() {
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
                             Comments
                         </h1>
-
+                        {/* 
                         <button
                             onClick={handleRefresh}
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
                         >
                             <RotateCw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* Announcement Info */}
@@ -127,7 +127,7 @@ export default function CommentsPage() {
                 <button
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
-                    className="bg-[#5074b6] p-3 rounded-full text-white hover:bg-[#5074b6] transition"
+                    className="bg-[#5074b6] p-3 rounded-full text-white hover:bg-[#5074b6] transition cursor-pointer"
                 >
                     <Send size={18} />
                 </button>

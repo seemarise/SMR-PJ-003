@@ -220,7 +220,7 @@ export default function TopicPage({ params }) {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={handleBack}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm cursor-pointer"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -319,8 +319,8 @@ export default function TopicPage({ params }) {
                                                     });
                                                     setShowDeleteModal(true);
                                                 }}
-                                                className={`text-${isPdf ? "red" : "yellow"}-500 hover:text-${isPdf ? "red" : "yellow"
-                                                    }-700 transition`}
+                                                className={`text-${isPdf ? "red" : "yellow"}-500 hover:text-${isPdf ? "red" : "yellow "
+                                                    }-700 transition cursor-pointer`}
                                             >
                                                 <Trash2 className="w-5 h-5 md:w-6 md:h-6" />
                                             </button>
@@ -343,7 +343,7 @@ export default function TopicPage({ params }) {
                                 <div className="flex justify-end gap-3 mt-6">
                                     {/* Cancel Button */}
                                     <button
-                                        className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
+                                        className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100 cursor-pointer"
                                         onClick={() => {
                                             setDeleteDoc({});
                                             setShowDeleteModal(false);
@@ -354,7 +354,7 @@ export default function TopicPage({ params }) {
 
                                     {/* Delete Button */}
                                     <button
-                                        className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
+                                        className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100 cursor-pointer"
                                         onClick={deleteDocument}
                                     >
                                         Delete
@@ -373,14 +373,14 @@ export default function TopicPage({ params }) {
                                     <div className="flex mb-6">
                                         <button
                                             onClick={() => setActiveTab("upload")}
-                                            className={`flex-1 py-2 rounded-l-lg ${activeTab === "upload" ? "bg-[#5074b6] text-white" : "bg-gray-100"
+                                            className={`flex-1 cursor-pointer py-2 rounded-l-lg ${activeTab === "upload" ? "bg-[#5074b6] text-white hover:bg-[#5d88d3]" : "bg-gray-100"
                                                 }`}
                                         >
                                             Upload Files
                                         </button>
                                         <button
                                             onClick={() => setActiveTab("link")}
-                                            className={`flex-1 py-2 rounded-r-lg ${activeTab === "link" ? "bg-[#5074b6] text-white" : "bg-gray-100"
+                                            className={`flex-1 py-2 cursor-pointer rounded-r-lg ${activeTab === "link" ? "bg-[#5074b6] text-white hover:bg-[#5d88d3]" : "bg-gray-100"
                                                 }`}
                                         >
                                             Web Link
@@ -403,7 +403,7 @@ export default function TopicPage({ params }) {
                                                 <span className="text-sm">Upload Files ({files.length})</span>
                                                 <button
                                                     onClick={handleAddFilesClick}
-                                                    className="bg-[#5074b6] text-white px-4 py-1 rounded"
+                                                    className="bg-[#5074b6] text-white px-4 py-1 rounded cursor-pointer hover:bg-[#5d88d3]"
                                                 >
                                                     Add Files
                                                 </button>
@@ -434,7 +434,7 @@ export default function TopicPage({ params }) {
                                                             </span>
                                                             <button
                                                                 onClick={() => removeFile(i)}
-                                                                className="text-red-500 hover:text-red-700"
+                                                                className="text-red-500 hover:text-red-700 cursor-pointer"
                                                             >
                                                                 <X size={16} />
                                                             </button>
@@ -448,12 +448,12 @@ export default function TopicPage({ params }) {
                                             </p>
 
                                             <div className="flex justify-between">
-                                                <button onClick={handleAddDocumnetCancel} className="px-4 py-2 rounded bg-gray-200">
+                                                <button onClick={handleAddDocumnetCancel} className="px-4 py-2 rounded bg-gray-200 cursor-pointer">
                                                     Cancel
                                                 </button>
                                                 <button
                                                     onClick={handleUploadSubmit}
-                                                    className="px-4 py-2 rounded bg-[#5074b6] text-white"
+                                                    className="px-4 py-2 rounded bg-[#5074b6] text-white cursor-pointer hover:bg-[#5d88d3]"
                                                     disabled={files.length === 0}
                                                 >
                                                     Add Documents
@@ -486,12 +486,12 @@ export default function TopicPage({ params }) {
                                             </p>
 
                                             <div className="flex justify-between">
-                                                <button onClick={handleAddDocumnetCancel} className="px-4 py-2 rounded bg-gray-200">
+                                                <button onClick={handleAddDocumnetCancel} className="px-4 py-2 rounded bg-gray-200 cursor-pointer">
                                                     Cancel
                                                 </button>
                                                 <button
                                                     onClick={handleLinkSubmit}
-                                                    className="px-4 py-2 rounded bg-[#5074b6] text-white"
+                                                    className="px-4 py-2 rounded bg-[#5074b6] text-white cursor-pointer hover:bg-[#5d88d3]"
                                                 >
                                                     Add Link
                                                 </button>
@@ -505,7 +505,7 @@ export default function TopicPage({ params }) {
                     {/* Floating Add Button */}
                     <button
                         onClick={() => setShowAddModal(true)}
-                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
+                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5d88d3] transition md:p-5 md:bottom-10 md:right-10 cursor-pointer"
                     >
                         <Plus />
                     </button>

@@ -48,7 +48,7 @@ export default function EditAnnouncementPage() {
             <div className="flex items-center justify-between px-4 py-4 bg-white shadow-sm md:px-8">
                 <button
                     onClick={() => router.back()}
-                    className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition"
+                    className="p-2 rounded-full cursor-pointer bg-blue-100 hover:bg-blue-200 transition"
                 >
                     <ArrowLeft className="w-5 h-5 text-[#5074b6]" />
                 </button>
@@ -102,7 +102,7 @@ export default function EditAnnouncementPage() {
                         {/* Update Button */}
                         <button
                             type="submit"
-                            className="w-full mt-8 bg-[#5074b6] text-white py-3 rounded-xl font-semibold hover:bg-[#5074b6] transition"
+                            className="w-full mt-8 bg-[#5074b6] text-white py-3 rounded-xl font-semibold hover:bg-[#5d88d3] transition cursor-pointer"
                         >
                             Update Announcement
                         </button>

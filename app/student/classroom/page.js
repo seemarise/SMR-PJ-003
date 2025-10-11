@@ -52,7 +52,7 @@ export default function SubjectsPage() {
                                 `/student/classroom/studentdashboard`
                             )}
                     >
-                        <button className="bg-[#5074b6] text-white font-semibold text-[16px] md:text-[20px] px-6 py-5 text-left rounded-xl shadow-sm w-full md:w-full">
+                        <button className="bg-[#5074b6] text-white font-semibold text-[16px] md:text-[20px] px-6 py-5 text-left rounded-xl cursor-pointer shadow-sm w-full md:w-full">
                             My Classroom
                         </button>
                     </div>

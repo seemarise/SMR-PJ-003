@@ -63,7 +63,7 @@ export default function AssignmentQuizPage() {
                 <div className="flex items-center justify-between relative">
                     <button
                         onClick={() => router.back()}
-                        className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                        className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 cursor-pointer md:shadow-sm"
                     >
                         <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />
                     </button>
@@ -115,7 +115,7 @@ export default function AssignmentQuizPage() {
                                 <button
                                     key={index}
                                     onClick={() => handleOptionSelect(option)}
-                                    className={`flex items-center gap-3 w-full border-2 rounded-xl px-4 py-3 text-left text-[15px] md:text-[16px] transition-all ${selectedOptions[currentQuestion.id] === option
+                                    className={`flex items-center gap-3 w-full border-2 rounded-xl px-4 py-3 text-left text-[15px] cursor-pointer md:text-[16px] transition-all ${selectedOptions[currentQuestion.id] === option
                                         ? "border-[#5074b6] bg-[#e7edf9] text-[#5074b6] font-semibold"
                                         : "border-gray-300 text-gray-800 hover:border-[#5074b6]/50"
                                         }`}
@@ -139,7 +139,7 @@ export default function AssignmentQuizPage() {
                         <button
                             onClick={handlePrevious}
                             disabled={currentIndex === 0}
-                            className={`flex items-center gap-2 px-5 py-2 rounded-lg border font-medium transition ${currentIndex === 0
+                            className={`flex items-center gap-2 px-5 py-2 rounded-lg border cursor-pointer font-medium transition ${currentIndex === 0
                                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                                 : "text-[#5074b6] border-[#5074b6] hover:bg-[#e7edf9]"
                                 }`}
@@ -149,7 +149,7 @@ export default function AssignmentQuizPage() {
 
                         <button
                             onClick={handleNext}
-                            className="bg-[#5074b6] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#4060a3] transition"
+                            className="bg-[#5074b6] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#4060a3] transition cursor-pointer"
                         >
                             Next →
                         </button>
@@ -157,7 +157,7 @@ export default function AssignmentQuizPage() {
 
                     {/* ===== Submit Button ===== */}
                     <div className="flex justify-center w-full mt-4 md:mt-8">
-                        <button className="bg-gray-200 text-gray-400 px-6 py-2 rounded-lg font-medium cursor-not-allowed flex items-center gap-2">
+                        <button className="bg-gray-200 text-gray-400 px-6 py-2 rounded-lg font-medium cursor-not-allowed flex items-center gap-2 ">
                             ✓ Submit Answers
                         </button>
                     </div>

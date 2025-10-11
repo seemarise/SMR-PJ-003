@@ -29,7 +29,7 @@ export default function EditAssignmentPage() {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -39,7 +39,7 @@ export default function EditAssignmentPage() {
                             Edit Assignment
                         </h1>
 
-                        <button className="text-red-500 hover:text-red-600 transition">
+                        <button className="text-red-500 cursor-pointer hover:text-red-600 transition">
                             <Trash size={20} className="md:w-6 md:h-6" />
                         </button>
                     </div>
@@ -80,7 +80,7 @@ export default function EditAssignmentPage() {
                                 <button
                                     type="button"
                                     onClick={handleAddTopic}
-                                    className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-[#5074b6] transition"
+                                    className="bg-[#5074b6] text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-[#5d88d3] transition"
                                 >
                                     +
                                 </button>
@@ -93,7 +93,7 @@ export default function EditAssignmentPage() {
                                         className="bg-blue-100 text-[#5074b6] px-3 py-1 rounded-full flex items-center gap-2"
                                     >
                                         <span>{topic}</span>
-                                        <button onClick={() => handleDeleteTopic(topic)}>×</button>
+                                        <button className="cursor-pointer" onClick={() => handleDeleteTopic(topic)}>×</button>
                                     </div>
                                 ))}
                             </div>
@@ -143,7 +143,7 @@ export default function EditAssignmentPage() {
                             <label className="font-medium block mb-1">Documents</label>
                             <button
                                 type="button"
-                                className="border border-[#5074b6] text-[#5074b6] px-4 py-2 rounded-lg hover:bg-blue-50 transition"
+                                className="border border-[#5074b6] text-[#5074b6] px-4 py-2 cursor-pointer rounded-lg hover:bg-blue-50 transition"
                             >
                                 Upload Document
                             </button>
@@ -160,10 +160,10 @@ export default function EditAssignmentPage() {
                         <div>
                             <label className="font-medium block mb-1">Add Images</label>
                             <div className="flex gap-2">
-                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-[#5074b6] transition">
+                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-[#5d88d3] transition cursor-pointer">
                                     Add Image
                                 </button>
-                                <button className="border px-4 py-2 rounded-lg hover:bg-gray-50 transition">
+                                <button className="border px-4 py-2 rounded-lg hover:bg-gray-50 transition cursor-pointer">
                                     📷
                                 </button>
                             </div>
@@ -184,7 +184,7 @@ export default function EditAssignmentPage() {
                             <div className="mt-3 p-3 border rounded-lg bg-gray-50 md:p-5 md:rounded-xl">
                                 <div className="flex justify-between items-center mb-2">
                                     <p className="font-medium">5 Questions</p>
-                                    <button className="text-[#5074b6] hover:underline">
+                                    <button className="text-[#5074b6] hover:underline cursor-pointer">
                                         Edit Questions
                                     </button>
                                 </div>
@@ -192,10 +192,10 @@ export default function EditAssignmentPage() {
                                     1. What is the primary spiritual significance of Diwali...
                                 </p>
                                 <div className="flex gap-2 mt-3 flex-wrap">
-                                    <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition">
+                                    <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition cursor-pointer">
                                         + Generate with AI
                                     </button>
-                                    <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition">
+                                    <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition cursor-pointer">
                                         + Add Questions
                                     </button>
                                 </div>
@@ -203,7 +203,7 @@ export default function EditAssignmentPage() {
                         </div>
 
                         {/* Update Button */}
-                        <button className="w-full bg-[#5074b6] hover:bg-[#5074b6] text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl">
+                        <button className="w-full bg-[#5074b6] hover:bg-[#5d88d3] text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl cursor-pointer">
                             Update Assignment
                         </button>
                     </form>

@@ -10,7 +10,7 @@ export default function CreateQuizModal({ onClose, onManual, onCreateAI }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-5 relative">
-        <button onClick={onClose} className="absolute right-3 top-3 p-1 rounded-full">
+        <button onClick={onClose} className="absolute right-3 top-3 p-1 rounded-full cursor-pointer">
           <X className="w-5 h-5 text-gray-600" />
         </button>
 
@@ -46,13 +46,13 @@ export default function CreateQuizModal({ onClose, onManual, onCreateAI }) {
         </div>
 
         <div className="mt-4 flex items-center justify-end gap-3">
-          <button onClick={onClose} className="px-4 py-2 rounded-md">Cancel</button>
+          <button onClick={onClose} className="px-4 cursor-pointer py-2 rounded-md">Cancel</button>
           <button
             onClick={() => {
               if (method === "manual") onManual();
               else onCreateAI(count);
             }}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md"
+            className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer"
           >
             Create
           </button>

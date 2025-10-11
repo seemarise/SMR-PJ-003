@@ -36,7 +36,7 @@ export default function StudentPerformanceReport({ params }) {
                     <div className="flex items-center justify-between mb-4 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-transparent hover:bg-blue-50 transition md:p-3 md:bg-blue-100 md:hover:bg-blue-200 md:shadow-sm"
+                            className="p-2 rounded-full bg-transparent hover:bg-blue-50 transition md:p-3 md:bg-blue-100 md:hover:bg-blue-200 cursor-pointer md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-gray-700 md:w-6 md:h-6 md:text-[#5074b6]" />
@@ -46,12 +46,12 @@ export default function StudentPerformanceReport({ params }) {
                             Performance Report
                         </h1>
 
-                        <button
+                        {/* <button
                             className="text-gray-700 md:text-[#5074b6] md:p-2 md:rounded-full md:hover:bg-blue-100"
                             onClick={handleRefresh}
                         >
                             <RotateCcw className="w-5 h-5 md:w-7 md:h-7" />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* Student Info Card */}
@@ -91,7 +91,7 @@ export default function StudentPerformanceReport({ params }) {
                         <div className="flex border-b">
                             <button
                                 onClick={() => setActiveTab("school")}
-                                className={`flex-1 py-3 font-medium flex flex-col items-center transition md:py-4 ${activeTab === "school"
+                                className={`flex-1 py-3 cursor-pointer font-medium flex flex-col items-center transition md:py-4 ${activeTab === "school"
                                     ? "text-[#5074b6] border-b-2 border-[#5074b6] bg-blue-50"
                                     : "text-gray-500 hover:bg-gray-50"
                                     }`}
@@ -103,7 +103,7 @@ export default function StudentPerformanceReport({ params }) {
                             </button>
                             <button
                                 onClick={() => setActiveTab("vad")}
-                                className={`flex-1 py-3 font-medium flex flex-col items-center transition md:py-4 ${activeTab === "vad"
+                                className={`flex-1 py-3 cursor-pointer font-medium flex flex-col items-center transition md:py-4 ${activeTab === "vad"
                                     ? "text-[#5074b6] border-b-2 border-[#5074b6] bg-blue-50"
                                     : "text-gray-500 hover:bg-gray-50"
                                     }`}
@@ -130,12 +130,12 @@ export default function StudentPerformanceReport({ params }) {
                                     : "No VAD test data available for this student."}
                             </p>
 
-                            <button
+                            {/* <button
                                 onClick={handleRefresh}
                                 className="px-5 py-1.5 bg-[#5074b6] text-white text-sm font-semibold rounded-md shadow hover:bg-[#5074b6] transition md:px-8 md:py-3 md:text-base"
                             >
                                 Refresh
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>

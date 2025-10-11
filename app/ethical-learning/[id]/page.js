@@ -28,8 +28,8 @@ export default function CompendiumDetailPage() {
     const updatedCompendia = saved.map(item => {
       if (item.id === itemId) {
         const isCurrentlyPinned = item.isPinned;
-        return { 
-          ...item, 
+        return {
+          ...item,
           isPinned: !isCurrentlyPinned,
           pinOrder: !isCurrentlyPinned ? Date.now() : null
         };
@@ -57,7 +57,7 @@ export default function CompendiumDetailPage() {
         <div className="flex items-center gap-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => router.back()}
-            className="p-2 rounded-full hover:bg-gray-100 transition"
+            className="p-2 rounded-full cursor-pointer hover:bg-gray-100 transition"
           >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
@@ -76,7 +76,7 @@ export default function CompendiumDetailPage() {
                 setShowToast(true);
                 setTimeout(() => setShowToast(false), 1200);
               }}
-              className="flex items-center gap-2 text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-md"
+              className="flex cursor-pointer items-center gap-2 text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-md"
             >
               <Copy className="w-4 h-4" />
               Copy Contents
@@ -103,9 +103,9 @@ export default function CompendiumDetailPage() {
               <div className="space-y-2">
                 {compendium.websiteLinks.map((link) => (
                   <div key={link.id} className="flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2">
-                    <a 
-                      href={link.url} 
-                      target="_blank" 
+                    <a
+                      href={link.url}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#5074b6] underline hover:text-[#3d5a94] truncate flex-1"
                     >
@@ -153,11 +153,10 @@ export default function CompendiumDetailPage() {
         <div className="mt-6 flex gap-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => togglePin(compendium.id)}
-            className={`flex-1 border rounded-lg py-2.5 text-sm font-medium flex items-center justify-center gap-2 transition ${
-              compendium.isPinned 
-                ? "bg-[#5074b6] text-white border-[#5074b6] hover:bg-[#3d5a94]" 
+            className={`flex-1 cursor-pointer border rounded-lg py-2.5 text-sm font-medium flex items-center justify-center gap-2 transition ${compendium.isPinned
+                ? "bg-[#5074b6] text-white border-[#5074b6] hover:bg-[#3d5a94]"
                 : "bg-white border-gray-300 hover:bg-gray-50"
-            }`}
+              }`}
           >
             <Pin className="w-4 h-4" />
             {compendium.isPinned ? "Unpin" : "Pin"}
@@ -165,14 +164,14 @@ export default function CompendiumDetailPage() {
 
           <button
             onClick={() => setShowVADModal(true)}
-            className="flex-1 bg-yellow-400 text-gray-900 border border-yellow-500 rounded-lg py-2.5 text-sm font-medium hover:bg-yellow-500"
+            className="flex-1 bg-yellow-400 text-gray-900 border border-yellow-500 rounded-lg py-2.5 text-sm font-medium hover:bg-yellow-500 cursor-pointer"
           >
             VAD Squad Review
           </button>
 
           <button
             onClick={() => router.push(`/ethical-learning/${id}/comments`)}
-            className="flex-1 bg-white border border-gray-300 rounded-lg py-2.5 text-sm font-medium hover:bg-gray-50"
+            className="flex-1 bg-white border border-gray-300 rounded-lg py-2.5 text-sm font-medium cursor-pointer hover:bg-gray-50"
           >
             Comments
           </button>
@@ -182,7 +181,7 @@ export default function CompendiumDetailPage() {
         <div className="mt-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => router.push("/ethical-learning/upload")}
-            className="w-full bg-white border border-gray-300 rounded-lg py-2.5 text-sm font-medium hover:bg-gray-50"
+            className="w-full bg-white border border-gray-300 rounded-lg py-2.5 text-sm font-medium cursor-pointer hover:bg-gray-50"
           >
             Create Continuation Compendium
           </button>
@@ -203,14 +202,14 @@ export default function CompendiumDetailPage() {
         <div className="mt-6 flex flex-col gap-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => alert("AI Magic feature")}
-            className="w-full bg-blue-600 text-white rounded-lg py-3 text-sm font-medium hover:bg-blue-700"
+            className="w-full bg-blue-600 text-white rounded-lg py-3 text-sm font-medium cursor-pointer hover:bg-blue-700"
           >
             AI Magic
           </button>
 
           <button
             onClick={() => router.push(`/ethical-learning/${id}/quiz`)}
-            className="w-full bg-gray-900 text-white rounded-lg py-3 text-sm font-medium hover:bg-gray-800"
+            className="w-full bg-gray-900 text-white rounded-lg py-3 text-sm font-medium hover:bg-gray-800 cursor-pointer"
           >
             TAKE THE QUIZ
           </button>
@@ -237,7 +236,7 @@ export default function CompendiumDetailPage() {
                     setShowVADModal(false);
                     setReviewText("");
                   }}
-                  className="flex-1 py-2.5 text-gray-700 font-medium text-sm hover:bg-gray-100 rounded-lg transition"
+                  className="flex-1 py-2.5 text-gray-700 font-medium text-sm hover:bg-gray-100 cursor-pointer rounded-lg transition"
                 >
                   Cancel
                 </button>
@@ -249,7 +248,7 @@ export default function CompendiumDetailPage() {
                     setShowToast(true);
                     setTimeout(() => setShowToast(false), 1500);
                   }}
-                  className="flex-1 py-2.5 bg-black text-white font-medium text-sm rounded-lg hover:bg-gray-800 transition"
+                  className="flex-1 py-2.5 bg-black text-white font-medium text-sm rounded-lg cursor-pointer hover:bg-gray-800 transition"
                 >
                   Submit
                 </button>

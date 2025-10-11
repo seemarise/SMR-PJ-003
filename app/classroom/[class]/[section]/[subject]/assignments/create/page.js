@@ -236,7 +236,7 @@ export default function CreateAssignment() {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
@@ -281,7 +281,7 @@ export default function CreateAssignment() {
                                 {/* <button
                                     type="button"
                                     onClick={() => setShowImageSourcePopup(true)}
-                                    className="absolute  cursor-pointer right-3 top-2 p-2 text-gray-500 hover:text-blue-600 transition-colors"
+                                    className="absolute right-3 top-2 p-2 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
                                 >
                                     <Camera className="w-5 h-5" />
                                 </button> */}

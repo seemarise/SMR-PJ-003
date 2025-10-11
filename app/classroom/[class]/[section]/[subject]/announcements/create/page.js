@@ -36,7 +36,7 @@ export default function CreateAnnouncement() {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 cursor-pointer md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -85,7 +85,7 @@ export default function CreateAnnouncement() {
                         {/* Post Button */}
                         <button
                             type="submit"
-                            className="flex items-center justify-center gap-2 bg-[#5074b6] text-white w-full py-3 rounded-lg shadow hover:bg-[#5074b6] transition text-lg font-medium md:py-4 md:text-xl md:font-semibold md:rounded-xl"
+                            className="flex items-center justify-center gap-2 bg-[#5074b6] text-white w-full py-3 rounded-lg shadow hover:bg-[#5d88d3] transition text-lg font-medium md:py-4 md:text-xl md:font-semibold md:rounded-xl cursor-pointer"
                         >
                             Post Announcement
                         </button>

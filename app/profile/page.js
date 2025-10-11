@@ -24,7 +24,7 @@ export default function ProfilePage() {
                     <div className="relative flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -108,7 +108,7 @@ export default function ProfilePage() {
                             <button className="bg-blue-100 text-[#5074b6] py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-blue-200 transition">
                                 Share Feedback
                             </button> */}
-                            <button className="bg-red-500 cursor-pointer text-white py-2 rounded-full font-medium md:flex-1 md:py-3 hover:bg-red-600 transition" onClick={() => { sessionService.removeSession(); router.replace("/login") }}>
+                            <button className="bg-red-500 cursor-pointer text-white py-2 rounded-full  font-medium md:flex-1 md:py-3 hover:bg-red-600 transition" onClick={() => { sessionService.removeSession(); router.replace("/login") }}>
                                 Logout
                             </button>
                         </div>

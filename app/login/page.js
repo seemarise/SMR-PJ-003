@@ -95,7 +95,7 @@ export default function LoginPage() {
             setRole("student");
             setStep("email");
           }}
-          className="w-full bg-white p-5 rounded-2xl shadow-md flex items-center gap-4 border hover:shadow-lg transition"
+          className="w-full bg-white p-5 rounded-2xl shadow-md flex items-center cursor-pointer gap-4 border hover:shadow-lg transition"
         >
           <div className="flex-shrink-0 bg-blue-100 p-3 rounded-lg">
             <GraduationCap color="#5074b6" />
@@ -115,7 +115,7 @@ export default function LoginPage() {
             setRole("teacher");
             setStep("email");
           }}
-          className="w-full bg-white p-5 rounded-2xl shadow-md flex items-center gap-4 border hover:shadow-lg transition"
+          className="w-full bg-white p-5 rounded-2xl shadow-md flex items-center gap-4 border cursor-pointer hover:shadow-lg transition"
         >
           <div className="flex-shrink-0 bg-green-100 p-3 rounded-lg">
             <School color="lightgreen" />
@@ -141,7 +141,7 @@ export default function LoginPage() {
     <div className="flex flex-col min-h-screen bg-gray-50 relative px-6">
       {/* Back button */}
       <button
-        className="absolute top-6 left-5 text-gray-600"
+        className="absolute top-6 left-5 text-gray-600 cursor-pointer"
         onClick={() => setStep("choose")}
       >
         <ArrowLeft className="text-gray-400 w-5 h-5" />
@@ -181,7 +181,7 @@ export default function LoginPage() {
 
         <button
           onClick={handleEmailEntry}
-          className="w-full max-w-md bg-[#5074b6] text-white py-3 rounded-xl text-lg font-semibold hover:bg-[#5074b6] transition"
+          className="w-full max-w-md bg-[#5074b6] text-white py-3 rounded-xl text-lg cursor-pointer font-semibold hover:bg-[#5074b6] transition"
         >
           Continue
         </button>
@@ -197,7 +197,7 @@ export default function LoginPage() {
   const renderOtpScreen = () => (
     <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gray-50 relative">
       <button
-        className="absolute top-6 left-5 text-gray-600"
+        className="absolute cursor-pointer top-6 left-5 text-gray-600"
         onClick={() => setStep("email")}
       >
         <ArrowLeft className="text-gray-400 w-5 h-5" />
@@ -239,7 +239,7 @@ export default function LoginPage() {
       </div>
 
       <button
-        className={`w-full max-w-md py-3 rounded-xl text-lg font-semibold hover:transition-colors transition
+        className={`w-full cursor-pointer max-w-md py-3 rounded-xl text-lg font-semibold hover:transition-colors transition
     ${role === "teacher"
             ? "bg-green-800 text-white hover:bg-green-700"
             : "bg-[#5074b6] text-white hover:bg-[#5074b6]"
@@ -260,7 +260,7 @@ export default function LoginPage() {
         ) : (
           <button
             onClick={() => setTimer(60)}
-            className={`w-full py-3 rounded-xl text-lg font-semibold transition
+            className={`w-full cursor-pointer py-3 rounded-xl text-lg font-semibold transition
         ${role === "teacher"
                 ? "bg-green-100 text-green-800 hover:bg-green-200"
                 : "bg-gray-200 text-[#5074b6] hover:bg-gray-300"
