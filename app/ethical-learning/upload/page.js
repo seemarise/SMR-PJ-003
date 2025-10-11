@@ -5,10 +5,11 @@ import { ArrowLeft, Image as ImageIcon, Send, Loader2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CreateQuizModal from "../../../components/CreateQuizModal";
 import ManualQuizEditor from "../../../components/ManualQuizEditor";
-import { getCompendiaCategories, getCompendiaSubCategories, generateQuizWithAIPassingContent } from "@/services/ethicalLearningService/compendiaService";
+import { getCompendiaCategories, getCompendiaSubCategories, generateQuizWithAIPassingContent, addCompendia } from "@/services/ethicalLearningService/compendiaService";
 import { toast } from "react-toastify";
 import QuizQuestionsPreview from "@/components/QuizQuestionPreview";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import { getSignedUrl } from "@/services/classroomService/resourceApi";
 export default function UploadCompendiumPage() {
   const router = useRouter();
 
@@ -150,33 +151,49 @@ export default function UploadCompendiumPage() {
     }));
   };
 
-  // NEW: Reusable helper function to upload a single file
-  const uploadFile = async (file) => {
-    try {
-      // 1. Get signed URL from our backend
-      const { uploadUrl, publicUrl } = await getSignedUrl(file);
+  async function getSignedUrlWrapper(file, fieldName) {
+    const response = await getSignedUrl({
+      fileName: file.name,
+      fieldName: fieldName
+    });
+    return response.data;
 
-      // 2. Upload the file to the signed URL (e.g., to S3)
-      const uploadResponse = await fetch(uploadUrl, {
+    // const blob = new Blob([file], { type: file.type });
+    // const url = URL.createObjectURL(blob);
+
+    // return {
+    //   uploadUrl: url,
+    //   // The backend would use fieldName to construct the final path
+    //   publicUrl: `https://your-cloud-storage.com/${fieldName}/${Date.now()}-${file.name}`
+    // };
+  }
+  // NEW: Reusable helper function to upload a single file
+  // UPDATED: The uploadFile helper now requires a fieldName
+  const uploadFile = async (file, fieldName) => {
+    try {
+      // 1. Get signed URL from our backend, passing the fieldName
+      const { signedUrl } = await getSignedUrlWrapper(file, fieldName);
+      // 2. Upload the file to the signed URL
+      const uploadResponse = await fetch(signedUrl, {
         method: 'PUT',
         headers: { 'Content-Type': file.type },
         body: file,
       });
-
+      console.log(uploadResponse.url.split('?')[0]);
       if (!uploadResponse.ok) {
         throw new Error(`Failed to upload ${file.name}`);
       }
-
-      // 3. Return the final public URL of the uploaded file
-      return publicUrl;
+      console.log(uploadResponse);
+      // alert(uploadResponse)
+      // 3. Return the final public URL
+      return uploadResponse.url.split('?')[0];
     } catch (error) {
       console.error('Upload failed for file:', file.name, error);
-      throw error; // Re-throw error to be caught by handleSubmit
+      throw error;
     }
   };
 
-
-  // REWRITTEN: handleSubmit now orchestrates the entire upload process
+  // UPDATED: handleSubmit now passes the correct fieldName for each upload
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -186,42 +203,38 @@ export default function UploadCompendiumPage() {
       let uploadedCoverUrl = null;
       let uploadedImageUrls = [];
 
-      // Step 1: Upload the cover image if it exists
+      // Step 1: Upload the cover image with its specific fieldName
       if (compendiaData.coverImageFile) {
         showToast("Uploading cover image...", "info");
-        uploadedCoverUrl = await uploadFile(compendiaData.coverImageFile);
+        uploadedCoverUrl = await uploadFile(compendiaData.coverImageFile, 'compendiums/cover-images');
       }
-
-      // Step 2: Upload all other images in parallel
+      console.log("upload cover url", uploadedCoverUrl)
+      // Step 2: Upload other images with their specific fieldName
       if (compendiaData.imageFiles.length > 0) {
         showToast(`Uploading ${compendiaData.imageFiles.length} images...`, "info");
         uploadedImageUrls = await Promise.all(
-          compendiaData.imageFiles.map(file => uploadFile(file))
+          compendiaData.imageFiles.map(file => uploadFile(file, 'compendiums/content-images'))
         );
       }
 
-      // Step 3: Construct the final payload with the new URLs
+      // Step 3: Construct the final payload
       const finalPayload = {
         title: compendiaData.title,
-        content: compendiaData.content,
+        contents: compendiaData.content,
         websiteLinks: compendiaData.arrWebsiteLink,
         category: selCategory,
-        subCategory: selSubCat,
-        coverImage: uploadedCoverUrl, // URL of uploaded cover image
-        images: uploadedImageUrls,     // Array of URLs of other images
-        quiz: compendiaData.quiz,
+        subcategory: selSubCat,
+        numberOfQuestions: compendiaData.quiz.length,
+        coverImage: uploadedCoverUrl,
+        images: uploadedImageUrls,
+        MCQs: compendiaData.quiz,
+        continuedFrom: null
       };
 
       // Step 4: Submit the final data to your backend
       showToast("Submitting compendium data...", "info");
       await submitCompendiumData(finalPayload);
 
-      // Kept your localStorage logic as a fallback/example
-      const saved = JSON.parse(localStorage.getItem("compendia") || "[]");
-      saved.unshift({ ...finalPayload, id: Date.now().toString(), createdAt: new Date().toISOString() });
-      localStorage.setItem("compendia", JSON.stringify(saved));
-
-      // Final Success state
       showToast("Compendium submitted successfully!", "success");
       sessionStorage.removeItem("compendium_draft");
       router.push("/ethical-learning");
@@ -234,6 +247,14 @@ export default function UploadCompendiumPage() {
     }
   };
 
+  async function submitCompendiumData(payload) {
+    let res = await addCompendia(payload);
+    if (res.statusCode == 200) {
+      // showToast("Compendium Added successfully");
+      return { success: true };
+    }
+
+  }
   const removeWebsiteLink = (linkToRemove) => {
     setCompendiaData(prev => ({
       ...prev,
@@ -517,9 +538,10 @@ export default function UploadCompendiumPage() {
                   // Transform API response to our internal format
                   const newQuestions = aiQuestions.map(q => ({
                     id: Date.now() + Math.random(), // Unique key for React
-                    text: q.question,
-                    options: q.answerOptions,
-                    correctAnswerIndex: q.correctOptionIndex,
+                    question: q.question,
+                    answerOptions: q.answerOptions,
+                    correctOptionIndex: q.correctOptionIndex,
+                    imageUrl: ""
                   }));
 
                   // Get existing questions and append the new ones

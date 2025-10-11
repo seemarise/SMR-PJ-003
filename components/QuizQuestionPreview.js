@@ -47,11 +47,11 @@ export default function QuizQuestionsPreview({ questions, onEdit, onDeleteReques
             <div key={q.id || index} className="flex items-start gap-3">
               <div className="bg-[#5074b6] text-white rounded-full w-6 h-6 flex-shrink-0 flex items-center justify-center text-xs font-bold">{index + 1}</div>
               <div className="flex-1">
-                <p className="text-gray-800 font-medium">{q.text}</p>
+                <p className="text-gray-800 font-medium">{q.question}</p>
                 <div className="text-sm text-green-700 flex items-center gap-1.5 mt-1">
                   <CheckCircle2 className="w-4 h-4 text-green-600" />
                   <span className="font-normal">Answer:</span>
-                  <span className="font-semibold">{q.options[q.correctAnswerIndex]}</span>
+                  <span className="font-semibold">{q.answerOptions[q.correctOptionIndex]}</span>
                 </div>
               </div>
             </div>

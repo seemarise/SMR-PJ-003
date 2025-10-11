@@ -7,9 +7,10 @@ import { Trash2, PlusCircle, X, ChevronLeft, ChevronRight } from "lucide-react";
 // This is a default empty question structure
 const createNewQuestion = () => ({
   id: Date.now() + Math.random(), // more unique key
-  text: "",
-  options: ["", "", "", ""],
-  correctAnswerIndex: 0,
+  question: "",
+  answerOptions: ["", "", "", ""],
+  correctOptionIndex: 0,
+  imageUrl: ""
 });
 
 export default function ManualQuizEditor({ initialQuestions, onSave, onClose }) {
@@ -25,17 +26,17 @@ export default function ManualQuizEditor({ initialQuestions, onSave, onClose }) 
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  // Handler to update the current question's text
-  const handleQuestionTextChange = (e) => {
+  // Handler to update the current question's question
+  const handleQuestionquestionChange = (e) => {
     const newQuestions = [...questions];
-    newQuestions[currentQuestionIndex].text = e.target.value;
+    newQuestions[currentQuestionIndex].question = e.target.value;
     setQuestions(newQuestions);
   };
 
   // Handler to update a specific option's text
   const handleOptionChange = (optionIndex, value) => {
     const newQuestions = [...questions];
-    newQuestions[currentQuestionIndex].options[optionIndex] = value;
+    newQuestions[currentQuestionIndex].answerOptions[optionIndex] = value;
     setQuestions(newQuestions);
   };
 
@@ -66,11 +67,11 @@ export default function ManualQuizEditor({ initialQuestions, onSave, onClose }) 
 
   const handleSaveAll = () => {
     for (const q of questions) {
-      if (!q.text.trim()) {
+      if (!q.question.trim()) {
         alert('All questions must have text.');
         return;
       }
-      if (q.options.some(opt => !opt.trim())) {
+      if (q.answerOptions.some(opt => !opt.trim())) {
         alert('All options must be filled in for every question.');
         return;
       }
@@ -128,7 +129,7 @@ export default function ManualQuizEditor({ initialQuestions, onSave, onClose }) 
           <div>
             <label className="font-medium text-gray-700">Question Text</label>
             <textarea
-              value={currentQuestion.text}
+              value={currentQuestion.question}
               onChange={handleQuestionTextChange}
               placeholder="Enter your question here"
               className="w-full mt-1 p-2 border border-gray-300 rounded-md text-sm"
@@ -142,9 +143,9 @@ export default function ManualQuizEditor({ initialQuestions, onSave, onClose }) 
               <span className="text-sm text-gray-500">Select Correct</span>
             </div>
             <div className="space-y-3">
-              {currentQuestion.options.map((option, index) => (
+              {currentQuestion.answerOptions.map((option, index) => (
                 <div key={index} className="flex items-center gap-3">
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-md font-bold text-white ${currentQuestion.correctAnswerIndex === index ? 'bg-[#5074b6]' : 'bg-gray-300'}`}>
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-md font-bold text-white ${currentQuestion.correctOptionIndex === index ? 'bg-[#5074b6]' : 'bg-gray-300'}`}>
                     {String.fromCharCode(65 + index)}
                   </div>
                   <input
@@ -157,7 +158,7 @@ export default function ManualQuizEditor({ initialQuestions, onSave, onClose }) 
                   <input
                     type="radio"
                     name={`correct-answer-${currentQuestion.id}`}
-                    checked={currentQuestion.correctAnswerIndex === index}
+                    checked={currentQuestion.correctOptionIndex === index}
                     onChange={() => handleCorrectAnswerChange(index)}
                     className="w-5 h-5 accent-[#5074b6]"
                   />

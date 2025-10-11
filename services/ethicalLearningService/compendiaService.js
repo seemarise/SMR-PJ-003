@@ -33,6 +33,10 @@ const removePinCompendiaById = (pathParams) => {
 const generateQuizWithAIPassingContent = (body) => {
   return apiClient.post("/api/v1/chat/student/generate-quiz", body);
 }
+
+const addCompendia = (body) => {
+  return apiClient.post("/api/v1/compendia/teachers/add-compendium", body);
+}
 // getListSuggestions not working
 // getAllCompedia 
 
@@ -44,5 +48,6 @@ export {
   getVadSquadreviewsByComId,
   pinCompendiaById,
   removePinCompendiaById,
-  generateQuizWithAIPassingContent
+  generateQuizWithAIPassingContent,
+  addCompendia
 };
