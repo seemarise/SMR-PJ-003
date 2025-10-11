@@ -161,7 +161,7 @@ export default function AssignmentsPage({ params }) {
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 router.push(
-                                                    `/classroom/${classId}/${section}/${subject}/assignments/${a._id}/edit`
+                                                    `/classroom/${classId}/${section}/${subject}/assignments/${a._id}/edit?classId=${classId}&sectionId=${sectionId}&subjectId=${subjectId}`
                                                 );
                                             }}
                                             className="text-[#5074b6] hover:text-[#5d88d3] cursor-pointer transition"

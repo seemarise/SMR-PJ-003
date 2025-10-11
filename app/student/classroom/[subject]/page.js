@@ -14,7 +14,7 @@ export default function SubjectDetailPage() {
 
     return (
         <div className="flex flex-col min-h-screen bg-white md:bg-gray-50">
-            <main className="flex-1 px-5 py-3 md:px-8 md:py-10">
+            <main className="flex-1 px-5 py-2">
                 <div className="md:max-w-5xl md:mx-auto md:space-y-10">
                     {/* ===== Header ===== */}
                     <div className="flex items-center justify-between mb-6 md:mb-8 relative">
@@ -32,13 +32,13 @@ export default function SubjectDetailPage() {
                             </h1>
                         </div>
 
-                        <div className="w-10 h-10 md:w-14 md:h-14 bg-gray-100 rounded-full flex items-center justify-center shadow-sm">
+                        {/* <div className="w-10 h-10 md:w-14 md:h-14 bg-gray-100 rounded-full flex items-center justify-center shadow-sm">
                             <Users
                                 onClick={() =>
                                     router.push(`/student/classroom/${subject}/people`)
                                 }
                                 className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* ===== Curriculum Card ===== */}

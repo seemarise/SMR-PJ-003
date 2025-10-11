@@ -30,11 +30,10 @@ export default function AnnouncementPage() {
             const res = await getStudentClassroomAnnouncement(params);
             const newData = res.data?.announcements || [];
 
-            if (newData.length > 0) {
-                setAnnouncements((prev) => [...prev, ...newData]);
-            } else {
-                setHasMore(false);
-            }
+            setAnnouncements((prev) => [...prev, ...newData]);
+
+            setHasMore(res.data.hasNext);
+
         } catch (err) {
             console.error("Error fetching announcements:", err);
         } finally {

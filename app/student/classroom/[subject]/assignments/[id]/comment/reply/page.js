@@ -3,11 +3,17 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowLeft, RotateCw, Send } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { addReplyToComment, getAllReply } from "@/services/classroomService/commentApi";
+import { sessionService } from "@/services/sessionService";
 
 export default function RepliesPage() {
     const router = useRouter();
     const [isMobile, setIsMobile] = useState(false);
+    const [user] = useState(sessionService.getUser())
+    const [replies, setReplies] = useState([])
+    const [load, setLoad] = useState(false)
+    const commentId = useSearchParams().get("comment")
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -16,61 +22,39 @@ export default function RepliesPage() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // --- Mock data ---
-    const [comment] = useState({
-        id: 1,
-        name: "Sai Prasad N",
-        text: "hey",
-        time: "51 minutes ago",
-        you: true,
-        profile: "/user.png",
-    });
+    useEffect(() => {
+        getAllReply(commentId, {}).then(res => {
+            setReplies(res.data.replies)
+        })
+    }, [load])
 
-    const [replies, setReplies] = useState([
-        {
-            id: 1,
-            name: "Sai Prasad N",
-            text: "heyy",
-            time: "30 minutes ago",
-            you: true,
-            profile: "/user.png",
-        },
-        {
-            id: 2,
-            name: "Sai Prasad N",
-            text: "heyu",
-            time: "Just now",
-            you: true,
-            profile: "/user.png",
-        },
-    ]);
+
+
 
     const [replyText, setReplyText] = useState("");
 
     const handleSend = () => {
         if (!replyText.trim()) return;
-        setReplies([
-            ...replies,
-            {
-                id: replies.length + 1,
-                name: "Sai Prasad N",
-                text: replyText,
-                time: "Just now",
-                you: true,
-                profile: "/user.png",
-            },
-        ]);
-        setReplyText("");
+        addReplyToComment({
+            commentId,
+            reply: replyText
+        }).then(res => {
+            setLoad(x => !x)
+            setReplyText("");
+        })
+
     };
 
+    const comment = {}
+
     const handleRefresh = () => {
-        // Placeholder refresh logic
+        setLoad(x => !x)
     };
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50 relative">
             {/* ===== Main Content ===== */}
-            <main className="px-4 py-4 flex-1 md:px-8 md:py-10 pb-28 md:pb-32">
+            <main className="px-4 py-2 flex-1 pb-28 md:pb-32">
                 <div className="md:max-w-5xl md:mx-auto">
                     {/* ===== Header (Matching CommentsPage) ===== */}
                     <div className="flex items-center justify-between mb-6 md:mb-10">
@@ -84,13 +68,13 @@ export default function RepliesPage() {
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
                             Replies
                         </h1>
-                        {/* 
+
                         <button
                             onClick={handleRefresh}
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
                         >
                             <RotateCw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
-                        </button> */}
+                        </button>
                     </div>
 
                     {/* ===== Original Cards (Unchanged) ===== */}
@@ -131,14 +115,14 @@ export default function RepliesPage() {
                             <div className="flex flex-col gap-3 md:gap-4">
                                 {replies.map((reply) => (
                                     <div
-                                        key={reply.id}
+                                        key={reply._id}
                                         className="flex bg-[#F8F9FD] rounded-2xl shadow-sm overflow-hidden md:p-1"
                                     >
                                         {/* Blue vertical strip */}
                                         <div className="w-1.5 bg-[#4A5DC4]" />
                                         <div className="flex justify-center ml-1 items-center">
                                             <Image
-                                                src={reply.profile}
+                                                src={reply.repliedBy.profileImage}
                                                 alt="profile"
                                                 width={40}
                                                 height={40}
@@ -151,7 +135,7 @@ export default function RepliesPage() {
                                                 <div>
                                                     <div className="flex items-center gap-2">
                                                         <p className="font-semibold text-gray-800 text-[15px] md:text-base">
-                                                            {reply.name}
+                                                            {reply.repliedBy.name}
                                                         </p>
                                                         {reply.you && (
                                                             <span className="text-[11px] bg-[#E8EDFF] text-[#4A5DC4] px-2 py-[1px] rounded-full font-medium">
@@ -162,7 +146,7 @@ export default function RepliesPage() {
                                                 </div>
                                             </div>
                                             <p className="text-gray-800 text-[15px] mt-2 ml-3 md:text-base">
-                                                {reply.text}
+                                                {reply.reply}
                                             </p>
                                         </div>
                                     </div>
@@ -192,10 +176,10 @@ export default function RepliesPage() {
             <footer className="fixed bottom-0 left-0 right-0 bg-white flex items-center gap-3 px-4 py-3 md:px-8 md:py-4 shadow-sm pb-1">
                 <div className="flex items-center flex-1 bg-gray-100 rounded-full px-4 py-2 md:py-2 max-w-5xl mx-auto">
                     <Image
-                        src="/user.png"
+                        src={user.profileImage}
                         alt="you"
-                        width={10}
-                        height={10}
+                        width={30}
+                        height={30}
                         className="rounded-full object-cover mr-2"
                     />
                     <input

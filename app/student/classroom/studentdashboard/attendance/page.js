@@ -57,7 +57,7 @@ export default function AttendanceCalendar() {
     const weeks = useMemo(() => getMonthMatrix(view.year, view.month), [view]);
 
     const presentPercent = useMemo(() => {
-        return Math.round((attendence.filter(a => a.status == 'present').length ?? 0 / (attendence.filter(a => a.status == 'present' || a.status == 'absent').length ?? 1)) * 1000) / 10
+        return Math.round((attendence.filter(a => a.status == 'present').length ?? 0 / (attendence.filter(a => a.status == 'present' || a.status == 'absent').length ?? 1)) * 100) / 10
     }, [attendence, daysInMonth]);
 
     function prevMonth() {
@@ -79,7 +79,7 @@ export default function AttendanceCalendar() {
 
     return (
         <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
-            <main className="flex-1 px-4 py-6 md:px-8 md:py-10">
+            <main className="flex-1 px-4 py-2 md:px-8">
                 <div className="md:max-w-5xl md:mx-auto">
                     <div className="relative flex items-center justify-between mb-6">
                         <Link href="/student/classroom/studentdashboard" className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm">
@@ -87,7 +87,7 @@ export default function AttendanceCalendar() {
                         </Link>
 
                         <div className="absolute left-1/2 -translate-x-1/2 text-center">
-                            <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl">My Classroom</h1>
+                            <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl">Student Attendence</h1>
                         </div>
                     </div>
 
