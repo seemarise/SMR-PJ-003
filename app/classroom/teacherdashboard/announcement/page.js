@@ -48,12 +48,9 @@ export default function AnnouncementsPage({ params }) {
         try {
             const res = await getAllAnnouncements(params);
             const newData = res.data?.announcements || [];
+            setAnnouncements((prev) => [...prev, ...newData]);
+            setHasMore(res.data.hasNext);
 
-            if (newData.length > 0) {
-                setAnnouncements((prev) => [...prev, ...newData]);
-            } else {
-                setHasMore(false);
-            }
         } catch (err) {
             console.error("Error fetching announcements:", err);
         } finally {
@@ -201,7 +198,7 @@ export default function AnnouncementsPage({ params }) {
                                     className="flex justify-start items-center gap-1 mt-4 text-[#5074b6] text-sm md:text-base hover:underline cursor-pointer"
                                     onClick={() =>
                                         router.push(
-                                            `/classroom/teacherdashboard/announcement/${a._id}/comments`
+                                            `/classroom/teacherdashboard/announcement/${a._id}/comment`
                                         )
                                     }
                                 >

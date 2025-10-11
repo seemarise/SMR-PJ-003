@@ -204,7 +204,7 @@ export default function AnnouncementsPage({ params }) {
                                     className="flex justify-start items-center gap-1 mt-4 text-[#5074b6] text-sm md:text-base hover:underline cursor-pointer"
                                     onClick={() =>
                                         router.push(
-                                            `/classroom/${className}/${section}/${subject}/announcements/${a._id}/comments`
+                                            `/classroom/${className}/${section}/${subject}/announcements/${a._id}/comment`
                                         )
                                     }
                                 >

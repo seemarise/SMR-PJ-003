@@ -4,10 +4,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { addAnnouncement } from "@/services/classroomService/announcementApi";
+import React from "react";
 
-export default function CreateAnnouncement() {
+export default function CreateAnnouncement({ params }) {
     const router = useRouter();
     const searchParams = useSearchParams();
+
+    let { class: className, section, subject } = React.use(params)
+
 
     // ✅ get query params
     const classId = searchParams.get("classId");
@@ -24,7 +28,7 @@ export default function CreateAnnouncement() {
     const onSubmit = (data) => {
         // TODO: Save to DB
         addAnnouncement({ ...data, classId, sectionId, subjectId }).then(() => {
-            router.back(); // back to announcements list 
+            router.push(`./?class=${classId}&section=${sectionId}&subject=${subjectId}`); // back to announcements list 
         })
     };
 

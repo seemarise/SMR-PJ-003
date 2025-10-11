@@ -18,7 +18,7 @@ export default function CreateAnnouncement() {
     const onSubmit = (data) => {
         // TODO: Save to DB
         addAnnouncement(data).then(() => {
-            router.back(); // back to announcements list 
+            router.push("./"); // back to announcements list 
         })
     };
 

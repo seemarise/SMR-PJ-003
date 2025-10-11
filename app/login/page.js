@@ -74,8 +74,20 @@ export default function LoginPage() {
   }
 
   const handleEmailEntry = async () => {
+    if (email == "") {
+      return toast.error("Please enter email ")
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
     console.log("clicked", role);
     let res = await loginApi[role].getOtp({ "email": email }, {});
+
     if (res.statusCode == 200) {
       setStep("otp");
       setTimer(60);
