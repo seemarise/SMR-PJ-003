@@ -21,7 +21,9 @@ export default function AssignmentsPage({ params }) {
     // Extract route params
     // 🔹 get route params
     const searchParams = useSearchParams();
-    const { class: classId, section, subject } = React.use(params);
+    const { class: className, section, subject } = React.use(params);
+    const classId = searchParams.get("class");
+    const sectionId = searchParams.get("section");
     const subjectId = searchParams.get("subject");
 
     const [assignments, setAssignments] = useState([]);
@@ -114,7 +116,7 @@ export default function AssignmentsPage({ params }) {
                                 key={a._id}
                                 onClick={() =>
                                     router.push(
-                                        `/classroom/${classId}/${section}/${subject}/assignments/${a._id}?title=${a.lesson}`
+                                        `/classroom/${className}/${section}/${subject}/assignments/${a._id}?title=${a.lesson}&classId=${classId}&sectionId=${sectionId}&subjectId=${subjectId}`
                                     )
                                 }
                                 className="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-md transition md:p-6 md:rounded-xl"
@@ -234,7 +236,7 @@ export default function AssignmentsPage({ params }) {
                     <button
                         onClick={() =>
                             router.push(
-                                `/classroom/${classId}/${section}/${subject}/assignments/create`
+                                `/classroom/${className}/${section}/${subject}/assignments/create?classId=${classId}&sectionId=${sectionId}&subjectId=${subjectId}`
                             )
                         }
                         className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
