@@ -29,7 +29,7 @@ export default function SubjectPage({ params }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
-      <main className="flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10">
+      <main className="flex-1 px-4 py-2 space-y-6">
         {/* Desktop-centered container */}
         <div className="md:max-w-5xl md:mx-auto md:space-y-10">
 

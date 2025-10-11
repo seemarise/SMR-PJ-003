@@ -52,7 +52,7 @@ export default function CompendiumDetailPage() {
 
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
-      <main className="flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10 animate-in fade-in duration-300">
+      <main className="flex-1 px-4 py-2 space-y-6 animate-in fade-in duration-300">
         {/* Header */}
         <div className="flex items-center gap-3 md:max-w-5xl md:mx-auto">
           <button
@@ -154,8 +154,8 @@ export default function CompendiumDetailPage() {
           <button
             onClick={() => togglePin(compendium.id)}
             className={`flex-1 cursor-pointer border rounded-lg py-2.5 text-sm font-medium flex items-center justify-center gap-2 transition ${compendium.isPinned
-                ? "bg-[#5074b6] text-white border-[#5074b6] hover:bg-[#3d5a94]"
-                : "bg-white border-gray-300 hover:bg-gray-50"
+              ? "bg-[#5074b6] text-white border-[#5074b6] hover:bg-[#3d5a94]"
+              : "bg-white border-gray-300 hover:bg-gray-50"
               }`}
           >
             <Pin className="w-4 h-4" />
