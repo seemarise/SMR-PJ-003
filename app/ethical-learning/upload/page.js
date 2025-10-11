@@ -5,10 +5,13 @@ import { ArrowLeft, Image as ImageIcon, Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CreateQuizModal from "../../../components/CreateQuizModal";
 import { getCompendiaCategories, getCompendiaSubCategories } from "@/services/ethicalLearningService/compendiaService";
-
+import { toast } from "react-toastify";
 export default function UploadCompendiumPage() {
   const router = useRouter();
   // Consolidated state for all compendium form data
+  const showToast = (a, b = "success") => {
+    toast[b](a);
+  };
   const [compendiaData, setCompendiaData] = useState({
     title: "",
     content: "",
@@ -27,16 +30,9 @@ export default function UploadCompendiumPage() {
   const [subcategory, setSubCategory] = useState([]);
   const [selSubCat, setSelSubCat] = useState(null);
   const [showQuizModal, setShowQuizModal] = useState(false);
-  const [toast, setToast] = useState("");
-
   useEffect(() => {
     fetchCategory();
   }, []);
-
-  function showToast(message) {
-    setToast(message);
-    setTimeout(() => setToast(""), 1500);
-  }
 
   async function fetchCategory() {
     let res = await getCompendiaCategories();
@@ -190,7 +186,7 @@ export default function UploadCompendiumPage() {
                 rows={8}
                 className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm mt-1"
               />
-              <ImageIcon className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
+              <ImageIcon onClick={() => showToast("Work in Progress", "error")} className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
             </div>
             <p className="text-xs text-gray-500 mt-1">
               <strong>Note:</strong> The Textual content you provide is more than enough. Only add website links and images if they would help students understand your compendium.
