@@ -12,8 +12,8 @@ const concatenatePath = (url, arr = [], obj = {}) => {
 const getCompendiaCategories = () => {
   return apiClient.get("/api/v1/compendia/category/get-all-categories");
 }
-const getCompendiaSubCategories = (pathParams) => {
-  return apiClient.get(concatenatePath("/api/v1/compendia/sub-category/get-all-sub-categories", pathParams));
+const getCompendiaSubCategories = (id) => {
+  return apiClient.get(concatenatePath("/api/v1/compendia/sub-category/get-all-sub-categories/" + id));
 }
 const getAllCompendia = (queryParams) => {
   return apiClient.get(concatenatePath("/api/v1/compendia/student/get-all-compendia", [], queryParams));

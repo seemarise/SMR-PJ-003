@@ -12,69 +12,80 @@ export default function CompendiaPage() {
   const [selCategory, setSelCategory] = useState(-1);
   const [openDd, setOpenDd] = useState(false);
   const [subcategory, setSubCategory] = useState([]);
-  const [selSubCat, setSelSubCat] = useState(-1);
-  const [activeTab, setActiveTab] = useState("Mental");
+  const [selSubCat, setSelSubCat] = useState(null);
   const [compendia, setCompendia] = useState([]);
   const [searchCompendia, setSearchCompendia] = useState([]);
+  const [filteredCompendia, setFilteredCompendia] = useState([]);
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+
   async function fetchCategory() {
     let res = await getCompendiaCategories();
     if (res.statusCode == 200) {
       setCategory(res.data.categories);
-      if (res.data.categories.length > 0) {
-        setSelCategory(0);
+      if (res.data.categories.length) {
+        setSelCategory(res.data.categories[0]?._id);
+        fetchSubCategory(res.data.categories[0]?._id);
       }
     };
   };
 
-  async function fetchSubCategory() {
-    let res = await getCompendiaSubCategories([category[selCategory]._id]);
+  async function fetchSubCategory(id) {
+    setSearch("")
+    let res = await getCompendiaSubCategories(id);
     if (res.statusCode == 200) {
       setSubCategory(res.data.subcategories);
-      if (res.data.subcategories.length > 0) {
-        setSelSubCat(0);
-        fetchCompendia();
+      if (res.data.subcategories.length) {
+        setSelSubCat(res.data.subcategories[0]?._id);
+      }
+      if (!compendia.length) {
+        console.log(res.data.subcategories[0]?._id)
+        fetchCompendia(res.data.subcategories[0]?._id)
+      } else {
+        filterCompendia(res.data.subcategories[0]?._id)
       }
 
     };
   }
 
-  async function fetchCompendia() {
+  async function fetchCompendia(subCatId) {
+    console.log(subCatId)
     let res = await getAllCompendia({
       pageNumber: 1,
       pageSize: 100
     });
     if (res.statusCode == 200) {
       let allCompendia = res.data.compendia;
-      let filteredCompBySubCategory = allCompendia.filter((comp) => comp.subcategory._id == subcategory[selSubCat]._id);
-      setCompendia(filteredCompBySubCategory);
-      setSearchCompendia(filteredCompBySubCategory);
+      setCompendia(allCompendia);
+      filterCompendia(subCatId, allCompendia)
     };
-
   };
+
+  function filterCompendia(subCat, allCompendia = []) {
+    console.log(subCat)
+    console.log(compendia)
+    let filteredCompBySubCategory = compendia.filter((comp) => comp.subcategory._id == subCat);
+    if (!filteredCompBySubCategory.length) filteredCompBySubCategory = allCompendia.filter((comp) => comp.subcategory._id == subCat);
+    setSearchCompendia(filteredCompBySubCategory);
+    setFilteredCompendia(filteredCompBySubCategory)
+  }
+
   // Load saved compendia from localStorage
   useEffect(() => {
     fetchCategory();
   }, []);
-  useEffect(() => {
-    if (category.length != 0) {
-      fetchSubCategory();
-    }
 
-  }, [selCategory]);
 
-  useEffect(() => {
-    setSearch('');
-    fetchCompendia();
-  }, [selSubCat]);
+
+
+
 
   useEffect(() => {
     if (search != "") {
-      setSearchCompendia(compendia.filter(com => com.title.toLowerCase().includes(search)));
+      setFilteredCompendia(searchCompendia.filter(com => com.title.toLowerCase().includes(search)));
     } else {
-      setSearchCompendia(compendia);
+      setFilteredCompendia(searchCompendia);
     }
   }, [search]);
   // Function to toggle star status
@@ -110,6 +121,12 @@ export default function CompendiaPage() {
 
   // Check if there are any starred compendia
   const hasStarredCompendia = compendia.some(item => item.isStarred);
+
+  const handleCategoryChange = (id) => {
+    setSelCategory(id);
+    setOpenDd(false);
+    fetchSubCategory(id);
+  }
 
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
@@ -163,7 +180,7 @@ export default function CompendiaPage() {
                   className="bg-[#5074b6] text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1 cursor-pointer select-none"
                   onClick={() => setOpenDd(prev => !prev)}
                 >
-                  {category[selCategory]?.name}
+                  {category.find(cat => cat._id == selCategory).name}
                   <svg
                     className={`w-3 h-3 transform transition-transform duration-200 ${openDd ? "rotate-180" : "rotate-0"
                       }`}
@@ -184,11 +201,8 @@ export default function CompendiaPage() {
                     {category.map((cat, index) => (
                       <div
                         key={index}
-                        onClick={() => {
-                          setSelCategory(index);
-                          setOpenDd(false);
-                        }}
-                        className={`px-3 py-1.5 text-sm cursor-pointer hover:bg-[#5074b6]/10 ${index === selCategory ? "font-semibold text-[#5074b6]" : "text-gray-700"
+                        onClick={() => handleCategoryChange(cat._id)}
+                        className={`px-3 py-1.5 text-sm cursor-pointer hover:bg-[#5074b6]/10 ${cat._id === selCategory ? "font-semibold text-[#5074b6]" : "text-gray-700"
                           }`}
                       >
                         {cat.name}
@@ -207,8 +221,8 @@ export default function CompendiaPage() {
           {subcategory.length != 0 && subcategory.map((tab, index) => (
             <button
               key={index}
-              onClick={() => setSelSubCat(index)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition ${selSubCat == index
+              onClick={() => { setSelSubCat(tab._id); filterCompendia(tab._id); setSearch("") }}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition ${selSubCat == tab._id
                 ? "bg-[#5074b6] text-white"
                 : "text-black"
                 }`}
@@ -234,8 +248,8 @@ export default function CompendiaPage() {
 
         {/* Compendia Cards - Matching image design */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:max-w-5xl md:mx-auto">
-          {searchCompendia.length > 0 ? (
-            searchCompendia.map((item, index) => (
+          {filteredCompendia.length > 0 ? (
+            filteredCompendia.map((item, index) => (
               <div
                 key={index}
                 className="relative bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden flex flex-col h-full"
