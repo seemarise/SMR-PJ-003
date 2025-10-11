@@ -113,21 +113,21 @@ export default function CompendiaPage() {
 
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
-      <main className="flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10 animate-in fade-in duration-300">
+      <main className="flex-1 px-4 py-2 space-y-6 animate-in fade-in duration-300">
         {/* Title Row - Matching the image design */}
         <div className="relative flex items-center justify-between md:max-w-5xl md:mx-auto">
           {/* Left - + Create Button */}
           <button
             onClick={() => router.push("/ethical-learning/upload")}
-            className="w-12 h-12 bg-[#5074b6] rounded-full flex items-center justify-center text-white hover:bg-[#3d5a94] transition-all duration-200 active:scale-95 cursor-pointer shadow-lg"
+            className="w-10 h-10 md:w-12 md:h-12 bg-[#5074b6] rounded-full flex items-center justify-center text-white hover:bg-[#3d5a94] transition-all duration-200 active:scale-95 cursor-pointer shadow-lg"
           >
-            <Plus className="w-6 h-6" />
+            <Plus className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
           {/* Center Title with red wavy underline */}
           <div className="absolute left-1/2 -translate-x-1/2 text-center">
-            <h2 className="text-2xl font-bold text-black">Compendia</h2>
-            <div className="w-32 h-2 mx-auto mt-1">
+            <h2 className="text-xl md:text-2xl font-bold text-black">Compendia</h2>
+            <div className="w-24 md:w-32 h-2 mx-auto mt-1">
               <svg viewBox="0 0 120 8" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-red-500">
                 <path d="M4 4 C12 1, 20 7, 28 4 S44 1, 52 4 S68 7, 76 4 S92 1, 100 4 S116 7, 116 4" stroke="currentColor" strokeWidth="2" fill="transparent" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -135,18 +135,19 @@ export default function CompendiaPage() {
           </div>
 
           {/* Right - My Compendium Button */}
-          <div className='flex'>
+          <div className='flex items-center gap-1'>
             <button
               onClick={() => router.push("/ethical-learning/my-compendium")}
-              className={`px-4 py-2 cursor-pointer rounded-lg text-sm font-medium transition ${hasStarredCompendia
+              className={`px-3 py-1.5 md:px-4 md:py-2 cursor-pointer rounded-lg text-xs md:text-sm font-medium transition ${hasStarredCompendia
                 ? "bg-[#5074b6] text-white hover:bg-[#3d5a94]"
                 : "bg-gray-300 text-white hover:bg-gray-400"
                 }`}
             >
-              My Compendium
+              <span className="hidden sm:inline">My Compendium</span>
+              <span className="sm:hidden">My</span>
             </button>
-            <div className="rounded-full p-2 mx-1 bg-gray-400" onClick={() => setIsModalOpen(true)}>
-              <NotepadText className="w-6 h-6 text-white "> </NotepadText>
+            <div className="rounded-full p-1.5 md:p-2 bg-gray-400 cursor-pointer" onClick={() => setIsModalOpen(true)}>
+              <NotepadText className="w-4 h-4 md:w-6 md:h-6 text-white" />
             </div>
           </div>
         </div>
@@ -156,14 +157,14 @@ export default function CompendiaPage() {
           category.length != 0 &&
 
           <div className="md:max-w-5xl md:mx-auto">
-            <div className="flex flex-wrap items-center gap-3 ">
-              <span className="text-sm font-medium"> Category :</span>
+            <div className="flex flex-wrap items-center gap-2 md:gap-3">
+              <span className="text-xs md:text-sm font-medium">Category:</span>
               <div className="flex items-center gap-2 relative">
                 <div
-                  className="bg-[#5074b6] text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1 cursor-pointer select-none"
+                  className="bg-[#5074b6] text-white px-2 py-1 md:px-3 rounded-full text-xs md:text-sm font-medium flex items-center gap-1 cursor-pointer select-none"
                   onClick={() => setOpenDd(prev => !prev)}
                 >
-                  {category[selCategory]?.name}
+                  <span className="max-w-[120px] md:max-w-none truncate">{category[selCategory]?.name}</span>
                   <svg
                     className={`w-3 h-3 transform transition-transform duration-200 ${openDd ? "rotate-180" : "rotate-0"
                       }`}
@@ -180,7 +181,7 @@ export default function CompendiaPage() {
 
                 {/* Dropdown Menu */}
                 {openDd && (
-                  <div className="absolute top-full mt-2 bg-white rounded-lg shadow-md py-2 w-36 z-20">
+                  <div className="absolute top-full mt-2 bg-white rounded-lg shadow-md py-2 w-36 z-20 right-0">
                     {category.map((cat, index) => (
                       <div
                         key={index}
@@ -203,12 +204,12 @@ export default function CompendiaPage() {
         }
 
         {/* Tabs - Matching image design */}
-        <div className="flex gap-2 md:max-w-5xl md:mx-auto">
+        <div className="flex gap-1 md:gap-2 md:max-w-5xl md:mx-auto overflow-x-auto pb-2">
           {subcategory.length != 0 && subcategory.map((tab, index) => (
             <button
               key={index}
               onClick={() => setSelSubCat(index)}
-              className={`px-4 py-2 cursor-pointer rounded-full text-sm font-medium transition ${selSubCat == index
+              className={`px-3 py-1.5 md:px-4 md:py-2 cursor-pointer rounded-full text-xs md:text-sm font-medium transition whitespace-nowrap flex-shrink-0 ${selSubCat == index
                 ? "bg-[#5074b6] text-white"
                 : "text-black"
                 }`}
@@ -225,10 +226,10 @@ export default function CompendiaPage() {
             value={search}
             placeholder="Search Keywords of Compendia"
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
-            className="w-full bg-white border border-gray-300 rounded-full px-4 py-3 pr-14 text-sm focus:ring-2 focus:ring-[#5074b6] focus:border-[#5074b6]"
+            className="w-full bg-white border border-gray-300 rounded-full px-4 py-2.5 md:py-3 pr-12 md:pr-14 text-sm focus:ring-2 focus:ring-[#5074b6] focus:border-[#5074b6]"
           />
-          <button className="absolute right-2 top-2 w-8 h-8 bg-[#5074b6] rounded-full flex items-center cursor-pointer justify-center hover:bg-[#3d5a94] transition">
-            <Search className="w-4 h-4 text-white" />
+          <button className="absolute right-2 top-1.5 md:top-2 w-7 h-7 md:w-8 md:h-8 bg-[#5074b6] rounded-full flex items-center cursor-pointer justify-center hover:bg-[#3d5a94] transition">
+            <Search className="w-3.5 h-3.5 md:w-4 md:h-4 text-white" />
           </button>
         </div>
 

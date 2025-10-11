@@ -42,7 +42,7 @@ export default function NavbarTop({ sharedTitle }) {
       </div>
 
       {/* Notification Icon */}
-      <Bell className="h-6 w-6 text-gray-700 cursor-pointer" />
+      {/* <Bell className="h-6 w-6 text-gray-700 cursor-pointer" /> */}
     </header>
   );
 }
