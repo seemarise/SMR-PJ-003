@@ -1,8 +1,8 @@
 
 import { apiClient } from "../api";
 
-const getAllAnnouncements = (data) => {
-    return apiClient.get("/api/v1/announcement/teachers/list-all", data);
+const getStudentAssignment = (subjectId, data) => {
+    return apiClient.get(`/api/v1/assignments/student/all-assignments/${subjectId}`, data);
 };
 const deleteAnnouncement = (id) => {
     return apiClient.delete("/api/v1/announcement/teachers/delete/" + id);
@@ -14,4 +14,4 @@ const generateAssignment = (data) => {
     return apiClient.post("/api/v1/chat/teachers/assignment/generate-quiz", data);
 };
 
-export { getAllAnnouncements, deleteAnnouncement, addAssignment, generateAssignment };
+export { getStudentAssignment, deleteAnnouncement, addAssignment, generateAssignment };
