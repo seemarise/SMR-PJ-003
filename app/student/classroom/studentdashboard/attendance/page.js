@@ -57,7 +57,7 @@ export default function AttendanceCalendar() {
     const weeks = useMemo(() => getMonthMatrix(view.year, view.month), [view]);
 
     const presentPercent = useMemo(() => {
-        return Math.round((attendence.filter(a => a.status == 'present').length ?? 0 / (attendence.filter(a => a.status == 'present' || a.status == 'absent').length ?? 1)) * 1000) / 10
+        return Math.round((attendence.filter(a => a.status == 'present').length ?? 0 / (attendence.filter(a => a.status == 'present' || a.status == 'absent').length ?? 1)) * 100) / 10
     }, [attendence, daysInMonth]);
 
     function prevMonth() {
@@ -87,7 +87,7 @@ export default function AttendanceCalendar() {
                         </Link>
 
                         <div className="absolute left-1/2 -translate-x-1/2 text-center">
-                            <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl">My Classroom</h1>
+                            <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl">Student Attendence</h1>
                         </div>
                     </div>
 
