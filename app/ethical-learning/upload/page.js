@@ -5,128 +5,136 @@ import { ArrowLeft, Image as ImageIcon, Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CreateQuizModal from "../../../components/CreateQuizModal";
 import { getCompendiaCategories, getCompendiaSubCategories } from "@/services/ethicalLearningService/compendiaService";
+
 export default function UploadCompendiumPage() {
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [websiteLink, setWebsiteLink] = useState("");
-  const [websiteLinks, setWebsiteLinks] = useState([]);
+  // Consolidated state for all compendium form data
+  const [compendiaData, setCompendiaData] = useState({
+    title: "",
+    content: "",
+    websiteLink: "",
+    categoryId: "",
+    subCategoryId: "",
+    arrWebsiteLink: [],
+    coverImage: null, // Will hold a single dataURL string
+    images: [],       // Will hold an array of dataURL strings
+  });
+
+  // State for categories and UI controls
   const [category, setCategory] = useState([]);
   const [selCategory, setSelCategory] = useState(-1);
   const [openDd, setOpenDd] = useState(false);
   const [subcategory, setSubCategory] = useState([]);
   const [selSubCat, setSelSubCat] = useState(null);
-  const [coverImage, setCoverImage] = useState("");
-  const [image, setImage] = useState("");
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [toast, setToast] = useState("");
-  const [compendiaData, setCompendiaData] = useState({});
 
   useEffect(() => {
     fetchCategory();
   }, []);
+
   function showToast(message) {
     setToast(message);
     setTimeout(() => setToast(""), 1500);
   }
+
   async function fetchCategory() {
-    console.log("fetch category");
     let res = await getCompendiaCategories();
     if (res.statusCode == 200) {
-      console.log("set categories", res.data.categories);
       setCategory(res.data.categories);
       if (res.data.categories.length) {
-        console.log("set seleted categories", res.data.categories[0]?._id);
-        setSelCategory(res.data.categories[0]?._id);
-        fetchSubCategory(res.data.categories[0]?._id);
+        const firstCategoryId = res.data.categories[0]?._id;
+        setSelCategory(firstCategoryId);
+        setCompendiaData(prev => ({ ...prev, categoryId: firstCategoryId ? firstCategoryId : "" }))
+        fetchSubCategory(firstCategoryId);
       }
-    };
-  };
+    }
+  }
 
   async function fetchSubCategory(id) {
-    console.log("fetch sub category");
     let res = await getCompendiaSubCategories(id);
     if (res.statusCode == 200) {
-      console.log("set sub categories", res.data.subcategories);
       setSubCategory(res.data.subcategories);
       if (res.data.subcategories.length) {
-        console.log("set selected sub categories", res.data.subcategories[0]?._id);
         setSelSubCat(res.data.subcategories[0]?._id);
+        setCompendiaData(prev => ({ ...prev, subCategoryId: res.data.subcategories[0]?._id ? res.data.subcategories[0]?._id : "" }))
       }
-
-    };
+    }
   }
-  // If there's a draft in sessionStorage, load it so quiz editor can attach
-  // useEffect(() => {
-  //   const draft = sessionStorage.getItem("compendium_draft");
-  //   if (draft) {
-  //     try {
-  //       const d = JSON.parse(draft);
-  //       setTitle(d.title || "");
-  //       setContent(d.content || "");
-  //       setWebsiteLink(d.websiteLink || "");
-  //       setWebsiteLinks(d.websiteLinks || []);
-  //       setCategory(d.category || "General");
-  //       setSubCategory(d.subCategory || "Industry");
-  //       setCoverImage(d.coverImage || "");
-  //       setImage(d.image || "");
-  //     } catch { }
-  //   }
-  // }, []);
 
-  // Function to add website link
-  const addWebsiteLink = () => {
-    if (websiteLink.trim()) {
-      const newLink = {
-        id: Date.now().toString(),
-        url: websiteLink.trim(),
-        displayName: websiteLink.trim()
-      };
-      setWebsiteLinks([...websiteLinks, newLink]);
-      setWebsiteLink("");
-    }
-  };
-
-  // Function to remove website link
-  const removeWebsiteLink = (id) => {
-    setWebsiteLinks(websiteLinks.filter(link => link.id !== id));
-  };
-
-  // Handle Enter key press for website link input
-  const handleWebsiteKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addWebsiteLink();
-    }
-  };
-
+  // Helper to convert a file to a base64 data URL
   function toDataURL(file, cb) {
     const reader = new FileReader();
     reader.onload = () => cb(reader.result);
     reader.readAsDataURL(file);
   }
 
-  const handleFile = (e, setter) => {
+  // Handler for single cover image upload
+  const handleCoverImageFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    toDataURL(file, (dataUrl) => setter(dataUrl));
+    toDataURL(file, (dataUrl) => {
+      setCompendiaData(prev => ({ ...prev, coverImage: dataUrl }));
+    });
   };
+
+  // NEW: Handler for multiple image uploads at once
+  const handleMultipleImagesFile = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    // A helper to wrap the callback-based toDataURL in a Promise
+    const readFileAsPromise = (file) => {
+      return new Promise(resolve => {
+        toDataURL(file, dataUrl => resolve(dataUrl));
+      });
+    };
+
+    // Create an array of promises, one for each file
+    const promises = files.map(readFileAsPromise);
+
+    // Wait for all file reading operations to complete
+    const newDataUrls = await Promise.all(promises);
+
+    // Update the state once with all the new image URLs
+    setCompendiaData(prev => ({
+      ...prev,
+      images: [...(prev.images || []), ...newDataUrls],
+    }));
+  };
+
+
+  // Function to remove an image from the multiple images array
+  const handleRemoveImage = (indexToRemove) => {
+    setCompendiaData(prev => ({
+      ...prev,
+      images: prev.images.filter((_, index) => index !== indexToRemove),
+    }));
+  };
+
+  // Function to remove website link
+  const removeWebsiteLink = (linkToRemove) => {
+    setCompendiaData(prev => ({
+      ...prev,
+      arrWebsiteLink: prev.arrWebsiteLink.filter(link => link !== linkToRemove)
+    }));
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const id = Date.now().toString();
-    // fetch quiz from sessionStorage draft (if created)
     const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
+
     const newCompendium = {
       id,
-      title,
-      content,
-      websiteLink,
-      websiteLinks,
-      category,
-      subCategory,
-      coverImage,
-      image,
+      title: compendiaData.title,
+      content: compendiaData.content,
+      websiteLinks: compendiaData.arrWebsiteLink,
+      category: selCategory,
+      subCategory: selSubCat,
+      coverImage: compendiaData.coverImage,
+      images: compendiaData.images,
       quiz: draft.quiz || [],
       createdAt: new Date().toISOString(),
     };
@@ -135,22 +143,20 @@ export default function UploadCompendiumPage() {
     saved.unshift(newCompendium);
     localStorage.setItem("compendia", JSON.stringify(saved));
 
-    // clear draft
     sessionStorage.removeItem("compendium_draft");
     router.push("/ethical-learning");
   };
+
   const handleCategoryChange = (id) => {
     setSelCategory(id);
+    setCompendiaData(prev => ({ ...prev, categoryId: id }))
     setOpenDd(false);
     fetchSubCategory(id);
-  }
-  function fillCompendiaData(prev, field, value) {
-    return { ...prev, [field]: value }
-  }
+  };
+
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
       <main className="flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10 animate-in fade-in duration-300">
-        {/* Header */}
         <div className="flex items-center gap-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => router.back()}
@@ -166,7 +172,7 @@ export default function UploadCompendiumPage() {
           <div>
             <label className="font-medium text-gray-700">Title:</label>
             <input
-              value={compendiaData?.title}
+              value={compendiaData.title}
               onChange={(e) => setCompendiaData(prev => ({ ...prev, title: e.target.value }))}
               placeholder="Please write the title of your compendium here."
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm mt-1"
@@ -178,16 +184,16 @@ export default function UploadCompendiumPage() {
             <label className="font-medium text-gray-700">Content:</label>
             <div className="relative">
               <textarea
-                value={compendiaData?.content}
+                value={compendiaData.content}
                 onChange={(e) => setCompendiaData(prev => ({ ...prev, content: e.target.value }))}
                 placeholder="Copy & paste the textual part of your compendium here."
                 rows={8}
                 className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm mt-1"
               />
-              <ImageIcon onClick={() => { }} className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
+              <ImageIcon className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              <strong>Note:</strong> The Textual content you provide for the compendium is more than enough. Only add website links and images to this compendium if you truly believe that they would help students understand your compendium.
+              <strong>Note:</strong> The Textual content you provide is more than enough. Only add website links and images if they would help students understand your compendium.
             </p>
           </div>
 
@@ -196,7 +202,7 @@ export default function UploadCompendiumPage() {
             <label className="font-medium text-gray-700">Website Link:</label>
             <div className="relative">
               <input
-                value={compendiaData?.websiteLink}
+                value={compendiaData.websiteLink}
                 onChange={(e) => setCompendiaData(prev => ({ ...prev, websiteLink: e.target.value }))}
                 placeholder="Enter website link and tap icon"
                 className="w-full border border-gray-300 rounded-md px-3 py-2 pr-12 text-sm mt-1"
@@ -204,50 +210,28 @@ export default function UploadCompendiumPage() {
               <button
                 type="button"
                 onClick={() => {
-                  console.log("link button click");
                   setCompendiaData((prev) => {
                     const arr = prev.arrWebsiteLink ? [...prev.arrWebsiteLink] : [];
                     if (prev.websiteLink?.trim()) {
                       arr.push(prev.websiteLink.trim());
                     }
-
-                    const obj = {
-                      ...prev,
-                      arrWebsiteLink: arr,
-                      websiteLink: ""
-                    };
-
-                    console.log("Updated array:", arr);
-                    console.log("Updated object:", obj);
-
-                    return obj;
+                    return { ...prev, arrWebsiteLink: arr, websiteLink: "" };
                   });
                 }}
-
                 className="absolute right-2 top-2 w-8 h-8 bg-[#5074b6] rounded-full flex items-center justify-center hover:bg-[#3d5a94] transition"
               >
                 <Send className="w-4 h-4 text-white" />
               </button>
             </div>
 
-            {/* Website Links Tiles */}
-            {compendiaData?.arrWebsiteLink?.length > 0 && (
+            {compendiaData.arrWebsiteLink?.length > 0 && (
               <div className="mt-3 space-y-2">
-                {compendiaData?.arrWebsiteLink?.map((link, index) => (
+                {compendiaData.arrWebsiteLink.map((link, index) => (
                   <div key={index} className="flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2">
-                    <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline hover:text-blue-800 truncate flex-1"
-                    >
+                    <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800 truncate flex-1">
                       {link}
                     </a>
-                    <button
-                      type="button"
-                      onClick={() => removeWebsiteLink(link.id)}
-                      className="ml-2 text-red-500 hover:text-red-700 font-bold text-lg"
-                    >
+                    <button type="button" onClick={() => removeWebsiteLink(link)} className="ml-2 text-red-500 hover:text-red-700 font-bold text-lg">
                       ×
                     </button>
                   </div>
@@ -256,81 +240,69 @@ export default function UploadCompendiumPage() {
             )}
           </div>
 
-          {/* Cover Image */}
+          {/* Cover Image (Single) */}
           <div>
             <label className="font-medium text-gray-700">Cover Image:</label>
             <div className="flex gap-3 items-center mt-1">
               <label className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 text-sm font-medium hover:bg-gray-50 cursor-pointer">
                 Add Image
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleFile(e, setCoverImage)}
-                  className="hidden"
-                />
+                <input type="file" accept="image/*" onChange={handleCoverImageFile} className="hidden" />
               </label>
-              {coverImage && (
-                <img src={coverImage} alt="cover" className="w-28 h-16 object-cover rounded-md" />
+              {compendiaData.coverImage && (
+                <img src={compendiaData.coverImage} alt="cover" className="w-28 h-16 object-cover rounded-md" />
               )}
             </div>
           </div>
 
-          {/* Image */}
+          {/* Images (Multiple) */}
           <div>
-            <label className="font-medium text-gray-700">Image:</label>
-            <div className="flex gap-3 items-center mt-1">
-              <label className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 text-sm font-medium hover:bg-gray-50 cursor-pointer">
-                Add Image
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleFile(e, setImage)}
-                  className="hidden"
-                />
+            <label className="font-medium text-gray-700">Images:</label>
+            <div className="flex flex-col gap-3 mt-1">
+              <label className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 text-sm font-medium hover:bg-gray-50 cursor-pointer self-start">
+                Add Images
+                {/* MODIFIED: Added the 'multiple' attribute */}
+                <input type="file" accept="image/*" onChange={handleMultipleImagesFile} className="hidden" multiple />
               </label>
-              {image && (
-                <img src={image} alt="img" className="w-28 h-16 object-cover rounded-md" />
-              )}
+              <div className="flex gap-3 items-center flex-wrap">
+                {compendiaData.images?.map((imgSrc, index) => (
+                  <div key={index} className="relative">
+                    <img src={imgSrc} alt={`img-${index}`} className="w-28 h-16 object-cover rounded-md" />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(index)}
+                      className="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold leading-none hover:bg-red-700"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Category + Subcategory */}
           <div className="flex flex-col gap-3">
-            {
-              category.length != 0 &&
-
+            {category.length !== 0 && (
               <div className="md:max-w-5xl md:mx-auto">
-                <div className="flex flex-wrap items-center gap-3 ">
-                  <span className="text-sm font-medium"> Category :</span>
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-sm font-medium">Category:</span>
                   <div className="flex items-center gap-2 relative">
                     <div
                       className="bg-[#5074b6] text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1 cursor-pointer select-none"
                       onClick={() => setOpenDd(prev => !prev)}
                     >
-                      {category.find(cat => cat._id == selCategory).name}
-                      <svg
-                        className={`w-3 h-3 transform transition-transform duration-200 ${openDd ? "rotate-180" : "rotate-0"
-                          }`}
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
+                      {category.find(cat => cat._id === selCategory)?.name || "Select"}
+                      <svg className={`w-3 h-3 transform transition-transform duration-200 ${openDd ? "rotate-180" : "rotate-0"}`} fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
                     </div>
-
-                    {/* Dropdown Menu */}
                     {openDd && (
                       <div className="absolute top-full mt-2 bg-white rounded-lg shadow-md py-2 w-36 z-20">
                         {category.map((cat, index) => (
                           <div
                             key={index}
                             onClick={() => handleCategoryChange(cat._id)}
-                            className={`px-3 py-1.5 text-sm cursor-pointer hover:bg-[#5074b6]/10 ${cat._id === selCategory ? "font-semibold text-[#5074b6]" : "text-gray-700"
-                              }`}
+                            className={`px-3 py-1.5 text-sm cursor-pointer hover:bg-[#5074b6]/10 ${cat._id === selCategory ? "font-semibold text-[#5074b6]" : "text-gray-700"}`}
                           >
                             {cat.name}
                           </div>
@@ -340,19 +312,17 @@ export default function UploadCompendiumPage() {
                   </div>
                 </div>
               </div>
-
-            }
-
-            {/* Tabs - Matching image design */}
-            <div className="flex gap-2 md:max-w-5xl md:mx-auto">
-              {subcategory.length != 0 && subcategory.map((tab, index) => (
+            )}
+            <div className="flex gap-2 md:max-w-5xl md:mx-auto flex-wrap">
+              {subcategory.length !== 0 && subcategory.map((tab, index) => (
                 <button
+                  type="button"
                   key={index}
-                  onClick={() => { setSelSubCat(tab._id); }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition ${selSubCat == tab._id
-                    ? "bg-[#5074b6] text-white"
-                    : "text-black"
-                    }`}
+                  onClick={() => {
+                    setSelSubCat(tab._id);
+                    setCompendiaData(prev => ({ ...prev, subCategoryId: tab._id }))
+                  }}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition ${selSubCat === tab._id ? "bg-[#5074b6] text-white" : "text-black"}`}
                 >
                   {tab.name}
                 </button>
@@ -364,16 +334,10 @@ export default function UploadCompendiumPage() {
             <button
               type="button"
               onClick={() => {
-                // save current form as draft to sessionStorage so the quiz editor can attach quiz to draft
                 const draft = {
-                  title,
-                  content,
-                  websiteLink,
-                  websiteLinks,
-                  category,
-                  subCategory,
-                  coverImage,
-                  image,
+                  ...compendiaData,
+                  category: selCategory,
+                  subCategory: selSubCat,
                   quiz: JSON.parse(sessionStorage.getItem("compendium_draft") || "{}").quiz || [],
                 };
                 sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
@@ -383,11 +347,7 @@ export default function UploadCompendiumPage() {
             >
               Create Quiz
             </button>
-
-            <button
-              type="submit"
-              className="px-4 py-2 bg-[#5074b6] text-white rounded-md hover:bg-[#3d5a94] flex-1"
-            >
+            <button type="submit" className="px-4 py-2 bg-[#5074b6] text-white rounded-md hover:bg-[#3d5a94] flex-1">
               Submit
             </button>
           </div>
@@ -398,23 +358,16 @@ export default function UploadCompendiumPage() {
             onClose={() => setShowQuizModal(false)}
             onManual={() => {
               setShowQuizModal(false);
-              // ensure draft saved
               const draft = {
-                title,
-                content,
-                websiteLink,
-                websiteLinks,
-                category,
-                subCategory,
-                coverImage,
-                image,
+                ...compendiaData,
+                category: selCategory,
+                subCategory: selSubCat,
                 quiz: JSON.parse(sessionStorage.getItem("compendium_draft") || "{}").quiz || [],
               };
               sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
               router.push("/ethical-learning/quiz/manual");
             }}
             onCreateAI={() => {
-              // For demo: simple AI generate stub (create one question)
               const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
               const questions = draft?.quiz || [];
               questions.push({
