@@ -69,7 +69,7 @@ export default function MyCompendiumPage() {
           >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
-          <h1 className="text-xl font-semibold text-[#5074b6]">
+          <h1 className="text-lg md:text-xl font-semibold text-[#5074b6]">
             My Compendium
           </h1>
         </div>
@@ -144,13 +144,13 @@ export default function MyCompendiumPage() {
               </div>
             ))
           ) : (
-            <div className="col-span-full text-center py-20">
-              <Star className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg mb-2">No starred compendia yet</p>
+            <div className="col-span-full text-center py-12 md:py-20">
+              <Star className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 text-base md:text-lg mb-2">No starred compendia yet</p>
               <p className="text-gray-400 text-sm">Star some compendia to see them here</p>
               <button
                 onClick={() => router.push("/ethical-learning")}
-                className="mt-4 px-6 py-2 bg-[#5074b6] text-white rounded-lg hover:bg-[#3d5a94] transition cursor-pointer"
+                className="mt-4 px-4 py-2 md:px-6 md:py-2 bg-[#5074b6] text-white rounded-lg hover:bg-[#3d5a94] transition cursor-pointer text-sm md:text-base"
               >
                 Browse Compendia
               </button>
