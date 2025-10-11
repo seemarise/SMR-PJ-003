@@ -45,7 +45,7 @@ export default function StudentDashboard() {
 
     return (
         <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
-            <main className="flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10">
+            <main className="flex-1 px-4 py-2 space-y-6">
                 {/* Centered Container */}
                 <div className="md:max-w-5xl md:mx-auto md:space-y-10">
                     {/* Header Row */}
@@ -76,11 +76,13 @@ export default function StudentDashboard() {
                             />
                             <div className="w-full">
                                 <p className="text-gray-600 text-sm md:text-base">Welcome,</p>
-                                <h2 className="font-bold flex items-center justify-between text-lg md:text-2xl text-gray-800">
+                                <h2 className="font-bold flex items-center justify-between text-lg md:text-2xl text-gray-800 md:inline">
                                     {user.name}
-                                    <span className="text-left font-normal text-sm">{user.school}</span>
                                 </h2>
-                                <span className="mt-1 inline-flex items-center bg-white border border-[#5074b6] text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
+                                <br />
+                                <span className="text-left font-normal text-sm">{user.school}</span>
+                                <br />
+                                <span className="mt-1 inline-flex items-center  bg-white border border-[#5074b6] text-[#5074b6] text-sm font-medium px-3 py-1 rounded-lg">
                                     <UserRound className="w-4 h-4 mr-2" />
                                     Class {user.className + " " + user.section}
                                 </span>

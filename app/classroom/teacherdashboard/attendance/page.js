@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { ArrowLeft, CalendarDays, CheckCircle, XCircle, Pencil } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { ArrowLeft, CalendarDays, CheckCircle, XCircle, Pencil, CircleChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getAttendence, updateAttendence } from "@/services/classroomService/classroomApi";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 function capitalize(word) {
     if (!word) return "";
@@ -25,6 +26,13 @@ export default function AttendancePage() {
     const [changedAttendence, setChangedAttendence] = useState({})
     const [load, setLoad] = useState(false)
 
+    const inputRef = useRef(null);
+
+    const handleDivClick = () => {
+        inputRef.current?.showPicker?.(); // Modern browsers support showPicker
+        inputRef.current?.click(); // fallback for others
+    };
+
     useEffect(() => {
         getAttendence({ date: selectedDate }).then((res) => {
             setAttendance(res.data?.studentsWithAttendance)
@@ -41,6 +49,7 @@ export default function AttendancePage() {
         }
         updateAttendence(param).then(res => {
             setIsEditing(false)
+            toast.success("Attendence Updated Successfully")
             setLoad(x => !x)
         })
     }
@@ -56,7 +65,7 @@ export default function AttendancePage() {
     };
 
     return (
-        <main className="px-4 py-4 bg-white min-h-screen md:bg-gray-50 md:px-8 md:py-10">
+        <main className="px-4 py-2 bg-white min-h-screen md:bg-gray-50">
             {/* Centered Container */}
             <div className="md:max-w-5xl md:mx-auto">
                 {/* Header */}
@@ -64,14 +73,14 @@ export default function AttendancePage() {
                     {/* Back Button */}
                     <button
                         onClick={() => router.back()}
-                        className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                        className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm cursor-pointer"
                     >
                         <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                     </button>
 
                     {/* Centered Title */}
                     <div className="absolute left-1/2 -translate-x-1/2 text-center">
-                        <h1 className="text-xl md:text-3xl font-bold text-[#5074b6]">
+                        <h1 className="text-lg md:text-3xl font-bold text-[#5074b6]">
                             Student Attendance
                         </h1>
                     </div>
@@ -81,7 +90,7 @@ export default function AttendancePage() {
                         {!isEditing ? (
                             <button
                                 onClick={() => setIsEditing(true)}
-                                className="p-1 md:p-2"
+                                className="p-1 md:p-2 cursor-pointer"
                             >
                                 <Pencil className="w-5 h-5 text-[#5074b6] hover:scale-110 transition md:w-6 md:h-6" />
                             </button>
@@ -89,13 +98,13 @@ export default function AttendancePage() {
                             <>
                                 <button
                                     onClick={() => setIsEditing(false)}
-                                    className="text-red-500 font-medium hover:underline text-sm md:text-base"
+                                    className="text-red-500 font-medium hover:underline text-sm md:text-base cursor-pointer"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleSubmitAttendence}
-                                    className="text-[#5074b6] font-medium hover:underline text-sm md:text-base"
+                                    className="text-[#5074b6] font-medium hover:underline text-sm md:text-base cursor-pointer"
                                 >
                                     Save
                                 </button>
@@ -105,20 +114,29 @@ export default function AttendancePage() {
                 </div>
 
                 {/* Date Selector (Now with input type="date") */}
-                <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex items-center justify-between mb-6 md:p-6 md:rounded-2xl md:bg-blue-50 md:border-blue-100">
+                <div
+                    className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex items-center justify-between mb-6 md:p-6 md:rounded-2xl md:bg-blue-50 md:border-blue-100 cursor-pointer"
+                    onClick={handleDivClick}
+                >
                     <div className="flex items-center gap-3">
                         <CalendarDays className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         <div>
                             <p className="text-gray-500 text-sm font-medium">Date</p>
+                            <p className="font-semibold text-gray-800 text-base md:text-lg inline">
+                                {selectedDate ? selectedDate : "Select a date"}
+                            </p>
                             <input
+                                ref={inputRef}
                                 type="date"
                                 value={selectedDate}
                                 onChange={(e) => setSelectedDate(e.target.value)}
-                                className="font-semibold text-gray-800 text-base md:text-lg bg-transparent focus:outline-none cursor-pointer"
+                                className="font-semibold opacity-0 text-gray-800 text-base md:text-lg bg-transparent focus:outline-none cursor-pointer"
                             />
                         </div>
                     </div>
-                    <span className="text-gray-400 text-lg md:text-xl">▾</span>
+                    <button>
+                        <CircleChevronDown />
+                    </button>
                 </div>
 
                 {/* Student List */}
@@ -136,7 +154,7 @@ export default function AttendancePage() {
                                     alt={student.name}
                                     className="w-12 h-12 rounded-full object-cover border border-gray-200 md:w-14 md:h-14"
                                 />
-                                <p className="font-semibold text-gray-800 text-base md:text-lg">
+                                <p className="font-semibold cursor-default text-gray-800 text-base md:text-lg">
                                     {student.name}
                                 </p>
                             </div>
@@ -161,8 +179,8 @@ export default function AttendancePage() {
                                     <button
                                         onClick={() => toggleStatus(student._id, "present")}
                                         className={`p-2 rounded-full border transition ${changedAttendence[student._id]?.status === "present"
-                                            ? "bg-green-500 border-green-500 text-white"
-                                            : "border-green-400 text-green-500 hover:bg-green-50"
+                                            ? "bg-green-500 border-green-500 text-white cursor-pointer"
+                                            : "border-green-400 text-green-500 hover:bg-green-50 cursor-pointer"
                                             }`}
                                     >
                                         <CheckCircle className="w-5 h-5" />
@@ -170,8 +188,8 @@ export default function AttendancePage() {
                                     <button
                                         onClick={() => toggleStatus(student._id, "absent")}
                                         className={`p-2 rounded-full border transition ${changedAttendence[student._id]?.status === "absent"
-                                            ? "bg-red-500 border-red-500 text-white"
-                                            : "border-red-400 text-red-500 hover:bg-red-50"
+                                            ? "bg-red-500 border-red-500 text-white cursor-pointer"
+                                            : "border-red-400 text-red-500 hover:bg-red-50 cursor-pointer"
                                             }`}
                                     >
                                         <XCircle className="w-5 h-5" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import {
     RotateCcw,
     ArrowLeft,
@@ -10,31 +10,30 @@ import {
     ChevronRight,
 } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getPeople } from "@/services/classroomService/classroomApi";
 
 export default function StudentPerformancePage() {
     const router = useRouter();
-    const { classId, section, subject } = useParams(); // ✅ get all three
+    const { class: className, section, subject } = useParams(); // ✅ get all three
+    const [students, setStudents] = useState([])
+    const searchParams = useSearchParams()
 
+    const classId = searchParams.get("class")
+    const sectionId = searchParams.get("section")
+    const subjectId = searchParams.get("subject")
     // Mock subject data
     const subjectInfo = {
         name: subject ? subject.charAt(0).toUpperCase() + subject.slice(1) : "English",
-        class: `Class ${classId} - Section ${section.toUpperCase()}`,
+        class: `Class ${className} - Section ${section.toUpperCase()}`,
         students: 2,
     };
 
-    // Mock student list
-    const students = [
-        {
-            id: 1,
-            name: "Kishan Rao B",
-            photo: "/students/kishan.jpg",
-        },
-        {
-            id: 2,
-            name: "Sai Prasad N",
-            photo: "/students/sai.jpg",
-        },
-    ];
+    useEffect(() => {
+        getPeople({ classId, sectionId, subjectId }).then((res) => {
+            setStudents(res.data.students)
+        })
+    }, [])
 
     const handleRefresh = () => {
         alert("Refreshing...");
@@ -42,7 +41,7 @@ export default function StudentPerformancePage() {
 
     // ✅ Correct routing to each student's report
     const handleStudentClick = (id) => {
-        router.push(`/classroom/${classId}/${section}/${subject}/performance/${id}`);
+        router.push(`/classroom/${className}/${section}/${subject}/performance/${id}`);
     };
 
     return (
@@ -53,22 +52,22 @@ export default function StudentPerformancePage() {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
-                        <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-semibold">
+                        <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-semibold text-center w-full">
                             Student Performance
                         </h1>
 
-                        <button
+                        {/* <button
                             className="text-[#5074b6] md:p-2 md:rounded-full md:hover:bg-blue-100"
                             onClick={handleRefresh}
                         >
                             <RotateCcw className="w-6 h-6 md:w-7 md:h-7" />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* Subject Info Card */}
@@ -97,12 +96,12 @@ export default function StudentPerformancePage() {
                             <p className="text-gray-500 text-sm mb-4 md:text-base">
                                 There are no students assigned to this class yet.
                             </p>
-                            <button
+                            {/* <button
                                 className="px-6 py-2 bg-[#5074b6] text-white font-semibold rounded-md shadow hover:bg-[#5074b6] transition md:px-8 md:py-3"
                                 onClick={handleRefresh}
                             >
                                 Refresh
-                            </button>
+                            </button> */}
                         </div>
                     ) : (
                         <>
@@ -114,9 +113,9 @@ export default function StudentPerformancePage() {
                             <div className="flex flex-col gap-3 md:gap-4">
                                 {students.map((student, index) => (
                                     <div
-                                        key={student.id}
+                                        key={student._id}
                                         className="flex items-center justify-between bg-white rounded-xl p-3 shadow-sm hover:shadow-md transition cursor-pointer md:p-4"
-                                        onClick={() => handleStudentClick(student.id)}
+                                        onClick={() => handleStudentClick(student._id)}
                                     >
                                         <div className="flex items-center gap-3 md:gap-4">
                                             {/* Number Badge */}
@@ -127,7 +126,7 @@ export default function StudentPerformancePage() {
                                             {/* Profile Image */}
                                             <div className="w-10 h-10 rounded-full overflow-hidden md:w-12 md:h-12">
                                                 <Image
-                                                    src={student.photo}
+                                                    src={student.profileImage}
                                                     alt={student.name}
                                                     width={48}
                                                     height={48}

@@ -7,4 +7,10 @@ const getAllComment = (parentId, data) => {
 const addComment = (data) => {
     return apiClient.post("/api/v1/comment/teachers/addComment", data);
 };
-export { getAllComment, addComment };
+const addReplyToComment = (data) => {
+    return apiClient.post("/api/v1/comment/reply/addReply", data);
+};
+const getAllReply = (commentId, data) => {
+    return apiClient.get(`/api/v1/comment/reply/listRepliesUser/${commentId}`, data);
+};
+export { getAllComment, addComment, addReplyToComment, getAllReply };

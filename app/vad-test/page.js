@@ -67,13 +67,13 @@ function VadTestPage() {
         {/* <NavbarTop /> */}
 
         {/* Page Content */}
-        <main className={`flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10 ${isExiting ? 'animate-out fade-out slide-out-to-left duration-300' : 'animate-in fade-in duration-300'}`}>
+        <main className={`flex-1 px-4 py-2 space-y-6 ${isExiting ? 'animate-out fade-out slide-out-to-left duration-300' : 'animate-in fade-in duration-300'}`}>
           {/* Title Row */}
           <div className="relative flex items-center justify-between md:max-w-5xl md:mx-auto">
             {/* Left - School Exam */}
             <button
               onClick={() => router.push('/school-exams')}
-              className="px-3 py-1 border border-gray-400 text-gray-800 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-100 hover:border-gray-500 transition-all duration-200 active:scale-95 md:px-5 md:py-2.5 md:text-base md:shadow-sm md:bg-white"
+              className="px-3 py-1 border border-gray-400 text-gray-800 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-100 hover:border-gray-500 transition-all duration-200 active:scale-95 md:px-5 md:py-2.5 md:text-base md:shadow-sm md:bg-white "
             >
               School Exam
             </button>
@@ -111,7 +111,7 @@ function VadTestPage() {
             {/* Test Info */}
             {vadTests?.map((vadTest, index) => {
               return <React.Fragment key={index}>
-                <div className="bg-blue-100 text-blue-800 font-semibold px-4 py-2 rounded-lg text-center shadow-sm md:text-xl md:py-3 md:bg-blue-50 md:border md:border-blue-200">
+                <div className="bg-blue-100 text-[#5074b6] font-semibold px-4 py-2 rounded-lg text-center shadow-sm md:text-xl md:py-3 md:bg-blue-50 md:border md:border-blue-200">
                   Class {vadTest.className}
                 </div>
 

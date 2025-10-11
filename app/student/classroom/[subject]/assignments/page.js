@@ -1,30 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { getStudentAssignment } from "@/services/classroomService/assignmentApi";
+import moment from "moment";
 
 export default function AssignmentsPage() {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState("pending");
     const { subject } = useParams();
+    const [assignments, setAssignments] = useState([])
 
-    const pendingAssignments = [
-        {
-            id: 1,
-            title: "Python",
-            subtitle: "Scope",
-            dueDate: "27/09/2025",
-        },
-        {
-            id: 2,
-            title: "The Path of Learning",
-            subtitle: "Poem",
-            dueDate: "09/10/2025",
-        },
-    ];
+    useEffect(() => {
+        getAllStudentAssignment(false)
+    }, [])
 
-    const completedAssignments = [];
+    function getAllStudentAssignment(isCompleted) {
+        getStudentAssignment(subject, { isCompleted }).then(res => {
+            setAssignments(res.data.assignments)
+        })
+    }
 
     const handleAttemptClick = (id) => {
         // You can later make 'English' dynamic using useParams()
@@ -35,19 +31,18 @@ export default function AssignmentsPage() {
         router.push(`/student/classroom/${subject}/assignments/${id}/comment`)
     }
 
-    const assignments =
-        activeTab === "pending" ? pendingAssignments : completedAssignments;
+
 
     return (
         <div className="flex flex-col min-h-screen bg-white md:bg-gray-50">
-            <main className="flex-1 px-5 py-3 md:px-8 md:py-10">
+            <main className="flex-1 px-5 py-2">
                 {/* ===== Desktop Container for Centering ===== */}
                 <div className="md:max-w-5xl md:mx-auto md:space-y-10">
                     {/* ===== Header ===== */}
                     <div className="flex items-center justify-between relative mb-6 md:mb-8">
                         <button
                             onClick={() => router.back()}
-                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm cursor-pointer"
                         >
                             <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />
                         </button>
@@ -65,20 +60,20 @@ export default function AssignmentsPage() {
                     <div className="flex justify-center mb-6 md:mb-10">
                         <div className="flex w-[85%] md:w-[50%] bg-white rounded-full shadow-md overflow-hidden md:shadow-sm">
                             <button
-                                className={`flex-1 py-2 text-[15px] font-medium rounded-full transition-all ${activeTab === "pending"
+                                className={`flex-1 py-2 text-[15px] font-medium rounded-full cursor-pointer transition-all ${activeTab === "pending"
                                     ? "bg-black text-white"
                                     : "text-black bg-white"
                                     }`}
-                                onClick={() => setActiveTab("pending")}
+                                onClick={() => { setActiveTab("pending"); getAllStudentAssignment(false); setAssignments([]) }}
                             >
                                 Pending
                             </button>
                             <button
-                                className={`flex-1 py-2 text-[15px] font-medium rounded-full transition-all ${activeTab === "completed"
+                                className={`flex-1 py-2 text-[15px] font-medium rounded-full cursor-pointer transition-all ${activeTab === "completed"
                                     ? "bg-black text-white"
                                     : "text-black bg-white"
                                     }`}
-                                onClick={() => setActiveTab("completed")}
+                                onClick={() => { setActiveTab("completed"); getAllStudentAssignment(true); setAssignments([]) }}
                             >
                                 Completed
                             </button>
@@ -103,20 +98,20 @@ export default function AssignmentsPage() {
                                     {/* Left Side */}
                                     <div>
                                         <h3 className="text-[17px] md:text-[20px] font-semibold text-gray-900">
-                                            {a.title}
+                                            {a.lesson}
                                         </h3>
                                         <p className="text-[14px] md:text-[16px] text-gray-900 mb-3 md:mb-4">
-                                            {a.subtitle}
+                                            {a.additionalInfo}
                                         </p>
 
                                         <div className="flex gap-3">
                                             <button
-                                                onClick={() => handleAttemptClick(a.id)}
-                                                className="bg-white text-black font-medium px-5 py-1.5 rounded-full text-[14px] md:text-[15px] shadow-sm">
+                                                onClick={() => handleAttemptClick(a._id)}
+                                                className="bg-white text-black font-medium px-5 py-1.5 rounded-full text-[14px] md:text-[15px] cursor-pointer shadow-sm">
                                                 Attempt
                                             </button>
-                                            <button className="border border-white text-white font-medium px-5 py-1.5 rounded-full text-[14px] md:text-[15px]"
-                                                onClick={() => handleCommentClick(a.id)}
+                                            <button className="border border-white text-white font-medium px-5 py-1.5 rounded-full cursor-pointer text-[14px] md:text-[15px]"
+                                                onClick={() => handleCommentClick(a._id)}
                                             >
                                                 Comment
                                             </button>
@@ -130,7 +125,7 @@ export default function AssignmentsPage() {
                                             Due Date:
                                         </p>
                                         <p className="text-[15px] md:text-[16px] text-gray-900 font-semibold">
-                                            {a.dueDate}
+                                            {moment(a.dueDate).format("DD-MMM-YYYY")}
                                         </p>
                                     </div>
                                 </div>

@@ -306,7 +306,7 @@ export default function UploadCompendiumPage() {
         <div className="flex items-center gap-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => router.back()}
-            className="p-2 rounded-full hover:bg-gray-100"
+            className="p-2 cursor-pointer rounded-full hover:bg-gray-100"
           >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>

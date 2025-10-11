@@ -31,18 +31,18 @@ export default function SelectStudentsPage() {
                     <div className="flex items-center justify-between px-5 py-4 md:px-6 md:py-5 md:rounded-xl  md:shadow-sm">
                         <button
                             onClick={() => router.back()}
-                            className="md:p-2 md:rounded-full md:bg-blue-100 hover:bg-blue-200 transition"
+                            className="md:p-2 md:rounded-full md:bg-blue-100 hover:bg-blue-200 transition cursor-pointer"
                         >
-                            <ArrowLeft className="w-6 h-6 text-gray-800 md:w-6 md:h-6 md:text-blue-600" />
+                            <ArrowLeft className="w-6 h-6 text-gray-800 md:w-6 md:h-6 md:text-[#5074b6]" />
                         </button>
 
                         <h1 className="text-[20px] font-semibold text-[rgb(80,116,182)] md:text-3xl md:font-bold">
                             Select Students
                         </h1>
 
-                        <button className="md:p-2 md:rounded-full md:bg-blue-100 hover:bg-blue-200 transition">
+                        {/* <button className="md:p-2 md:rounded-full md:bg-blue-100 hover:bg-blue-200 transition">
                             <RotateCcw className="w-6 h-6 text-[rgb(80,116,182)] md:w-6 md:h-6" />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* Selected Count */}
@@ -84,7 +84,7 @@ export default function SelectStudentsPage() {
                     <div className="p-4 border-t border-gray-200 flex justify-end md:border-none md:pt-6">
                         <button
                             onClick={() => router.push("/createassignment")}
-                            className="text-[rgb(80,116,182)] text-[17px] font-semibold md:text-lg md:bg-blue-100 md:px-6 md:py-2 md:rounded-lg md:hover:bg-blue-200 transition"
+                            className="text-[rgb(80,116,182)] text-[17px] font-semibold md:text-lg md:bg-blue-100 md:px-6 md:py-2 md:rounded-lg md:hover:bg-blue-200 transition cursor-pointer"
                         >
                             Done
                         </button>

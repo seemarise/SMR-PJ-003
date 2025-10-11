@@ -108,7 +108,7 @@ export default function SubmissionDetails({ params }) {
                                 {/* Back Button */}
                                 <button
                                     onClick={() => router.back()}
-                                    className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                                    className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm cursor-pointer"
                                     aria-label="Go back"
                                 >
                                     <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -138,7 +138,7 @@ export default function SubmissionDetails({ params }) {
 
                             {/* Student Info */}
                             <div>
-                                <h2 className="text-blue-800 font-semibold mb-2 md:text-xl">
+                                <h2 className="text-[#5074b6] font-semibold mb-2 md:text-xl">
                                     Student Information
                                 </h2>
                                 <div className="bg-white rounded-lg shadow p-4 flex gap-4 items-center mb-6 md:p-6 md:rounded-xl md:shadow-md">
@@ -163,7 +163,7 @@ export default function SubmissionDetails({ params }) {
 
                             {/* MCQ Answers */}
                             <div>
-                                <h2 className="text-blue-800 font-semibold mb-2 md:text-xl">
+                                <h2 className="text-[#5074b6] font-semibold mb-2 md:text-xl">
                                     MCQ Answers
                                 </h2>
                                 <div className="space-y-3 mb-8 md:space-y-4">
@@ -215,7 +215,7 @@ export default function SubmissionDetails({ params }) {
                                         />
                                         <div className="flex justify-end gap-3 mt-4">
                                             <button
-                                                className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+                                                className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer"
                                                 onClick={() => {
                                                     setShowModal(false);
                                                     setReason("");
@@ -224,7 +224,7 @@ export default function SubmissionDetails({ params }) {
                                                 Cancel
                                             </button>
                                             <button
-                                                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
+                                                className="px-4 py-2 rounded-lg bg-red-500 text-white cursor-pointer hover:bg-red-600"
                                                 onClick={() => handleRejectSubmission(submissionId)}
                                             >
                                                 Reject
@@ -245,7 +245,7 @@ function Button({ color, label, onClick }) {
     return (
         <button
             className={`w-full bg-${color}-500 text-white py-2 rounded-lg font-semibold 
-                  flex items-center justify-center gap-2 shadow 
+                  flex items-center cursor-pointer justify-center gap-2 shadow 
                   hover:bg-${color}-600 transition`}
             onClick={onClick}
         >

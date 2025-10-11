@@ -57,7 +57,7 @@ export default function AttendanceCalendar() {
     const weeks = useMemo(() => getMonthMatrix(view.year, view.month), [view]);
 
     const presentPercent = useMemo(() => {
-        return Math.round((attendence.filter(a => a.status == 'present').length ?? 0 / (attendence.filter(a => a.status == 'present' || a.status == 'absent').length ?? 1)) * 1000) / 10
+        return Math.round((attendence.filter(a => a.status == 'present').length ?? 0 / (attendence.filter(a => a.status == 'present' || a.status == 'absent').length ?? 1)) * 100) / 10
     }, [attendence, daysInMonth]);
 
     function prevMonth() {
@@ -79,7 +79,7 @@ export default function AttendanceCalendar() {
 
     return (
         <div className="flex min-h-screen flex-col bg-white md:bg-gray-50">
-            <main className="flex-1 px-4 py-6 md:px-8 md:py-10">
+            <main className="flex-1 px-4 py-2 md:px-8">
                 <div className="md:max-w-5xl md:mx-auto">
                     <div className="relative flex items-center justify-between mb-6">
                         <Link href="/student/classroom/studentdashboard" className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm">
@@ -87,7 +87,7 @@ export default function AttendanceCalendar() {
                         </Link>
 
                         <div className="absolute left-1/2 -translate-x-1/2 text-center">
-                            <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl">My Classroom</h1>
+                            <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl">Student Attendence</h1>
                         </div>
                     </div>
 
@@ -120,14 +120,14 @@ export default function AttendanceCalendar() {
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-between bg-blue-600 text-white rounded-xl px-4 py-3 mb-4">
-                            <button onClick={prevMonth} aria-label="previous month" className="p-2">
+                        <div className="flex items-center justify-between bg-blue-600 text-white rounded-xl px-4 py-3 mb-4 cursor-pointer">
+                            <button onClick={prevMonth} aria-label="previous month" className="p-2 cursor-pointer">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15 18L9 12L15 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </button>
                             <div className="font-semibold text-lg">{monthLabel}</div>
-                            <button onClick={nextMonth} aria-label="next month" className="p-2">
+                            <button onClick={nextMonth} aria-label="next month" className="p-2 cursor-pointer">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9 18L15 12L9 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>

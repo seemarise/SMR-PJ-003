@@ -108,7 +108,7 @@ export default function ResourcesPage({ params }) {
           <div className="flex items-center justify-between mb-6 md:mb-10">
             <button
               onClick={() => router.back()}
-              className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+              className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 cursor-pointer md:shadow-sm"
               aria-label="Go back"
             >
               <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -168,7 +168,7 @@ export default function ResourcesPage({ params }) {
                       setDeleteChapterId(chapter._id);
                       setShowModal(true);
                     }}
-                    className="text-red-400 hover:text-red-500 transition"
+                    className="text-red-400 cursor-pointer hover:text-red-500 transition"
                   >
                     <Trash2 className="w-5 h-5 md:w-6 md:h-6" />
                   </button>
@@ -189,7 +189,7 @@ export default function ResourcesPage({ params }) {
                 <div className="flex justify-end gap-3 mt-6">
                   {/* Cancel Button */}
                   <button
-                    className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
+                    className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
                       setDeleteChapterId("");
                       setShowModal(false);
@@ -200,7 +200,7 @@ export default function ResourcesPage({ params }) {
 
                   {/* Delete Button */}
                   <button
-                    className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
+                    className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100 cursor-pointer"
                     onClick={() => handleDelete()}
                   >
                     Delete
@@ -233,13 +233,13 @@ export default function ResourcesPage({ params }) {
                       setShowAddChapter(false);
                       setChapterName("");
                     }}
-                    className="px-4 py-2 rounded-xl text-gray-600 font-medium hover:bg-gray-100"
+                    className="px-4 py-2 cursor-pointer rounded-xl text-gray-600 font-medium hover:bg-gray-100"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleAddChapter}
-                    className="px-5 py-2 rounded-xl bg-[#5074b6] text-white font-medium hover:bg-[#5074b6]"
+                    className="px-5 py-2 rounded-xl cursor-pointer bg-[#5074b6] text-white font-medium hover:bg-[#5d88d3]"
                   >
                     Add Chapter
                   </button>
@@ -252,7 +252,7 @@ export default function ResourcesPage({ params }) {
             onClick={() => {
               setShowAddChapter(true);
             }}
-            className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
+            className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5d88d3] transition md:p-5 md:bottom-10 md:right-10 cursor-pointer"
           >
             <Plus />
           </button>

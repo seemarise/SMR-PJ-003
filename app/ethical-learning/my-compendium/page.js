@@ -17,8 +17,8 @@ export default function MyCompendiumPage() {
 
   // Function to toggle star status
   const toggleStar = (itemId) => {
-    const updatedCompendia = compendia.map(item => 
-      item.id === itemId 
+    const updatedCompendia = compendia.map(item =>
+      item.id === itemId
         ? { ...item, isStarred: !item.isStarred }
         : item
     );
@@ -31,8 +31,8 @@ export default function MyCompendiumPage() {
     const updatedCompendia = compendia.map(item => {
       if (item.id === itemId) {
         const isCurrentlyPinned = item.isPinned;
-        return { 
-          ...item, 
+        return {
+          ...item,
           isPinned: !isCurrentlyPinned,
           pinOrder: !isCurrentlyPinned ? Date.now() : null
         };
@@ -60,16 +60,16 @@ export default function MyCompendiumPage() {
 
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
-      <main className="flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10 animate-in fade-in duration-300">
+      <main className="flex-1 px-4 py-2 space-y-6 animate-in fade-in duration-300">
         {/* Header */}
         <div className="flex items-center gap-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => router.back()}
-            className="p-2 rounded-full hover:bg-gray-100 transition"
+            className="p-2 rounded-full cursor-pointer hover:bg-gray-100 transition"
           >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
-          <h1 className="text-xl font-semibold text-[#5074b6]">
+          <h1 className="text-lg md:text-xl font-semibold text-[#5074b6]">
             My Compendium
           </h1>
         </div>
@@ -85,25 +85,23 @@ export default function MyCompendiumPage() {
                 {/* Star Icon - Top Left */}
                 <button
                   onClick={() => toggleStar(item.id)}
-                  className="absolute top-2 left-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition"
+                  className="absolute top-2 left-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition cursor-pointer"
                 >
-                  <Star 
-                    className={`w-5 h-5 ${
-                      item.isStarred ? "text-yellow-400 fill-current" : "text-gray-400"
-                    }`} 
+                  <Star
+                    className={`w-5 h-5 ${item.isStarred ? "text-yellow-400 fill-current" : "text-gray-400"
+                      }`}
                   />
                 </button>
 
                 {/* Pin Icon - Top Right */}
                 <button
                   onClick={() => togglePin(item.id)}
-                  className="absolute top-2 right-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition"
+                  className="absolute top-2 right-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition cursor-pointer"
                 >
                   <div className="flex items-center gap-1">
-                    <Pin 
-                      className={`w-4 h-4 ${
-                        item.isPinned ? "text-[#5074b6] fill-current" : "text-gray-400"
-                      }`} 
+                    <Pin
+                      className={`w-4 h-4 ${item.isPinned ? "text-[#5074b6] fill-current" : "text-gray-400"
+                        }`}
                     />
                     {item.isPinned && (
                       <span className="text-xs font-semibold text-gray-700">
@@ -138,7 +136,7 @@ export default function MyCompendiumPage() {
                   <p className="text-sm text-gray-700 font-medium py-1">Admin</p>
                   <button
                     onClick={() => router.push(`/ethical-learning/${item.id}`)}
-                    className="w-full bg-[#5074b6] text-white rounded-b-xl py-2 text-sm font-semibold hover:bg-[#3d5a94] transition"
+                    className="w-full bg-[#5074b6] text-white rounded-b-xl py-2 cursor-pointer text-sm font-semibold hover:bg-[#3d5a94] transition"
                   >
                     Start
                   </button>
@@ -146,13 +144,13 @@ export default function MyCompendiumPage() {
               </div>
             ))
           ) : (
-            <div className="col-span-full text-center py-20">
-              <Star className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg mb-2">No starred compendia yet</p>
+            <div className="col-span-full text-center py-12 md:py-20">
+              <Star className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 text-base md:text-lg mb-2">No starred compendia yet</p>
               <p className="text-gray-400 text-sm">Star some compendia to see them here</p>
               <button
                 onClick={() => router.push("/ethical-learning")}
-                className="mt-4 px-6 py-2 bg-[#5074b6] text-white rounded-lg hover:bg-[#3d5a94] transition"
+                className="mt-4 px-4 py-2 md:px-6 md:py-2 bg-[#5074b6] text-white rounded-lg hover:bg-[#3d5a94] transition cursor-pointer text-sm md:text-base"
               >
                 Browse Compendia
               </button>

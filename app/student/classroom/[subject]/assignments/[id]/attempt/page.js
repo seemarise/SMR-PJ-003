@@ -43,7 +43,7 @@ Example : 7.8.2 (a) Accessing global Variable From inside a Function`,
                 <div className="flex items-center justify-between relative">
                     <button
                         onClick={() => router.back()}
-                        className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                        className="p-1 cursor-pointer rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
                     >
                         <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />
                     </button>
@@ -121,7 +121,7 @@ Example : 7.8.2 (a) Accessing global Variable From inside a Function`,
                             Complete the {assignment.quizCount} questions for this assignment.
                         </p>
 
-                        <button className="w-full bg-[#5074b6] text-white py-2 rounded-lg font-medium shadow-sm hover:bg-[#4060a3]"
+                        <button className="w-full bg-[#5074b6] text-white py-2 rounded-lg cursor-pointer font-medium shadow-sm hover:bg-[#4060a3]"
                             onClick={() => {
                                 router.push(`/student/classroom/${subject}/assignments/${id}/attempt/answer-question`);
 
@@ -153,11 +153,11 @@ Example : 7.8.2 (a) Accessing global Variable From inside a Function`,
 
                     {/* ===== Buttons ===== */}
                     <div className="flex flex-col gap-3 mt-6 md:mt-8">
-                        <button className="bg-[#5074b6] text-white font-medium py-3 rounded-lg shadow-sm hover:bg-[#4060a3]">
+                        <button className="bg-[#5074b6] text-white font-medium py-3 cursor-pointer rounded-lg shadow-sm hover:bg-[#4060a3]">
                             ✨ AI Magic
                         </button>
 
-                        <button className="bg-[#38b000] text-white font-medium py-3 rounded-lg shadow-sm hover:bg-[#2f9200]">
+                        <button className="bg-[#38b000] text-white font-medium py-3 cursor-pointer rounded-lg shadow-sm hover:bg-[#2f9200]">
                             Submit Assignment
                         </button>
                     </div>

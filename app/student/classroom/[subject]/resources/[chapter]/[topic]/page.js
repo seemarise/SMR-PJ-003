@@ -66,7 +66,7 @@ export default function TopicPage({ params }) {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={handleBack}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -83,13 +83,13 @@ export default function TopicPage({ params }) {
                     <div className="bg-blue-50 rounded-xl p-4 shadow-sm flex flex-col gap-2 md:p-6">
                         <div className="flex items-center gap-2">
                             <Folder className="text-[#5074b6] w-5 h-5 md:w-6 md:h-6" />
-                            <p className="text-blue-900 font-semibold text-lg capitalize">
+                            <p className="text-[#5074b6] font-semibold text-lg capitalize">
                                 {chapter.replace("-", " ")}
                             </p>
                         </div>
                         <div className="flex items-center gap-2">
                             <BookOpen className="text-[#5074b6] w-5 h-5 md:w-6 md:h-6" />
-                            <p className="text-blue-900 font-semibold text-lg capitalize">
+                            <p className="text-[#5074b6] font-semibold text-lg capitalize">
                                 {topic.replace("-", " ")}
                             </p>
                         </div>

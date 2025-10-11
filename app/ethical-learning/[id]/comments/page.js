@@ -20,7 +20,7 @@ export default function CompendiumCommentsPage() {
 
   useEffect(() => {
     if (!id) return;
-    
+
     // Load compendium details
     const saved = JSON.parse(localStorage.getItem("compendia") || "[]");
     const found = saved.find((c) => c.id === id);
@@ -35,7 +35,7 @@ export default function CompendiumCommentsPage() {
 
   const handleAddComment = () => {
     if (!input.trim()) return;
-    
+
     const newComment = {
       id: Date.now(),
       author: "Prakasavalli",
@@ -45,13 +45,13 @@ export default function CompendiumCommentsPage() {
       time: "Just now",
       replies: [],
     };
-    
+
     const updatedComments = [newComment, ...comments];
     setComments(updatedComments);
-    
+
     // Save to localStorage
     localStorage.setItem(`comments_${id}`, JSON.stringify(updatedComments));
-    
+
     setInput("");
   };
 
@@ -62,7 +62,7 @@ export default function CompendiumCommentsPage() {
 
   const handleAddReply = () => {
     if (!replyText.trim() || !replyingTo) return;
-    
+
     const newReply = {
       id: Date.now(),
       author: "Prakasavalli",
@@ -70,7 +70,7 @@ export default function CompendiumCommentsPage() {
       text: replyText,
       time: "Just now",
     };
-    
+
     const updatedComments = comments.map(comment => {
       if (comment.id === replyingTo) {
         return {
@@ -80,10 +80,10 @@ export default function CompendiumCommentsPage() {
       }
       return comment;
     });
-    
+
     setComments(updatedComments);
     localStorage.setItem(`comments_${id}`, JSON.stringify(updatedComments));
-    
+
     setReplyingTo(null);
     setReplyText("");
   };
@@ -119,16 +119,16 @@ export default function CompendiumCommentsPage() {
 
   const handleSaveEdit = () => {
     if (!editText.trim()) return;
-    
+
     const updatedComments = comments.map((c) =>
       c.id === editingComment.id
         ? { ...c, text: editText, time: "Just now (edited)" }
         : c
     );
-    
+
     setComments(updatedComments);
     localStorage.setItem(`comments_${id}`, JSON.stringify(updatedComments));
-    
+
     setEditingComment(null);
     setEditText("");
   };
@@ -155,24 +155,24 @@ export default function CompendiumCommentsPage() {
 
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
-      <main className="flex-1 px-4 py-6 space-y-6 md:px-8 md:py-10 animate-in fade-in duration-300">
+      <main className="flex-1 px-4 py-2 space-y-6 animate-in fade-in duration-300">
         {/* Header */}
         <div className="flex items-center gap-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => router.back()}
-            className="p-2 rounded-full hover:bg-gray-100 transition"
+            className="p-2 cursor-pointer rounded-full hover:bg-gray-100 transition"
           >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
           <h1 className="text-xl font-semibold text-[#5074b6] truncate">
             {compendium.title}
           </h1>
-          <button
+          {/* <button
             onClick={handleRefresh}
             className="p-2 rounded-full hover:bg-gray-100 transition ml-auto"
           >
             <RotateCw className="w-5 h-5 text-gray-700" />
-          </button>
+          </button> */}
         </div>
 
         {/* Comments Section */}
@@ -189,14 +189,14 @@ export default function CompendiumCommentsPage() {
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold flex-shrink-0">
                       {comment.author.charAt(0)}
                     </div>
-                    
+
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-semibold text-gray-900">
                           {comment.author}
                         </h3>
                         {comment.badge && (
-                          <span className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                          <span className="bg-blue-100 text-[#5074b6] text-xs font-medium px-2 py-0.5 rounded-full">
                             {comment.badge}
                           </span>
                         )}
@@ -204,8 +204,8 @@ export default function CompendiumCommentsPage() {
                       <p className="text-sm text-gray-500">{comment.time}</p>
                     </div>
 
-                    <button className="p-1 hover:bg-gray-100 rounded-full">
-                      <MoreVertical 
+                    <button className="p-1 cursor-pointer hover:bg-gray-100 rounded-full">
+                      <MoreVertical
                         className="w-5 h-5 text-gray-400"
                         onClick={() => handleOpenOptions(comment)}
                       />
@@ -219,9 +219,9 @@ export default function CompendiumCommentsPage() {
 
                   {/* Reply Button */}
                   <div className="flex justify-end">
-                    <button 
+                    <button
                       onClick={() => handleReply(comment.id)}
-                      className="flex items-center gap-2 text-gray-500 hover:text-[#5074b6] transition text-sm font-medium"
+                      className="flex items-center cursor-pointer gap-2 text-gray-500 hover:text-[#5074b6] transition text-sm font-medium"
                     >
                       <MessageSquare className="w-4 h-4" />
                       Reply
@@ -243,7 +243,7 @@ export default function CompendiumCommentsPage() {
                                   {reply.author}
                                 </h4>
                                 {reply.badge && (
-                                  <span className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                                  <span className="bg-blue-100 text-[#5074b6] text-xs font-medium px-2 py-0.5 rounded-full">
                                     {reply.badge}
                                   </span>
                                 )}
@@ -281,17 +281,16 @@ export default function CompendiumCommentsPage() {
                         <button
                           onClick={handleAddReply}
                           disabled={!replyText.trim()}
-                          className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-                            replyText.trim()
-                              ? "bg-[#5074b6] hover:bg-[#3d5a94] text-white"
-                              : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                          }`}
+                          className={`px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition ${replyText.trim()
+                            ? "bg-[#5074b6] hover:bg-[#3d5a94] text-white"
+                            : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                            }`}
                         >
                           Reply
                         </button>
                         <button
                           onClick={handleCancelReply}
-                          className="px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium hover:bg-gray-300 transition"
+                          className="px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium hover:bg-gray-300 transition cursor-pointer"
                         >
                           Cancel
                         </button>
@@ -326,18 +325,17 @@ export default function CompendiumCommentsPage() {
               />
               <button
                 onClick={handleCancelEdit}
-                className="px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition"
+                className="px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveEdit}
                 disabled={!editText.trim()}
-                className={`px-4 py-2 rounded-full font-medium transition ${
-                  editText.trim()
-                    ? "bg-[#5074b6] hover:bg-[#3d5a94] text-white"
-                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                }`}
+                className={`px-4 py-2 rounded-full cursor-pointer font-medium transition ${editText.trim()
+                  ? "bg-[#5074b6] hover:bg-[#3d5a94] text-white"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  }`}
               >
                 Save
               </button>
@@ -363,17 +361,16 @@ export default function CompendiumCommentsPage() {
               <button
                 onClick={handleAddReply}
                 disabled={!replyText.trim()}
-                className={`px-4 py-2 rounded-full font-medium transition ${
-                  replyText.trim()
-                    ? "bg-[#5074b6] hover:bg-[#3d5a94] text-white"
-                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                }`}
+                className={`px-4 py-2 cursor-pointer rounded-full font-medium transition ${replyText.trim()
+                  ? "bg-[#5074b6] hover:bg-[#3d5a94] text-white"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  }`}
               >
                 Reply
               </button>
               <button
                 onClick={handleCancelReply}
-                className="px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition"
+                className="px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition cursor-pointer"
               >
                 Cancel
               </button>
@@ -381,56 +378,55 @@ export default function CompendiumCommentsPage() {
           ) : (
             /* Normal Comment Mode */
             <div className="flex items-center gap-3 max-w-5xl mx-auto">
-            {/* Avatar */}
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold flex-shrink-0">
-              P
-            </div>
+              {/* Avatar */}
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold flex-shrink-0">
+                P
+              </div>
 
-            {/* Input */}
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleAddComment()}
-              placeholder="Write a comment..."
-              className="flex-1 bg-gray-100 rounded-full px-5 py-3 text-base outline-none focus:ring-2 focus:ring-[#5074b6] transition"
-            />
+              {/* Input */}
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handleAddComment()}
+                placeholder="Write a comment..."
+                className="flex-1 bg-gray-100 rounded-full px-5 py-3 text-base outline-none focus:ring-2 focus:ring-[#5074b6] transition"
+              />
 
-            {/* Send Button */}
-            <button
-              onClick={handleAddComment}
-              disabled={!input.trim()}
-              className={`w-12 h-12 rounded-full flex items-center justify-center transition flex-shrink-0 ${
-                input.trim()
+              {/* Send Button */}
+              <button
+                onClick={handleAddComment}
+                disabled={!input.trim()}
+                className={`w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition flex-shrink-0 ${input.trim()
                   ? "bg-[#5074b6] hover:bg-[#3d5a94] text-white"
                   : "bg-gray-200 text-gray-400 cursor-not-allowed"
-              }`}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+                  }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                />
-              </svg>
-            </button>
-          </div>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                  />
+                </svg>
+              </button>
+            </div>
           )}
         </footer>
 
         {/* Options Modal (Bottom Sheet) */}
         {showOptionsModal && (
-          <div 
+          <div
             className="fixed inset-0 bg-black/30 bg-opacity-50 z-[100] flex items-end justify-center"
             onClick={handleCloseOptions}
           >
-            <div 
+            <div
               className="bg-white rounded-t-3xl w-full max-w-md pb-6 animate-slide-up"
               onClick={(e) => e.stopPropagation()}
             >
@@ -442,7 +438,7 @@ export default function CompendiumCommentsPage() {
               {/* Edit Button */}
               <button
                 onClick={handleEditComment}
-                className="w-full px-6 py-4 flex items-center gap-4 hover:bg-gray-50 transition"
+                className="w-full px-6 py-4 flex items-center gap-4 hover:bg-gray-50 transition cursor-pointer"
               >
                 <svg className="w-6 h-6 text-[#5074b6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -453,7 +449,7 @@ export default function CompendiumCommentsPage() {
               {/* Delete Button */}
               <button
                 onClick={handleDeleteComment}
-                className="w-full px-6 py-4 flex items-center gap-4 hover:bg-gray-50 transition"
+                className="w-full px-6 py-4 flex items-center gap-4 hover:bg-gray-50 transition cursor-pointer"
               >
                 <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
