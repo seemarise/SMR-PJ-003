@@ -4,14 +4,17 @@ import React, { useEffect, useState } from "react";
 import { ArrowLeft, Image as ImageIcon, Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CreateQuizModal from "../../../components/CreateQuizModal";
+import ManualQuizEditor from "../../../components/ManualQuizEditor";
 import { getCompendiaCategories, getCompendiaSubCategories } from "@/services/ethicalLearningService/compendiaService";
 import { toast } from "react-toastify";
+import QuizQuestionsPreview from "@/components/QuizQuestionPreview";
 export default function UploadCompendiumPage() {
   const router = useRouter();
-  // Consolidated state for all compendium form data
+
   const showToast = (a, b = "success") => {
     toast[b](a);
   };
+
   const [compendiaData, setCompendiaData] = useState({
     title: "",
     content: "",
@@ -19,18 +22,28 @@ export default function UploadCompendiumPage() {
     categoryId: "",
     subCategoryId: "",
     arrWebsiteLink: [],
-    coverImage: null, // Will hold a single dataURL string
-    images: [],       // Will hold an array of dataURL strings
+    coverImage: null,
+    images: [],
+    quiz: [],
   });
 
-  // State for categories and UI controls
+  // ... (all other state variables remain the same)
   const [category, setCategory] = useState([]);
   const [selCategory, setSelCategory] = useState(-1);
   const [openDd, setOpenDd] = useState(false);
   const [subcategory, setSubCategory] = useState([]);
   const [selSubCat, setSelSubCat] = useState(null);
   const [showQuizModal, setShowQuizModal] = useState(false);
+  const [isEditingQuiz, setIsEditingQuiz] = useState(false);
+
+  // ... (all helper functions and useEffect hooks remain the same)
   useEffect(() => {
+    const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
+    if (Object.keys(draft).length > 0) {
+      setCompendiaData(prev => ({ ...prev, ...draft }));
+      setSelCategory(draft.category || -1);
+      setSelSubCat(draft.subCategory || null);
+    }
     fetchCategory();
   }, []);
 
@@ -39,10 +52,15 @@ export default function UploadCompendiumPage() {
     if (res.statusCode == 200) {
       setCategory(res.data.categories);
       if (res.data.categories.length) {
+        const draftCategory = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}").category;
         const firstCategoryId = res.data.categories[0]?._id;
-        setSelCategory(firstCategoryId);
-        setCompendiaData(prev => ({ ...prev, categoryId: firstCategoryId ? firstCategoryId : "" }))
-        fetchSubCategory(firstCategoryId);
+        const categoryToSet = draftCategory || firstCategoryId;
+
+        if (categoryToSet) {
+          setSelCategory(categoryToSet);
+          setCompendiaData(prev => ({ ...prev, categoryId: categoryToSet }));
+          fetchSubCategory(categoryToSet);
+        }
       }
     }
   }
@@ -52,20 +70,24 @@ export default function UploadCompendiumPage() {
     if (res.statusCode == 200) {
       setSubCategory(res.data.subcategories);
       if (res.data.subcategories.length) {
-        setSelSubCat(res.data.subcategories[0]?._id);
-        setCompendiaData(prev => ({ ...prev, subCategoryId: res.data.subcategories[0]?._id ? res.data.subcategories[0]?._id : "" }))
+        const draftSubCategory = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}").subCategory;
+        const firstSubCategoryId = res.data.subcategories[0]?._id;
+        const subCategoryToSet = draftSubCategory || firstSubCategoryId;
+
+        if (subCategoryToSet) {
+          setSelSubCat(subCategoryToSet);
+          setCompendiaData(prev => ({ ...prev, subCategoryId: subCategoryToSet }));
+        }
       }
     }
   }
 
-  // Helper to convert a file to a base64 data URL
   function toDataURL(file, cb) {
     const reader = new FileReader();
     reader.onload = () => cb(reader.result);
     reader.readAsDataURL(file);
   }
 
-  // Handler for single cover image upload
   const handleCoverImageFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -74,33 +96,22 @@ export default function UploadCompendiumPage() {
     });
   };
 
-  // NEW: Handler for multiple image uploads at once
   const handleMultipleImagesFile = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
-
-    // A helper to wrap the callback-based toDataURL in a Promise
     const readFileAsPromise = (file) => {
       return new Promise(resolve => {
         toDataURL(file, dataUrl => resolve(dataUrl));
       });
     };
-
-    // Create an array of promises, one for each file
     const promises = files.map(readFileAsPromise);
-
-    // Wait for all file reading operations to complete
     const newDataUrls = await Promise.all(promises);
-
-    // Update the state once with all the new image URLs
     setCompendiaData(prev => ({
       ...prev,
       images: [...(prev.images || []), ...newDataUrls],
     }));
   };
 
-
-  // Function to remove an image from the multiple images array
   const handleRemoveImage = (indexToRemove) => {
     setCompendiaData(prev => ({
       ...prev,
@@ -108,7 +119,6 @@ export default function UploadCompendiumPage() {
     }));
   };
 
-  // Function to remove website link
   const removeWebsiteLink = (linkToRemove) => {
     setCompendiaData(prev => ({
       ...prev,
@@ -116,39 +126,51 @@ export default function UploadCompendiumPage() {
     }));
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const id = Date.now().toString();
-    const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
-
     const newCompendium = {
       id,
-      title: compendiaData.title,
-      content: compendiaData.content,
+      ...compendiaData,
       websiteLinks: compendiaData.arrWebsiteLink,
       category: selCategory,
       subCategory: selSubCat,
-      coverImage: compendiaData.coverImage,
-      images: compendiaData.images,
-      quiz: draft.quiz || [],
       createdAt: new Date().toISOString(),
     };
 
     const saved = JSON.parse(localStorage.getItem("compendia") || "[]");
     saved.unshift(newCompendium);
     localStorage.setItem("compendia", JSON.stringify(saved));
-
     sessionStorage.removeItem("compendium_draft");
     router.push("/ethical-learning");
   };
 
   const handleCategoryChange = (id) => {
     setSelCategory(id);
-    setCompendiaData(prev => ({ ...prev, categoryId: id }))
+    setCompendiaData(prev => ({ ...prev, categoryId: id }));
     setOpenDd(false);
     fetchSubCategory(id);
   };
+
+  const saveDraft = () => {
+    const draft = {
+      ...compendiaData,
+      category: selCategory,
+      subCategory: selSubCat,
+    };
+    sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
+  };
+
+  const handleSaveQuiz = (updatedQuestions) => {
+    setCompendiaData(prev => ({ ...prev, quiz: updatedQuestions }));
+    const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
+    draft.quiz = updatedQuestions;
+    sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
+    setIsEditingQuiz(false);
+    showToast("Quiz draft saved successfully!");
+  };
+
+  const hasQuestions = compendiaData.quiz && compendiaData.quiz.length > 0;
 
   return (
     <div className="flex min-h-screen flex-col pb-20 bg-white md:pb-8 md:bg-gray-50">
@@ -256,7 +278,6 @@ export default function UploadCompendiumPage() {
             <div className="flex flex-col gap-3 mt-1">
               <label className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 text-sm font-medium hover:bg-gray-50 cursor-pointer self-start">
                 Add Images
-                {/* MODIFIED: Added the 'multiple' attribute */}
                 <input type="file" accept="image/*" onChange={handleMultipleImagesFile} className="hidden" multiple />
               </label>
               <div className="flex gap-3 items-center flex-wrap">
@@ -325,26 +346,37 @@ export default function UploadCompendiumPage() {
               ))}
             </div>
           </div>
-
-          <div className="flex gap-3">
+          {hasQuestions && (
+            <QuizQuestionsPreview
+              questions={compendiaData.quiz}
+              onEdit={() => {
+                saveDraft();
+                setIsEditingQuiz(true);
+              }}
+            />
+          )}
+          <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button
               type="button"
               onClick={() => {
-                const draft = {
-                  ...compendiaData,
-                  category: selCategory,
-                  subCategory: selSubCat,
-                  quiz: JSON.parse(sessionStorage.getItem("compendium_draft") || "{}").quiz || [],
-                };
-                sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
-                setShowQuizModal(true);
+                saveDraft();
+                if (hasQuestions) {
+                  // If quiz exists, go straight to the editor
+                  setIsEditingQuiz(true);
+                } else {
+                  // If no quiz, show the AI/Manual choice modal
+                  setShowQuizModal(true);
+                }
               }}
-              className="px-4 py-2 bg-[#5074b6] text-white rounded-md hover:bg-[#3d5a94]"
+              className="w-full sm:w-auto px-6 py-3 bg-[#5074b6] text-white rounded-md hover:bg-[#3d5a94] font-semibold"
             >
-              Create Quiz
+              {hasQuestions ? 'Edit Quiz' : 'Create Quiz'}
             </button>
-            <button type="submit" className="px-4 py-2 bg-[#5074b6] text-white rounded-md hover:bg-[#3d5a94] flex-1">
-              Submit
+            <button
+              type="submit"
+              className="w-full sm:w-auto flex-1 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold"
+            >
+              Submit Compendium
             </button>
           </div>
         </form>
@@ -354,14 +386,8 @@ export default function UploadCompendiumPage() {
             onClose={() => setShowQuizModal(false)}
             onManual={() => {
               setShowQuizModal(false);
-              const draft = {
-                ...compendiaData,
-                category: selCategory,
-                subCategory: selSubCat,
-                quiz: JSON.parse(sessionStorage.getItem("compendium_draft") || "{}").quiz || [],
-              };
-              sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
-              router.push("/ethical-learning/quiz/manual");
+              saveDraft();
+              setIsEditingQuiz(true);
             }}
             onCreateAI={() => {
               const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
@@ -374,9 +400,18 @@ export default function UploadCompendiumPage() {
               });
               draft.quiz = questions;
               sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
+              setCompendiaData(prev => ({ ...prev, quiz: questions }));
               setShowQuizModal(false);
               showToast("AI added 1 question to your quiz draft.");
             }}
+          />
+        )}
+
+        {isEditingQuiz && (
+          <ManualQuizEditor
+            initialQuestions={compendiaData.quiz}
+            onSave={handleSaveQuiz}
+            onClose={() => setIsEditingQuiz(false)}
           />
         )}
 
