@@ -22,7 +22,7 @@ function Classroom() {
   }, [])
 
   return (
-    <main className="px-4 py-4 bg-white md:overflow-y-auto md:bg-gray-50 md:px-8 md:py-10">
+    <main className="px-4 py-2 bg-white md:overflow-y-auto md:bg-gray-50 md:px-8 md:py-10">
       {/* Content Container - Centered on desktop */}
       <div className="md:max-w-5xl md:mx-auto">
         <Link href="/classroom/teacherdashboard">

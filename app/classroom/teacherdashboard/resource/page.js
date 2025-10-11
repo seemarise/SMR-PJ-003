@@ -104,7 +104,7 @@ export default function ResourcesPage({ params }) {
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
-            <main className="px-4 py-4 flex-1 md:px-8 md:py-10">
+            <main className="px-4 py-2 flex-1">
                 <div className="md:max-w-5xl md:mx-auto md:space-y-10">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-6 md:mb-10">
