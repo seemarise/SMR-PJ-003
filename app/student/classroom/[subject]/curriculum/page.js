@@ -14,7 +14,7 @@ export default function VadaiCurriculumPage() {
                     <div className="flex items-center justify-between mb-6 md:mb-10 relative">
                         <button
                             onClick={() => router.back()}
-                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm cursor-pointer"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />

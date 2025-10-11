@@ -28,18 +28,18 @@ export default function StudentPerformancePage({ params }) {
           <div className="flex items-center justify-between">
             <Link
               href="/classroom/teacherdashboard/performance"
-              className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
+              className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
             </Link>
 
-            <h1 className="text-lg font-bold text-blue-800 md:text-2xl">
+            <h1 className="text-lg font-bold text-[#5074b6] md:text-2xl">
               Performance Report
             </h1>
 
-            <button className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3">
+            {/* <button className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3">
               <RefreshCcw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
-            </button>
+            </button> */}
           </div>
 
           {/* Student Info Card */}
@@ -62,7 +62,7 @@ export default function StudentPerformancePage({ params }) {
           <div className="flex items-center bg-gray-100 rounded-lg p-1 md:w-1/2 md:mx-auto">
             <button
               onClick={() => setActiveTab("school")}
-              className={`flex-1 text-center py-2 rounded-md font-medium transition ${activeTab === "school"
+              className={`flex-1 cursor-pointer text-center py-2 rounded-md font-medium transition ${activeTab === "school"
                 ? "bg-[#5074b6] text-white"
                 : "text-gray-600 hover:text-[#5074b6]"
                 }`}
@@ -71,7 +71,7 @@ export default function StudentPerformancePage({ params }) {
             </button>
             <button
               onClick={() => setActiveTab("vad")}
-              className={`flex-1 text-center py-2 rounded-md font-medium transition ${activeTab === "vad"
+              className={`flex-1 cursor-pointer text-center py-2 rounded-md font-medium transition ${activeTab === "vad"
                 ? "bg-[#5074b6] text-white"
                 : "text-gray-600 hover:text-[#5074b6]"
                 }`}

@@ -53,7 +53,7 @@ export default function StudentPerformancePage() {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -63,12 +63,12 @@ export default function StudentPerformancePage() {
                             Student Performance
                         </h1>
 
-                        <button
+                        {/* <button
                             className="text-[#5074b6] md:p-2 md:rounded-full md:hover:bg-blue-100"
                             onClick={handleRefresh}
                         >
                             <RotateCcw className="w-6 h-6 md:w-7 md:h-7" />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* Subject Info Card */}
@@ -97,12 +97,12 @@ export default function StudentPerformancePage() {
                             <p className="text-gray-500 text-sm mb-4 md:text-base">
                                 There are no students assigned to this class yet.
                             </p>
-                            <button
+                            {/* <button
                                 className="px-6 py-2 bg-[#5074b6] text-white font-semibold rounded-md shadow hover:bg-[#5074b6] transition md:px-8 md:py-3"
                                 onClick={handleRefresh}
                             >
                                 Refresh
-                            </button>
+                            </button> */}
                         </div>
                     ) : (
                         <>

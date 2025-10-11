@@ -47,7 +47,7 @@ export default function AssignmentsPage() {
                     <div className="flex items-center justify-between relative mb-6 md:mb-8">
                         <button
                             onClick={() => router.back()}
-                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm cursor-pointer"
                         >
                             <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />
                         </button>
@@ -65,7 +65,7 @@ export default function AssignmentsPage() {
                     <div className="flex justify-center mb-6 md:mb-10">
                         <div className="flex w-[85%] md:w-[50%] bg-white rounded-full shadow-md overflow-hidden md:shadow-sm">
                             <button
-                                className={`flex-1 py-2 text-[15px] font-medium rounded-full transition-all ${activeTab === "pending"
+                                className={`flex-1 py-2 text-[15px] font-medium rounded-full cursor-pointer transition-all ${activeTab === "pending"
                                     ? "bg-black text-white"
                                     : "text-black bg-white"
                                     }`}
@@ -74,7 +74,7 @@ export default function AssignmentsPage() {
                                 Pending
                             </button>
                             <button
-                                className={`flex-1 py-2 text-[15px] font-medium rounded-full transition-all ${activeTab === "completed"
+                                className={`flex-1 py-2 text-[15px] font-medium rounded-full cursor-pointer transition-all ${activeTab === "completed"
                                     ? "bg-black text-white"
                                     : "text-black bg-white"
                                     }`}
@@ -112,10 +112,10 @@ export default function AssignmentsPage() {
                                         <div className="flex gap-3">
                                             <button
                                                 onClick={() => handleAttemptClick(a.id)}
-                                                className="bg-white text-black font-medium px-5 py-1.5 rounded-full text-[14px] md:text-[15px] shadow-sm">
+                                                className="bg-white text-black font-medium px-5 py-1.5 rounded-full text-[14px] md:text-[15px] cursor-pointer shadow-sm">
                                                 Attempt
                                             </button>
-                                            <button className="border border-white text-white font-medium px-5 py-1.5 rounded-full text-[14px] md:text-[15px]"
+                                            <button className="border border-white text-white font-medium px-5 py-1.5 rounded-full cursor-pointer text-[14px] md:text-[15px]"
                                                 onClick={() => handleCommentClick(a.id)}
                                             >
                                                 Comment

@@ -47,7 +47,7 @@ export default function NotFoundPage() {
         {/* Back Home button */}
         <button
           onClick={() => router.push("/")}
-          className="mt-6 flex items-center gap-2 px-5 py-2.5 border border-gray-400 text-gray-800 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-100 hover:border-gray-500 transition-all duration-200 active:scale-95 md:px-6 md:py-3 md:text-base md:shadow-sm md:bg-white"
+          className="mt-6 flex items-center gap-2 px-5 py-2.5 border border-gray-400 text-gray-800 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-100 hover:border-gray-500 transition-all duration-200 active:scale-95 md:px-6 md:py-3 md:text-base md:shadow-sm  md:bg-white"
         >
           <Home className="w-5 h-5" />
           Go Back Home

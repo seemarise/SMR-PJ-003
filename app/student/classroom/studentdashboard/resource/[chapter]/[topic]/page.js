@@ -66,7 +66,7 @@ export default function TopicPage({ params }) {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={handleBack}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />

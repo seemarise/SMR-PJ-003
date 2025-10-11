@@ -92,7 +92,7 @@ export default function AssignmentsPage({ params }) {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 cursor-pointer md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -162,7 +162,7 @@ export default function AssignmentsPage({ params }) {
                                                     `/classroom/${classId}/${section}/${subject}/assignments/${a._id}/edit`
                                                 );
                                             }}
-                                            className="text-[#5074b6] hover:text-[#5074b6] transition"
+                                            className="text-[#5074b6] hover:text-[#5d88d3] cursor-pointer transition"
                                         >
                                             <Pencil size={18} className="md:w-5 md:h-5" />
                                         </button>
@@ -174,7 +174,7 @@ export default function AssignmentsPage({ params }) {
                                                 setShowModal(true);
                                                 setDeleteId(a._id);
                                             }}
-                                            className="text-red-500 hover:text-red-600 transition"
+                                            className="text-red-500 hover:text-red-600 cursor-pointer transition"
                                         >
                                             <Trash size={18} className="md:w-5 md:h-5" />
                                         </button>
@@ -187,7 +187,7 @@ export default function AssignmentsPage({ params }) {
                                                     `/classroom/${classId}/${section}/${subject}/assignments/${a._id}?title=${a.lesson}`
                                                 );
                                             }}
-                                            className="text-[#5074b6] hover:text-[#5074b6] transition"
+                                            className="text-[#5074b6] hover:text-[#5d88d3] cursor-pointer transition"
                                         >
                                             <ArrowRight size={18} className="md:w-5 md:h-5" />
                                         </button>
@@ -209,7 +209,7 @@ export default function AssignmentsPage({ params }) {
                                 <div className="flex justify-end gap-3 mt-6">
                                     {/* Cancel Button */}
                                     <button
-                                        className="px-4 py-2 rounded-lg bg-white text-black  hover:bg-gray-100"
+                                        className="px-4 py-2 rounded-lg bg-white text-black cursor-pointer  hover:bg-gray-100"
                                         onClick={() => {
                                             setDeleteId("");
                                             setShowModal(false);
@@ -220,7 +220,7 @@ export default function AssignmentsPage({ params }) {
 
                                     {/* Delete Button */}
                                     <button
-                                        className="px-4 py-2 rounded-lg bg-white text-red-500 hover:bg-red-100"
+                                        className="px-4 py-2 rounded-lg bg-white text-red-500 cursor-pointer hover:bg-red-100"
                                         onClick={() => handleDeleteAssignment()}
                                     >
                                         Delete
@@ -237,7 +237,7 @@ export default function AssignmentsPage({ params }) {
                                 `/classroom/${classId}/${section}/${subject}/assignments/create`
                             )
                         }
-                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
+                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5d88d3] transition md:p-5 md:bottom-10 md:right-10 cursor-pointer"
                     >
                         <Plus />
                     </button>

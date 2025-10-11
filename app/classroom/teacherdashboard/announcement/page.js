@@ -136,7 +136,7 @@ export default function AnnouncementsPage({ params }) {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 cursor-pointer"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -176,7 +176,7 @@ export default function AnnouncementsPage({ params }) {
                                         </span>
                                         <button
                                             onClick={(e) => openOptions(a._id, e)}
-                                            className="p-1 rounded-full hover:bg-gray-100 transition"
+                                            className="p-1 rounded-full hover:bg-gray-100 transition cursor-pointer"
                                         >
                                             <MoreVertical
                                                 size={18}
@@ -226,7 +226,7 @@ export default function AnnouncementsPage({ params }) {
                                 `/classroom/teacherdashboard/announcement/create`
                             )
                         }
-                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5074b6] transition md:p-5 md:bottom-10 md:right-10"
+                        className="fixed bottom-6 right-6 bg-[#5074b6] text-white p-4 rounded-full shadow-lg text-2xl hover:bg-[#5d88d3] transition md:p-5 md:bottom-10 md:right-10 cursor-pointer "
                     >
                         <Plus />
                     </button>
@@ -251,7 +251,7 @@ export default function AnnouncementsPage({ params }) {
 
                             <button
                                 onClick={handleEdit}
-                                className="flex items-center justify-center gap-2 w-full py-3 text-[#5074b6] font-medium border-b border-gray-200"
+                                className="flex items-center justify-center gap-2 w-full py-3 text-[#5074b6] font-medium border-b border-gray-200 cursor-pointer"
                             >
                                 <Pencil size={18} />
                                 Edit Announcement
@@ -259,7 +259,7 @@ export default function AnnouncementsPage({ params }) {
 
                             <button
                                 onClick={handleDelete}
-                                className="flex items-center justify-center gap-2 w-full py-3 text-red-600 font-medium"
+                                className="flex items-center justify-center gap-2 w-full py-3 text-red-600 font-medium cursor-pointer"
                             >
                                 <Trash2 size={18} />
                                 Delete Announcement
@@ -277,13 +277,13 @@ export default function AnnouncementsPage({ params }) {
                         >
                             <button
                                 onClick={handleEdit}
-                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-[#5074b6] text-sm font-medium"
+                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-[#5074b6] text-sm font-medium cursor-pointer"
                             >
                                 <Pencil size={16} /> Edit Announcement
                             </button>
                             <button
                                 onClick={handleDelete}
-                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-red-600 text-sm font-medium"
+                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-red-600 text-sm font-medium cursor-pointer"
                             >
                                 <Trash2 size={16} /> Delete Announcement
                             </button>

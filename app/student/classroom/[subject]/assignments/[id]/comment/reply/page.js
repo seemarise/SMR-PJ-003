@@ -76,7 +76,7 @@ export default function RepliesPage() {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm cursor-pointer"
                         >
                             <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />
                         </button>
@@ -84,13 +84,13 @@ export default function RepliesPage() {
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl">
                             Replies
                         </h1>
-
+                        {/* 
                         <button
                             onClick={handleRefresh}
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
                         >
                             <RotateCw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* ===== Original Cards (Unchanged) ===== */}
@@ -178,7 +178,7 @@ export default function RepliesPage() {
                                 </p>
                                 <button
                                     onClick={() => setReplyText("Sample reply")}
-                                    className="bg-[#4A5DC4] text-white font-medium rounded-full px-5 py-2 flex items-center gap-2 shadow-sm hover:bg-[#3e51a6] transition"
+                                    className="bg-[#4A5DC4] text-white font-medium rounded-full px-5 py-2 flex items-center gap-2 shadow-sm hover:bg-[#3e51a6] transition cursor-pointer"
                                 >
                                     Reply
                                 </button>
@@ -208,7 +208,7 @@ export default function RepliesPage() {
                 </div>
                 <button
                     onClick={handleSend}
-                    className="bg-[#5074b6] p-3 rounded-full text-white hover:bg-[#3d5f9b] transition"
+                    className="bg-[#5074b6] p-3 rounded-full text-white hover:bg-[#3d5f9b] transition cursor-pointer"
                 >
                     <Send size={18} />
                 </button>

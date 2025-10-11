@@ -85,7 +85,7 @@ export default function CommentsPage() {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 cursor-pointer md:shadow-sm"
                         >
                             <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />
                         </button>
@@ -94,12 +94,12 @@ export default function CommentsPage() {
                             Comments
                         </h1>
 
-                        <button
+                        {/* <button
                             onClick={handleRefresh}
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3"
                         >
                             <RotateCw className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* --- Comments Section --- */}
@@ -119,7 +119,7 @@ export default function CommentsPage() {
                                         if (commentText.trim() === "")
                                             setCommentText("Sample comment");
                                     }}
-                                    className="flex items-center gap-2 bg-[#4A5DC4] text-white font-medium rounded-full px-5 py-2.5 shadow-sm hover:bg-[#4051a8] transition"
+                                    className="flex items-center gap-2 bg-[#4A5DC4] cursor-pointer text-white font-medium rounded-full px-5 py-2.5 shadow-sm hover:bg-[#4051a8] transition"
                                 >
                                     <MessageSquarePlus className="w-4 h-4" />
                                     Add Comment
@@ -162,7 +162,7 @@ export default function CommentsPage() {
                                                 onClick={(e) =>
                                                     openOptions(comment.id, e)
                                                 }
-                                                className="p-1 rounded-full hover:bg-gray-100 transition"
+                                                className="p-1 rounded-full hover:bg-gray-100 cursor-pointer transition"
                                             >
                                                 <MoreVertical className="w-4 h-4 text-gray-500 md:w-5 md:h-5" />
                                             </button>
@@ -172,7 +172,7 @@ export default function CommentsPage() {
                                             {comment.text}
                                         </p>
 
-                                        <button className="self-end mt-2 text-[13px] text-gray-600 bg-gray-50 px-3 py-1 rounded-full border border-gray-100 flex items-center gap-1 md:text-sm hover:bg-gray-100 transition"
+                                        <button className="self-end mt-2 text-[13px] text-gray-600 bg-gray-50 px-3 py-1 rounded-full border border-gray-100 flex items-center gap-1 md:text-sm hover:bg-gray-100 transition cursor-pointer"
                                             onClick={() => router.push(`/student/classroom/${subject}/assignments/${id}/comment/reply`)}
                                         >
                                             <MessageSquarePlus className="w-3 h-3 md:w-4 md:h-4" />{" "}
@@ -206,7 +206,7 @@ export default function CommentsPage() {
                 </div>
                 <button
                     onClick={handleAddComment}
-                    className="bg-[#5074b6] p-3 rounded-full text-white hover:bg-[#3d5f9b] transition"
+                    className="bg-[#5074b6] p-3 rounded-full text-white hover:bg-[#3d5f9b] transition cursor-pointer"
                 >
                     <Send size={18} />
                 </button>
@@ -229,7 +229,7 @@ export default function CommentsPage() {
 
                             <button
                                 onClick={handleEdit}
-                                className="flex items-center justify-center gap-2 w-full py-3 text-[#5074b6] font-medium border-b border-gray-200"
+                                className="flex items-center justify-center gap-2 w-full py-3 text-[#5074b6] font-medium border-b border-gray-200 cursor-pointer"
                             >
                                 <Pencil size={18} />
                                 Edit Comment
@@ -237,7 +237,7 @@ export default function CommentsPage() {
 
                             <button
                                 onClick={handleDelete}
-                                className="flex items-center justify-center gap-2 w-full py-3 text-red-600 font-medium"
+                                className="flex items-center justify-center gap-2 w-full py-3 text-red-600 font-medium cursor-pointer"
                             >
                                 <Trash2 size={18} />
                                 Delete Comment
@@ -255,13 +255,13 @@ export default function CommentsPage() {
                         >
                             <button
                                 onClick={handleEdit}
-                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-[#5074b6] text-sm font-medium"
+                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-[#5074b6] text-sm font-medium cursor-pointer"
                             >
                                 <Pencil size={16} /> Edit Comment
                             </button>
                             <button
                                 onClick={handleDelete}
-                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-red-600 text-sm font-medium"
+                                className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 rounded-lg text-red-600 text-sm font-medium cursor-pointer"
                             >
                                 <Trash2 size={16} /> Delete Comment
                             </button>

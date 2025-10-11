@@ -38,7 +38,7 @@ export default function ChapterPage({ params }) {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={handleBack}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
@@ -61,7 +61,7 @@ export default function ChapterPage({ params }) {
                                 placeholder="Search Keywords of Module/File Name"
                                 className="flex-1 text-gray-700 text-[15px] md:text-[17px] placeholder-gray-500 focus:outline-none"
                             />
-                            <button className="ml-2 bg-[#5074b6] rounded-full p-2 flex items-center justify-center">
+                            <button className="ml-2 bg-[#5074b6] rounded-full p-2 flex items-center cursor-pointer justify-center">
                                 <Search className="w-4 h-4 text-white md:w-5 md:h-5" />
                             </button>
                         </div>

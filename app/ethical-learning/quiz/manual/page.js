@@ -91,7 +91,7 @@ export default function ManualQuizEditor() {
       {/* top bar */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.back()} className="p-2 rounded-full hover:bg-gray-100">
+          <button onClick={() => router.back()} className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
         </div>
@@ -107,7 +107,7 @@ export default function ManualQuizEditor() {
             showToast("Quiz saved.");
             setTimeout(() => router.push("/ethical-learning/upload"), 600);
           }}
-          className="p-2 rounded-full bg-blue-600 text-white"
+          className="p-2 rounded-full cursor-pointer bg-blue-600 text-white"
           title="Save"
         >
           <Check className="w-5 h-5" />
@@ -158,17 +158,17 @@ export default function ManualQuizEditor() {
       <div className="flex items-center gap-3 border-t pt-4">
         <button
           onClick={() => deleteQuestion(activeIndex)}
-          className="px-3 py-2 rounded-md bg-red-50 text-red-600 border border-red-100"
+          className="px-3 py-2 rounded-md bg-red-50 text-red-600 border border-red-100 cursor-pointer"
         >
           Delete
         </button>
 
-        <button onClick={addQuestion} className="px-3 py-2 rounded-md bg-blue-600 text-white">
+        <button onClick={addQuestion} className="px-3 py-2 rounded-md bg-blue-600 text-white cursor-pointer">
           + Add New
         </button>
 
         <div className="ml-auto">
-          <button onClick={saveAll} className="px-4 py-2 bg-blue-700 text-white rounded-md">
+          <button onClick={saveAll} className="px-4 py-2 bg-blue-700 text-white rounded-md cursor-pointer">
             Save all Questions
           </button>
         </div>
@@ -180,9 +180,8 @@ export default function ManualQuizEditor() {
           <button
             key={q.id}
             onClick={() => setActiveIndex(i)}
-            className={`px-3 py-1 rounded-md text-sm ${
-              i === activeIndex ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700"
-            }`}
+            className={`px-3 py-1 cursor-pointer rounded-md text-sm ${i === activeIndex ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700"
+              }`}
           >
             Q{i + 1}
           </button>

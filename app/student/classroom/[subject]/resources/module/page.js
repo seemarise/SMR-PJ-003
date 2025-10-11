@@ -14,7 +14,7 @@ export default function ModulesPage() {
                     <div className="flex items-center justify-between mb-6 md:mb-10 relative">
                         <button
                             onClick={() => router.back()}
-                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 md:shadow-sm"
+                            className="p-1 rounded-full hover:bg-gray-100 transition md:p-2 cursor-pointer md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-6 h-6 md:w-7 md:h-7 text-[#5074b6]" />
@@ -38,7 +38,7 @@ export default function ModulesPage() {
                                 placeholder="Search Keywords of Module/File Name"
                                 className="flex-1 text-gray-700 text-[15px] md:text-[17px] placeholder-gray-500 focus:outline-none"
                             />
-                            <button className="ml-2 bg-[#5074b6] rounded-full p-2 flex items-center justify-center">
+                            <button className="ml-2 bg-[#5074b6] rounded-full p-2 flex items-center justify-center cursor-pointer">
                                 <Search className="w-4 h-4 text-white md:w-5 md:h-5" />
                             </button>
                         </div>

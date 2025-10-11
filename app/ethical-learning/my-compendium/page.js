@@ -17,8 +17,8 @@ export default function MyCompendiumPage() {
 
   // Function to toggle star status
   const toggleStar = (itemId) => {
-    const updatedCompendia = compendia.map(item => 
-      item.id === itemId 
+    const updatedCompendia = compendia.map(item =>
+      item.id === itemId
         ? { ...item, isStarred: !item.isStarred }
         : item
     );
@@ -31,8 +31,8 @@ export default function MyCompendiumPage() {
     const updatedCompendia = compendia.map(item => {
       if (item.id === itemId) {
         const isCurrentlyPinned = item.isPinned;
-        return { 
-          ...item, 
+        return {
+          ...item,
           isPinned: !isCurrentlyPinned,
           pinOrder: !isCurrentlyPinned ? Date.now() : null
         };
@@ -65,7 +65,7 @@ export default function MyCompendiumPage() {
         <div className="flex items-center gap-3 md:max-w-5xl md:mx-auto">
           <button
             onClick={() => router.back()}
-            className="p-2 rounded-full hover:bg-gray-100 transition"
+            className="p-2 rounded-full cursor-pointer hover:bg-gray-100 transition"
           >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
@@ -85,25 +85,23 @@ export default function MyCompendiumPage() {
                 {/* Star Icon - Top Left */}
                 <button
                   onClick={() => toggleStar(item.id)}
-                  className="absolute top-2 left-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition"
+                  className="absolute top-2 left-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition cursor-pointer"
                 >
-                  <Star 
-                    className={`w-5 h-5 ${
-                      item.isStarred ? "text-yellow-400 fill-current" : "text-gray-400"
-                    }`} 
+                  <Star
+                    className={`w-5 h-5 ${item.isStarred ? "text-yellow-400 fill-current" : "text-gray-400"
+                      }`}
                   />
                 </button>
 
                 {/* Pin Icon - Top Right */}
                 <button
                   onClick={() => togglePin(item.id)}
-                  className="absolute top-2 right-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition"
+                  className="absolute top-2 right-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition cursor-pointer"
                 >
                   <div className="flex items-center gap-1">
-                    <Pin 
-                      className={`w-4 h-4 ${
-                        item.isPinned ? "text-[#5074b6] fill-current" : "text-gray-400"
-                      }`} 
+                    <Pin
+                      className={`w-4 h-4 ${item.isPinned ? "text-[#5074b6] fill-current" : "text-gray-400"
+                        }`}
                     />
                     {item.isPinned && (
                       <span className="text-xs font-semibold text-gray-700">
@@ -138,7 +136,7 @@ export default function MyCompendiumPage() {
                   <p className="text-sm text-gray-700 font-medium py-1">Admin</p>
                   <button
                     onClick={() => router.push(`/ethical-learning/${item.id}`)}
-                    className="w-full bg-[#5074b6] text-white rounded-b-xl py-2 text-sm font-semibold hover:bg-[#3d5a94] transition"
+                    className="w-full bg-[#5074b6] text-white rounded-b-xl py-2 cursor-pointer text-sm font-semibold hover:bg-[#3d5a94] transition"
                   >
                     Start
                   </button>
@@ -152,7 +150,7 @@ export default function MyCompendiumPage() {
               <p className="text-gray-400 text-sm">Star some compendia to see them here</p>
               <button
                 onClick={() => router.push("/ethical-learning")}
-                className="mt-4 px-6 py-2 bg-[#5074b6] text-white rounded-lg hover:bg-[#3d5a94] transition"
+                className="mt-4 px-6 py-2 bg-[#5074b6] text-white rounded-lg hover:bg-[#3d5a94] transition cursor-pointer"
               >
                 Browse Compendia
               </button>

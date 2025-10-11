@@ -56,7 +56,7 @@ export default function CreateAssignment({ params }) {
                     <div className="flex items-center justify-between mb-6 md:mb-10">
                         <button
                             onClick={() => router.back()}
-                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition md:p-3 md:shadow-sm"
+                            className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
                             <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
@@ -93,7 +93,7 @@ export default function CreateAssignment({ params }) {
                                 <button
                                     type="button"
                                     onClick={() => setShowImageSourcePopup(true)}
-                                    className="absolute right-3 top-2 p-2 text-gray-500 hover:text-blue-600 transition-colors"
+                                    className="absolute right-3 top-2 p-2 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
                                 >
                                     <Camera className="w-5 h-5" />
                                 </button>
@@ -111,7 +111,7 @@ export default function CreateAssignment({ params }) {
                                 />
                                 <button
                                     type="button"
-                                    className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                                    className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
                                 >
                                     +
                                 </button>
@@ -162,7 +162,7 @@ export default function CreateAssignment({ params }) {
                             <label className="font-medium block mb-1">Upload Document</label>
                             <button
                                 type="button"
-                                className="border border-blue-500 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition"
+                                className="border border-blue-500 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition cursor-pointer"
                             >
                                 Upload Document
                             </button>
@@ -179,7 +179,7 @@ export default function CreateAssignment({ params }) {
                             {
                                 showAllStudent && (
                                     <div className="w-full">
-                                        <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex justify-center items-center transition"
+                                        <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-[#5d88d3] flex justify-center items-center transition cursor-pointer"
                                             type="button"
                                             onClick={() =>
                                                 router.push(
@@ -197,10 +197,10 @@ export default function CreateAssignment({ params }) {
                         <div>
                             <label className="font-medium block mb-1">Add Images</label>
                             <div className="flex gap-2">
-                                <button className="bg-[#5074b6] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <button className="bg-[#5074b6] text-white px-4 py-2 hover:bg-[#5d88d3] rounded-lg hover:bg-[#5d88d3]transition cursor-pointer">
                                     Add Image
                                 </button>
-                                <button className="border px-4 py-2 rounded-lg hover:bg-gray-50 transition">
+                                <button className="border px-4 py-2 rounded-lg hover:bg-gray-50 transition cursor-pointer">
                                     📷
                                 </button>
                             </div>
@@ -223,7 +223,7 @@ export default function CreateAssignment({ params }) {
                                                 )
                                             }
                                             type="button"
-                                            className="flex items-center gap-1 text-blue-600 hover:underline"
+                                            className="flex items-center gap-1 text-blue-600 hover:underline cursor-pointer"
                                         >
                                             <Pencil className="w-4 h-4" />
                                             Edit Questions
@@ -231,10 +231,10 @@ export default function CreateAssignment({ params }) {
                                     </div>
 
                                     <div className="flex gap-2 mt-3 flex-wrap">
-                                        <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition">
+                                        <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition cursor-pointer">
                                             + Generate with AI
                                         </button>
-                                        <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition">
+                                        <button className="border px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition cursor-pointer">
                                             + Add Questions
                                         </button>
                                     </div>
@@ -243,7 +243,7 @@ export default function CreateAssignment({ params }) {
                         </div>
 
                         {/* Submit Button */}
-                        <button className="w-full bg-[#5074b6] hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl">
+                        <button className="w-full bg-[#5074b6] hover:bg-[#5d88d3] text-white font-semibold py-3 rounded-md transition md:text-lg md:py-4 md:rounded-xl cursor-pointer">
                             Create Assignment
                         </button>
                     </form>
@@ -258,7 +258,7 @@ export default function CreateAssignment({ params }) {
                         <div className="space-y-3">
                             <button
                                 onClick={handleImageFromGallery}
-                                className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors"
+                                className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
                             >
                                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                                     <Image className="w-4 h-4 text-blue-600" />
@@ -267,7 +267,7 @@ export default function CreateAssignment({ params }) {
                             </button>
                             <button
                                 onClick={handleTakePhoto}
-                                className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors"
+                                className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
                             >
                                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                                     <Camera className="w-4 h-4 text-blue-600" />
@@ -277,7 +277,7 @@ export default function CreateAssignment({ params }) {
                         </div>
                         <button
                             onClick={() => setShowImageSourcePopup(false)}
-                            className="w-full mt-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                            className="w-full mt-4 py-2 text-gray-600 hover:text-gray-800 transition-colors cursor-pointer"
                         >
                             Cancel
                         </button>
@@ -293,7 +293,7 @@ function ToggleSwitch({ checked, onChange }) {
     return (
         <label className="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" checked={checked} onChange={onChange} className="sr-only peer" />
-            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
+            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-[#5d88d3] after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
         </label>
     );
 }

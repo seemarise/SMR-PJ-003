@@ -200,7 +200,7 @@ function ProgressTrackingPage() {
                         [topicKey]: !isTopicCompleted
                       }));
                     }}
-                    className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isTopicCompleted ? "bg-[#5074b6]" : "bg-gray-300"
+                    className={`relative cursor-pointer w-14 h-7 rounded-full transition-all duration-300 ${isTopicCompleted ? "bg-[#5074b6]" : "bg-gray-300"
                       }`}
                   >
                     <div
@@ -264,7 +264,7 @@ function ProgressTrackingPage() {
                     e.stopPropagation();
                     toggleSubtopic(selectedTopic.name, idx);
                   }}
-                  className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isCompleted ? "bg-[#5074b6]" : "bg-gray-300"
+                  className={`relative cursor-pointer w-14 h-7 rounded-full transition-all duration-300 ${isCompleted ? "bg-[#5074b6]" : "bg-gray-300"
                     }`}
                 >
                   <div
@@ -296,7 +296,7 @@ function ProgressTrackingPage() {
                   setSelectedTest(null);
                 }
               }}
-              className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
+              className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
             >
               <ChevronLeft className="h-6 w-6" />
             </button>
@@ -359,7 +359,7 @@ function ProgressTrackingPage() {
             <div className="flex gap-4 mt-4">
               <button
                 onClick={() => handleTabChange("vad")}
-                className={`flex-1 py-2 font-semibold transition-all duration-300 ${activeTab === "vad"
+                className={`flex-1 cursor-pointer py-2 font-semibold transition-all duration-300 ${activeTab === "vad"
                   ? "text-[#5074b6] border-b-2 border-[#5074b6]"
                   : "text-gray-500 hover:text-gray-700"
                   }`}
@@ -368,7 +368,7 @@ function ProgressTrackingPage() {
               </button>
               <button
                 onClick={() => handleTabChange("school")}
-                className={`flex-1 py-2 font-semibold transition-all duration-300 ${activeTab === "school"
+                className={`flex-1 cursor-pointer py-2 font-semibold transition-all duration-300 ${activeTab === "school"
                   ? "text-[#5074b6] border-b-2 border-[#5074b6]"
                   : "text-gray-500 hover:text-gray-700"
                   }`}

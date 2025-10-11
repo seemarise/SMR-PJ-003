@@ -119,7 +119,7 @@ export default function CompendiaPage() {
           {/* Left - + Create Button */}
           <button
             onClick={() => router.push("/ethical-learning/upload")}
-            className="w-12 h-12 bg-[#5074b6] rounded-full flex items-center justify-center text-white hover:bg-[#3d5a94] transition-all duration-200 active:scale-95 shadow-lg"
+            className="w-12 h-12 bg-[#5074b6] rounded-full flex items-center justify-center text-white hover:bg-[#3d5a94] transition-all duration-200 active:scale-95 cursor-pointer shadow-lg"
           >
             <Plus className="w-6 h-6" />
           </button>
@@ -138,7 +138,7 @@ export default function CompendiaPage() {
           <div className='flex'>
             <button
               onClick={() => router.push("/ethical-learning/my-compendium")}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition ${hasStarredCompendia
+              className={`px-4 py-2 cursor-pointer rounded-lg text-sm font-medium transition ${hasStarredCompendia
                 ? "bg-[#5074b6] text-white hover:bg-[#3d5a94]"
                 : "bg-gray-300 text-white hover:bg-gray-400"
                 }`}
@@ -208,7 +208,7 @@ export default function CompendiaPage() {
             <button
               key={index}
               onClick={() => setSelSubCat(index)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition ${selSubCat == index
+              className={`px-4 py-2 cursor-pointer rounded-full text-sm font-medium transition ${selSubCat == index
                 ? "bg-[#5074b6] text-white"
                 : "text-black"
                 }`}
@@ -227,7 +227,7 @@ export default function CompendiaPage() {
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
             className="w-full bg-white border border-gray-300 rounded-full px-4 py-3 pr-14 text-sm focus:ring-2 focus:ring-[#5074b6] focus:border-[#5074b6]"
           />
-          <button className="absolute right-2 top-2 w-8 h-8 bg-[#5074b6] rounded-full flex items-center justify-center hover:bg-[#3d5a94] transition">
+          <button className="absolute right-2 top-2 w-8 h-8 bg-[#5074b6] rounded-full flex items-center cursor-pointer justify-center hover:bg-[#3d5a94] transition">
             <Search className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -243,7 +243,7 @@ export default function CompendiaPage() {
                 {/* Star Icon - Top Left */}
                 <button
                   onClick={() => toggleStar(item._id)}
-                  className="absolute top-2 left-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition"
+                  className="absolute top-2 left-2 z-10 p-1 rounded-full bg-white/80 cursor-pointer hover:bg-white transition"
                 >
                   <Star
                     className={`w-5 h-5 ${item?.isStarred ? "text-yellow-400 fill-current" : "text-gray-400"
@@ -254,7 +254,7 @@ export default function CompendiaPage() {
                 {/* Pin Icon - Top Right */}
                 <button
                   onClick={() => togglePin(item._id)}
-                  className="absolute top-2 right-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition"
+                  className="absolute cursor-pointer top-2 right-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition"
                 >
                   <div className="flex items-center gap-1">
                     <Pin
@@ -294,7 +294,7 @@ export default function CompendiaPage() {
                   <p className="text-sm text-gray-700 font-medium py-1">Admin</p>
                   <button
                     onClick={() => router.push(`/ethical-learning/${item._id}`)}
-                    className="w-full bg-[#5074b6] text-white rounded-b-xl py-2 text-sm font-semibold hover:bg-[#3d5a94] transition"
+                    className="w-full cursor-pointer bg-[#5074b6] text-white rounded-b-xl py-2 text-sm font-semibold hover:bg-[#3d5a94] transition"
                   >
                     Start
                   </button>

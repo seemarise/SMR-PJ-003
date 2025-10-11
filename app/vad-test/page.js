@@ -73,7 +73,7 @@ function VadTestPage() {
             {/* Left - School Exam */}
             <button
               onClick={() => router.push('/school-exams')}
-              className="px-3 py-1 border border-gray-400 text-gray-800 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-100 hover:border-gray-500 transition-all duration-200 active:scale-95 md:px-5 md:py-2.5 md:text-base md:shadow-sm md:bg-white"
+              className="px-3 py-1 border border-gray-400 text-gray-800 rounded-lg text-sm font-medium cursor-pointer hover:bg-gray-100 hover:border-gray-500 transition-all duration-200 active:scale-95 md:px-5 md:py-2.5 md:text-base md:shadow-sm md:bg-white "
             >
               School Exam
             </button>
