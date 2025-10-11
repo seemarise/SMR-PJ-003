@@ -12,6 +12,10 @@ const getStudentSubjects = () => {
     return apiClient.get("/api/v1/subjects/student/all-subjects");
 };
 
+const getStudentProfile = () => {
+    return apiClient.get("/api/v1/student/get-profile");
+}
+
 const getStudentAttendence = (data) => {
     return apiClient.get("/api/v1/student/classroom/attendance", data);
 };
@@ -35,5 +39,6 @@ export {
     getStudentClassroomAnnouncement,
     getStudentClassroomRemark,
     getStudentClassroomChapters,
+    getStudentProfile,
     getStudentClassroomModules
 };
