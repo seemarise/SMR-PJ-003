@@ -28,7 +28,10 @@ const pinCompendiaById = (pathParams) => {
   return apiClient.get(concatenatePath("/api/v1/compendia/student/pin-compendium", pathParams));
 }
 const removePinCompendiaById = (pathParams) => {
-  return apiClient.get(concatenatePath("//api/v1/compendia/student/remove-pinned-compendium", pathParams));
+  return apiClient.get(concatenatePath("/api/v1/compendia/student/remove-pinned-compendium", pathParams));
+}
+const generateQuizWithAIPassingContent = (body) => {
+  return apiClient.post("/api/v1/chat/student/generate-quiz", body);
 }
 // getListSuggestions not working
 // getAllCompedia 
@@ -40,5 +43,6 @@ export {
   getMyCompendia,
   getVadSquadreviewsByComId,
   pinCompendiaById,
-  removePinCompendiaById
+  removePinCompendiaById,
+  generateQuizWithAIPassingContent
 };

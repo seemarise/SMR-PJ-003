@@ -5,9 +5,10 @@ import { ArrowLeft, Image as ImageIcon, Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CreateQuizModal from "../../../components/CreateQuizModal";
 import ManualQuizEditor from "../../../components/ManualQuizEditor";
-import { getCompendiaCategories, getCompendiaSubCategories } from "@/services/ethicalLearningService/compendiaService";
+import { getCompendiaCategories, getCompendiaSubCategories, generateQuizWithAIPassingContent } from "@/services/ethicalLearningService/compendiaService";
 import { toast } from "react-toastify";
 import QuizQuestionsPreview from "@/components/QuizQuestionPreview";
+import ConfirmationModal from "@/components/ConfirmationModal";
 export default function UploadCompendiumPage() {
   const router = useRouter();
 
@@ -35,7 +36,7 @@ export default function UploadCompendiumPage() {
   const [selSubCat, setSelSubCat] = useState(null);
   const [showQuizModal, setShowQuizModal] = useState(false);
   const [isEditingQuiz, setIsEditingQuiz] = useState(false);
-
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   // ... (all helper functions and useEffect hooks remain the same)
   useEffect(() => {
     const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
@@ -86,37 +87,12 @@ export default function UploadCompendiumPage() {
 
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1500));
-
+    let res = await generateQuizWithAIPassingContent({
+      query: compendiaData.content,
+      numberOfQuestions: 5
+    });
     // Return the mock API response you provided
-    return {
-      "status": true,
-      "statusCode": 200,
-      "message": "Success! Response fetched.",
-      "data": {
-        "response": [
-          {
-            "question": "What platforms are students using to turn their hobbies into businesses by creating content?",
-            "answerOptions": [
-              "Facebook and Twitter",
-              "YouTube, Instagram, and podcast platforms",
-              "LinkedIn and Pinterest",
-              "TikTok and Snapchat"
-            ],
-            "correctOptionIndex": 1
-          },
-          {
-            "question": "What type of businesses are being favored by Gen Z and investors alike, according to the given information?",
-            "answerOptions": [
-              "Tech startups",
-              "Eco-conscious brands",
-              "Traditional 9-5 jobs",
-              "AI-powered banks"
-            ],
-            "correctOptionIndex": 1
-          }
-        ]
-      }
-    };
+    return res;
   }
   function toDataURL(file, cb) {
     const reader = new FileReader();
@@ -205,7 +181,16 @@ export default function UploadCompendiumPage() {
     setIsEditingQuiz(false);
     showToast("Quiz draft saved successfully!");
   };
+  // UPDATED: handleDeleteQuiz now also closes the modal
+  const handleDeleteQuiz = () => {
+    setCompendiaData(prev => ({ ...prev, quiz: [] }));
+    const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
+    draft.quiz = [];
+    sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
 
+    setIsConfirmModalOpen(false); // Close the modal
+    showToast("Quiz has been deleted.", "success");
+  };
   const hasQuestions = compendiaData.quiz && compendiaData.quiz.length > 0;
 
   return (
@@ -389,6 +374,7 @@ export default function UploadCompendiumPage() {
                 saveDraft();
                 setIsEditingQuiz(true);
               }}
+              onDeleteRequest={() => setIsConfirmModalOpen(true)}
             />
           )}
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
@@ -474,7 +460,14 @@ export default function UploadCompendiumPage() {
             onClose={() => setIsEditingQuiz(false)}
           />
         )}
-
+        <ConfirmationModal
+          isOpen={isConfirmModalOpen}
+          onClose={() => setIsConfirmModalOpen(false)}
+          onConfirm={handleDeleteQuiz}
+          title="Delete Quiz"
+          message="Are you sure you want to delete all questions? This action cannot be undone."
+          confirmText="Delete"
+        />
         {toast ? (
           <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-sm px-4 py-2 rounded-md shadow-lg z-[200]">
             {toast}
