@@ -7,12 +7,14 @@ import { ArrowLeft, RotateCw, Info, UserRound, Send } from "lucide-react";
 import { addComment, getAllComment } from "@/services/classroomService/commentApi";
 import Image from "next/image";
 import moment from "moment";
+import { sessionService } from "@/services/sessionService";
 
 export default function CommentsPage() {
     const router = useRouter();
     const { id } = useParams();
     const [load, setLoad] = useState(false)
     const [comments, setComments] = useState([]);
+    const [user] = useState(sessionService.getUser())
 
     // ✅ React Hook Form
     const {
@@ -45,7 +47,7 @@ export default function CommentsPage() {
     };
 
     const handleRefresh = () => {
-        csetLoad(x => !x)
+        setLoad(x => !x)
     };
 
     return (
@@ -73,14 +75,6 @@ export default function CommentsPage() {
                         </button>
                     </div>
 
-                    {/* Announcement Info */}
-                    <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 md:px-5 md:py-3">
-                        <Info className="w-4 h-4 text-[#5074b6]" />
-                        <span className="text-sm text-[#5074b6] md:text-base">
-                            Announcement: <strong>English Lab</strong>
-                        </span>
-                    </div>
-
                     {/* Comments */}
                     <div className="space-y-4 md:space-y-6 mt-6">
                         {comments.map((c) => (
@@ -97,7 +91,7 @@ export default function CommentsPage() {
                                 />
                                 <div className="flex-1">
                                     <div className="flex justify-between items-center">
-                                        <h4 className="font-semibold text-gray-800">{c.commentedBy.name}</h4>
+                                        <h4 className="font-semibold text-gray-800">{c.commentedBy.name} {c.commentedBy._id == user._id && <span className="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-[#5074b6] text-xs rounded-sm">You</span>}</h4>
                                         <span className="text-xs text-gray-400">{moment(c.commentedOn).fromNow()}</span>
                                     </div>
                                     <p className="text-gray-700 text-sm md:text-base mt-1 whitespace-pre-line">
