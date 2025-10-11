@@ -81,7 +81,43 @@ export default function UploadCompendiumPage() {
       }
     }
   }
+  async function generateQuizWithAI(compendiumContent) {
+    console.log("Sending content to AI for quiz generation:", compendiumContent.substring(0, 100) + "...");
 
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    // Return the mock API response you provided
+    return {
+      "status": true,
+      "statusCode": 200,
+      "message": "Success! Response fetched.",
+      "data": {
+        "response": [
+          {
+            "question": "What platforms are students using to turn their hobbies into businesses by creating content?",
+            "answerOptions": [
+              "Facebook and Twitter",
+              "YouTube, Instagram, and podcast platforms",
+              "LinkedIn and Pinterest",
+              "TikTok and Snapchat"
+            ],
+            "correctOptionIndex": 1
+          },
+          {
+            "question": "What type of businesses are being favored by Gen Z and investors alike, according to the given information?",
+            "answerOptions": [
+              "Tech startups",
+              "Eco-conscious brands",
+              "Traditional 9-5 jobs",
+              "AI-powered banks"
+            ],
+            "correctOptionIndex": 1
+          }
+        ]
+      }
+    };
+  }
   function toDataURL(file, cb) {
     const reader = new FileReader();
     reader.onload = () => cb(reader.result);
@@ -389,20 +425,44 @@ export default function UploadCompendiumPage() {
               saveDraft();
               setIsEditingQuiz(true);
             }}
-            onCreateAI={() => {
-              const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
-              const questions = draft?.quiz || [];
-              questions.push({
-                id: Date.now().toString(),
-                text: "AI-generated question based on content (demo)",
-                options: ["Option A", "Option B", "Option C", "Option D"],
-                answer: 0,
-              });
-              draft.quiz = questions;
-              sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
-              setCompendiaData(prev => ({ ...prev, quiz: questions }));
-              setShowQuizModal(false);
-              showToast("AI added 1 question to your quiz draft.");
+            onCreateAI={async () => {
+              setShowQuizModal(false); // Close modal immediately
+              showToast("Generating quiz with AI, please wait...", "info");
+
+              try {
+                const res = await generateQuizWithAI(compendiaData.content);
+
+                if (res && res.status === true && res.data?.response) {
+                  const aiQuestions = res.data.response;
+
+                  // Transform API response to our internal format
+                  const newQuestions = aiQuestions.map(q => ({
+                    id: Date.now() + Math.random(), // Unique key for React
+                    text: q.question,
+                    options: q.answerOptions,
+                    correctAnswerIndex: q.correctOptionIndex,
+                  }));
+
+                  // Get existing questions and append the new ones
+                  const existingQuestions = compendiaData.quiz || [];
+                  const updatedQuestions = [...existingQuestions, ...newQuestions];
+
+                  // Update the main state
+                  setCompendiaData(prev => ({ ...prev, quiz: updatedQuestions }));
+
+                  // Update session storage draft
+                  const draft = JSON.parse(sessionStorage.getItem("compendium_draft") || "{}");
+                  draft.quiz = updatedQuestions;
+                  sessionStorage.setItem("compendium_draft", JSON.stringify(draft));
+
+                  showToast(`${newQuestions.length} new questions were added by AI!`, "success");
+                } else {
+                  throw new Error(res.message || "Failed to generate valid quiz questions.");
+                }
+              } catch (error) {
+                console.error("AI Quiz Generation Error:", error);
+                showToast("Sorry, we couldn't generate the quiz. Please try again.", "error");
+              }
             }}
           />
         )}
