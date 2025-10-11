@@ -12,8 +12,8 @@ const concatenatePath = (url, arr = [], obj = {}) => {
 const getCompendiaCategories = () => {
   return apiClient.get("/api/v1/compendia/category/get-all-categories");
 }
-const getCompendiaSubCategories = (pathParams) => {
-  return apiClient.get(concatenatePath("/api/v1/compendia/sub-category/get-all-sub-categories", pathParams));
+const getCompendiaSubCategories = (id) => {
+  return apiClient.get(concatenatePath("/api/v1/compendia/sub-category/get-all-sub-categories/" + id));
 }
 const getAllCompendia = (queryParams) => {
   return apiClient.get(concatenatePath("/api/v1/compendia/student/get-all-compendia", [], queryParams));
@@ -28,7 +28,14 @@ const pinCompendiaById = (pathParams) => {
   return apiClient.get(concatenatePath("/api/v1/compendia/student/pin-compendium", pathParams));
 }
 const removePinCompendiaById = (pathParams) => {
-  return apiClient.get(concatenatePath("//api/v1/compendia/student/remove-pinned-compendium", pathParams));
+  return apiClient.get(concatenatePath("/api/v1/compendia/student/remove-pinned-compendium", pathParams));
+}
+const generateQuizWithAIPassingContent = (body) => {
+  return apiClient.post("/api/v1/chat/student/generate-quiz", body);
+}
+
+const addCompendia = (body) => {
+  return apiClient.post("/api/v1/compendia/teachers/add-compendium", body);
 }
 // getListSuggestions not working
 // getAllCompedia 
@@ -40,5 +47,7 @@ export {
   getMyCompendia,
   getVadSquadreviewsByComId,
   pinCompendiaById,
-  removePinCompendiaById
+  removePinCompendiaById,
+  generateQuizWithAIPassingContent,
+  addCompendia
 };
