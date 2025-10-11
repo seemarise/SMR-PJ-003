@@ -224,7 +224,7 @@ export default function LoginPage() {
           <input
             key={i}
             id={`otp-${i}`}
-            type="text"
+            type="number"
             maxLength="1"
             value={digit}
             onKeyDown={(e) => {

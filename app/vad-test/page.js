@@ -111,7 +111,7 @@ function VadTestPage() {
             {/* Test Info */}
             {vadTests?.map((vadTest, index) => {
               return <React.Fragment key={index}>
-                <div className="bg-blue-100 text-blue-800 font-semibold px-4 py-2 rounded-lg text-center shadow-sm md:text-xl md:py-3 md:bg-blue-50 md:border md:border-blue-200">
+                <div className="bg-blue-100 text-[#5074b6] font-semibold px-4 py-2 rounded-lg text-center shadow-sm md:text-xl md:py-3 md:bg-blue-50 md:border md:border-blue-200">
                   Class {vadTest.className}
                 </div>
 

@@ -138,7 +138,7 @@ export default function SubmissionDetails({ params }) {
 
                             {/* Student Info */}
                             <div>
-                                <h2 className="text-blue-800 font-semibold mb-2 md:text-xl">
+                                <h2 className="text-[#5074b6] font-semibold mb-2 md:text-xl">
                                     Student Information
                                 </h2>
                                 <div className="bg-white rounded-lg shadow p-4 flex gap-4 items-center mb-6 md:p-6 md:rounded-xl md:shadow-md">
@@ -163,7 +163,7 @@ export default function SubmissionDetails({ params }) {
 
                             {/* MCQ Answers */}
                             <div>
-                                <h2 className="text-blue-800 font-semibold mb-2 md:text-xl">
+                                <h2 className="text-[#5074b6] font-semibold mb-2 md:text-xl">
                                     MCQ Answers
                                 </h2>
                                 <div className="space-y-3 mb-8 md:space-y-4">

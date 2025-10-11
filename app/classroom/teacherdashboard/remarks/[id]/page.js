@@ -81,7 +81,7 @@ export default function StudentRemarkDetailPage() {
 
                     {/* Add Remark Section */}
                     <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 mt-4 md:p-6 md:shadow-md">
-                        <h3 className="font-semibold text-blue-800 text-base md:text-xl mb-3">
+                        <h3 className="font-semibold text-[#5074b6] text-base md:text-xl mb-3">
                             Add a New Remark
                         </h3>
                         <textarea

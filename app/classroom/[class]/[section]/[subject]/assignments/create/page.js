@@ -239,7 +239,7 @@ export default function CreateAssignment() {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
@@ -281,7 +281,7 @@ export default function CreateAssignment() {
                                 {/* <button
                                     type="button"
                                     onClick={() => setShowImageSourcePopup(true)}
-                                    className="absolute right-3 top-2 p-2 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
+                                    className="absolute right-3 top-2 p-2 text-gray-500 hover:text-[#5074b6]transition-colors cursor-pointer"
                                 >
                                     <Camera className="w-5 h-5" />
                                 </button> */}
@@ -521,7 +521,7 @@ export default function CreateAssignment() {
                                 type="button"
                             >
                                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <Image className="w-4 h-4 text-blue-600" />
+                                    <Image className="w-4 h-4 text-[#5074b6]" />
                                 </div>
                                 <span>Image from Gallery</span>
                             </button>
@@ -532,7 +532,7 @@ export default function CreateAssignment() {
                                 type="button"
                             >
                                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <Camera className="w-4 h-4 text-blue-600" />
+                                    <Camera className="w-4 h-4 text-[#5074b6]" />
                                 </div>
                                 <span>Take Photo</span>
                             </button>

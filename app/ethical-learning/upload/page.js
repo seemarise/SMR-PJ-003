@@ -181,7 +181,7 @@ export default function UploadCompendiumPage() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 underline hover:text-blue-800 truncate flex-1"
+                      className="text-[#5074b6]underline hover:text-[#5d88d3] truncate flex-1"
                     >
                       {link.displayName}
                     </a>

@@ -159,7 +159,7 @@ export default function ChapterPage({ params }) {
                     <div className="bg-blue-50 rounded-xl p-4 shadow-sm flex flex-col gap-1 md:p-6">
                         <div className="flex items-center gap-2">
                             <Folder className="text-[#5074b6] w-5 h-5 md:w-6 md:h-6" />
-                            <p className="text-blue-900 font-semibold text-lg capitalize">
+                            <p className="text-[#5074b6] font-semibold text-lg capitalize">
                                 {chapterName}
                             </p>
                         </div>

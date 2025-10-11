@@ -30,7 +30,7 @@ export default function PerformancePage() {
             </Link>
 
             <div className="absolute left-1/2 -translate-x-1/2 text-center">
-              <h1 className="text-lg font-bold text-blue-800 md:text-3xl">
+              <h1 className="text-lg font-bold text-[#5074b6] md:text-3xl">
                 Performance Report
               </h1>
             </div>

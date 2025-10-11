@@ -33,7 +33,7 @@ export default function EthicalInfoModal({ isOpen, onClose }) {
           <div className="flex justify-end">
             <button
               onClick={onClose}
-              className="text-blue-600 font-semibold text-lg hover:text-blue-700 transition-colors cursor-pointer"
+              className="text-[#5074b6] font-semibold text-lg hover:text-[#5d88d3] transition-colors cursor-pointer"
             >
               Close
             </button>

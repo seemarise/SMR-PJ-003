@@ -196,7 +196,7 @@ export default function CompendiumCommentsPage() {
                           {comment.author}
                         </h3>
                         {comment.badge && (
-                          <span className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                          <span className="bg-blue-100 text-[#5074b6] text-xs font-medium px-2 py-0.5 rounded-full">
                             {comment.badge}
                           </span>
                         )}
@@ -243,7 +243,7 @@ export default function CompendiumCommentsPage() {
                                   {reply.author}
                                 </h4>
                                 {reply.badge && (
-                                  <span className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                                  <span className="bg-blue-100 text-[#5074b6] text-xs font-medium px-2 py-0.5 rounded-full">
                                     {reply.badge}
                                   </span>
                                 )}

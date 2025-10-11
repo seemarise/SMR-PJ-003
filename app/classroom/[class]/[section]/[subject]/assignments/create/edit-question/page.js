@@ -68,7 +68,7 @@ export default function EditQuestionsPage({ onSubmit }) {
                             className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 cursor-pointer transition md:p-3 md:shadow-sm"
                             aria-label="Go back"
                         >
-                            <ArrowLeft className="w-5 h-5 text-blue-600 md:w-6 md:h-6" />
+                            <ArrowLeft className="w-5 h-5 text-[#5074b6] md:w-6 md:h-6" />
                         </button>
 
                         <h1 className="text-xl font-bold text-[#5074b6] md:text-3xl md:font-bold">
@@ -82,7 +82,7 @@ export default function EditQuestionsPage({ onSubmit }) {
                     <div className="flex w-full max-w-2xl justify-center gap-10 border-b border-gray-300 mb-4 mx-auto">
                         <button
                             className={`pb-2 cursor-pointer text-sm font-medium ${tab === "mcq"
-                                ? "text-blue-600 border-b-2 border-blue-600"
+                                ? "text-[#5074b6] border-b-2 border-blue-200"
                                 : "text-gray-500"
                                 }`}
                             onClick={() => {
@@ -94,7 +94,7 @@ export default function EditQuestionsPage({ onSubmit }) {
                         </button>
                         <button
                             className={`pb-2 text-sm cursor-pointer font-medium ${tab === "descriptive"
-                                ? "text-blue-600 border-b-2 border-blue-600"
+                                ? "text-[#5074b6] border-b-2 border-blue-200"
                                 : "text-gray-500"
                                 }`}
                             onClick={() => {

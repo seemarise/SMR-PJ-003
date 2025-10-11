@@ -33,7 +33,7 @@ export default function SelectStudentsPage() {
                             onClick={() => router.back()}
                             className="md:p-2 md:rounded-full md:bg-blue-100 hover:bg-blue-200 transition cursor-pointer"
                         >
-                            <ArrowLeft className="w-6 h-6 text-gray-800 md:w-6 md:h-6 md:text-blue-600" />
+                            <ArrowLeft className="w-6 h-6 text-gray-800 md:w-6 md:h-6 md:text-[#5074b6]" />
                         </button>
 
                         <h1 className="text-[20px] font-semibold text-[rgb(80,116,182)] md:text-3xl md:font-bold">

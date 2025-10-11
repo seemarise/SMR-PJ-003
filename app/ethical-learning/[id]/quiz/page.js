@@ -89,7 +89,7 @@ export default function CompendiumQuizPage() {
           <button onClick={() => router.back()} className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <ArrowLeft className="w-5 h-5 text-gray-700" />
           </button>
-          <h1 className="text-xl font-semibold text-blue-700">{compendium.title} — Quiz</h1>
+          <h1 className="text-xl font-semibold text-[#5074b6]">{compendium.title} — Quiz</h1>
         </div>
 
         {questions.length === 0 ? (
