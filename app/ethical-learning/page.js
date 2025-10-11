@@ -134,22 +134,21 @@ export default function CompendiaPage() {
             </div>
           </div>
 
-          {/* Right - My Compendium Button */}
-          <div className='flex items-center gap-1'>
-            <button
-              onClick={() => router.push("/ethical-learning/my-compendium")}
-              className={`px-3 py-1.5 md:px-4 md:py-2 cursor-pointer rounded-lg text-xs md:text-sm font-medium transition ${hasStarredCompendia
-                ? "bg-[#5074b6] text-white hover:bg-[#3d5a94]"
-                : "bg-gray-300 text-white hover:bg-gray-400"
-                }`}
-            >
-              <span className="hidden sm:inline">My Compendium</span>
-              <span className="sm:hidden">My</span>
-            </button>
-            <div className="rounded-full p-1.5 md:p-2 bg-gray-400 cursor-pointer" onClick={() => setIsModalOpen(true)}>
-              <NotepadText className="w-4 h-4 md:w-6 md:h-6 text-white" />
-            </div>
-          </div>
+           {/* Right - My Compendium Button */}
+           <div className='flex flex-col items-end gap-1'>
+             <div className="rounded-full p-1.5 md:p-2 bg-gray-400 cursor-pointer" onClick={() => setIsModalOpen(true)}>
+               <NotepadText className="w-4 h-4 md:w-6 md:h-6 text-white" />
+             </div>
+             <button
+               onClick={() => router.push("/ethical-learning/my-compendium")}
+               className={`px-2 py-1 md:px-4 md:py-2 cursor-pointer rounded-lg text-xs md:text-sm font-medium transition ${hasStarredCompendia
+                 ? "bg-[#5074b6] text-white hover:bg-[#3d5a94]"
+                 : "bg-gray-300 text-white hover:bg-gray-400"
+                 }`}
+             >
+               My Compendium
+             </button>
+           </div>
         </div>
 
         {/* Category Section - Matching image design */}
